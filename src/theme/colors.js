@@ -1,0 +1,17 @@
+export const colors = {
+  primary: '#4B7BE5',
+  primarySoft: '#DCE6FA',
+  background: '#FFFFFF',
+  surface: '#F5F5F5',
+  surfaceBorder: '#E0E0E0',
+  textPrimary: '#1A1A1A',
+  textSecondary: '#666666',
+  textOnPrimary: '#FFFFFF',
+  accent: '#6C63FF',
+  accentSoft: '#E6E4FF',
+  danger: '#FF3B30',
+  dangerSoft: '#FFE0DE',
+  purple: '#8E44AD',
+  purpleSoft: '#F0E4F7',
+  success: '#34C759',
+};
