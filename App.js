@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, ActivityIndicator } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { supabase } from './lib/supabase';
-import { signInWithOtp, verifyOtp, signInAnonymously, onAuthStateChange, getSession, signOut } from './lib/auth';
+import { supabase } from './src/lib/supabase';
+import { signInWithOtp, verifyOtp, signInAnonymously, onAuthStateChange, getSession, signOut } from './src/lib/auth';
 import KiblatScreen from './src/screens/KiblatScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import KalenderScreen from './src/screens/KalenderScreen';
 import EksplorasiScreen from './src/screens/EksplorasiScreen';
-import LibraryScreen from './src/screens/LibraryScreen';
 import KepribadianScreen from './src/screens/KepribadianScreen';
 import PerjodohanWrapper from './src/screens/PerjodohanWrapper';
-import AppShell from './src/components/AppShell';
+import SettingsScreen from './src/screens/SettingsScreen';
+import OnboardingScreen, { cekOnboardingSelesai } from './src/screens/OnboardingScreen';
 
 function AppContent() {
   const [session, setSession] = useState(null);
@@ -20,6 +20,7 @@ function AppContent() {
   const [otpSent, setOtpSent] = useState(false);
   const [error, setError] = useState('');
   const [activeScreen, setActiveScreen] = useState('Beranda');
+  const [onboardingDone, setOnboardingDone] = useState(null);
 
   useEffect(() => {
     getSession().then((s) => {
@@ -28,6 +29,10 @@ function AppContent() {
     });
     const { data: listener } = onAuthStateChange((s) => setSession(s));
     return () => listener.subscription.unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    cekOnboardingSelesai().then(setOnboardingDone);
   }, []);
 
   const handleSendOtp = async () => {
@@ -58,7 +63,7 @@ function AppContent() {
     }
   };
 
-  if (loading) {
+  if (loading || onboardingDone === null) {
     return (
       <View style={styles.center}>
         <ActivityIndicator size="large" />
@@ -66,35 +71,35 @@ function AppContent() {
     );
   }
 
+  if (!onboardingDone) {
+    return (
+      <OnboardingScreen
+        onNavigate={(screen) => {
+          setOnboardingDone(true);
+          setActiveScreen(screen);
+        }}
+      />
+    );
+  }
+
   if (session) {
-    // Beranda sudah full-responsive lewat AppShell.
-    // Screen lain masih pakai layout lama (self-contained), akan dimigrasi berikutnya.
-    if (activeScreen === 'Beranda') {
-      return (
-        <AppShell active={activeScreen} onNavigate={setActiveScreen}>
-          <HomeScreen onNavigate={setActiveScreen} />
-        </AppShell>
-      );
-    }
     switch (activeScreen) {
+      case 'Beranda':
+        return <HomeScreen onNavigate={setActiveScreen} />;
       case 'Arah':
         return <KiblatScreen onNavigate={setActiveScreen} />;
       case 'Kalender':
         return <KalenderScreen onNavigate={setActiveScreen} />;
       case 'Eksplorasi':
         return <EksplorasiScreen onNavigate={setActiveScreen} />;
-      case 'Library':
-        return <LibraryScreen onNavigate={setActiveScreen} />;
       case 'Kepribadian':
         return <KepribadianScreen onNavigate={setActiveScreen} />;
       case 'Perjodohan':
         return <PerjodohanWrapper onNavigate={setActiveScreen} />;
+      case 'Settings':
+        return <SettingsScreen onNavigate={setActiveScreen} />;
       default:
-        return (
-          <AppShell active={activeScreen} onNavigate={setActiveScreen}>
-            <HomeScreen onNavigate={setActiveScreen} />
-          </AppShell>
-        );
+        return <HomeScreen onNavigate={setActiveScreen} />;
     }
   }
 

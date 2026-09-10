@@ -43,7 +43,7 @@ const SLIDES = [
   },
 ];
 
-export default function OnboardingScreen({ navigation }) {
+export default function OnboardingScreen({ onNavigate }) {
   const scrollRef = useRef(null);
   const [index, setIndex] = useState(0);
 
@@ -53,7 +53,7 @@ export default function OnboardingScreen({ navigation }) {
     } catch (e) {
       // gagal simpan status tidak boleh memblokir user masuk ke Home
     }
-    navigation.replace('Home');
+    onNavigate?.('Beranda');
   };
 
   const handleScroll = (e) => {

@@ -1,0 +1,2690 @@
+[
+  {
+    "id": "ABU_MASYAR_MENIKAH_SENIN",
+    "tradition": "CLASSICAL",
+    "system": "Kitab Abu Ma'syar",
+    "activity": "MENIKAH",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "planet": "Bulan",
+        "day_name": "Senin",
+        "day_of_week": 1
+      }
+    },
+    "outputs": {
+      "category": "netral",
+      "meaning": "Bulan (dingin-basah, air): suasana emosional dan penuh perasaan, namun sifat Bulan yang berubah-ubah dianggap kurang stabil untuk ikatan jangka panjang."
+    },
+    "source": {
+      "title": "Terjemah Abu Ma'syar Al-Falaki",
+      "supabase_id": "61889811-42cd-432d-9dcf-e1759eab4829"
+    },
+    "status": "UNVERIFIED",
+    "confidence": "LOW",
+    "notes": "Interpretasi turunan dari tabiat/unsur planet penguasa hari, bukan kutipan literal dari kitab."
+  },
+  {
+    "id": "ADAT_JAWA_MENIKAH_GEDHONG",
+    "tradition": "JAWA",
+    "system": "Adat Jawa",
+    "activity": "MENIKAH",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "nama": "Gedhong",
+        "pancasuda_sisa": 3
+      }
+    },
+    "outputs": {
+      "category": "baik",
+      "meaning": "Gedhong (sisa 3): dalam primbon, angka 3 melambangkan keseimbangan dan keharmonisan — salah satu neptu yang paling sering dicari khusus untuk hari akad nikah."
+    },
+    "source": {
+      "title": null,
+      "supabase_id": null
+    },
+    "status": "UNVERIFIED",
+    "confidence": "LOW",
+    "notes": "Penilaian berdasarkan neptu tanggal itu sendiri (Pancasuda). Tradisi lengkap pernikahan Jawa juga mempertimbangkan neptu jodoh kedua mempelai (lihat fitur Perjodohan) dan bulan Jawa (Suro & Poso dihindari; Besar & Ruwah dianjurkan)."
+  },
+  {
+    "id": "ADAT_JAWA_MENIKAH_LARA",
+    "tradition": "JAWA",
+    "system": "Adat Jawa",
+    "activity": "MENIKAH",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "nama": "Lara",
+        "pancasuda_sisa": 4
+      }
+    },
+    "outputs": {
+      "category": "kurang_baik",
+      "meaning": "Lara (sisa 4): waspada kemungkinan kesulitan atau tantangan di awal rumah tangga."
+    },
+    "source": {
+      "title": null,
+      "supabase_id": null
+    },
+    "status": "UNVERIFIED",
+    "confidence": "LOW",
+    "notes": "Penilaian berdasarkan neptu tanggal itu sendiri (Pancasuda). Tradisi lengkap pernikahan Jawa juga mempertimbangkan neptu jodoh kedua mempelai (lihat fitur Perjodohan) dan bulan Jawa (Suro & Poso dihindari; Besar & Ruwah dianjurkan)."
+  },
+  {
+    "id": "ADAT_JAWA_MENIKAH_LUNGGUH",
+    "tradition": "JAWA",
+    "system": "Adat Jawa",
+    "activity": "MENIKAH",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "nama": "Lungguh",
+        "pancasuda_sisa": 2
+      }
+    },
+    "outputs": {
+      "category": "baik",
+      "meaning": "Lungguh (sisa 2): pasangan dipercaya akan dihormati dan dihargai di lingkungannya."
+    },
+    "source": {
+      "title": null,
+      "supabase_id": null
+    },
+    "status": "UNVERIFIED",
+    "confidence": "LOW",
+    "notes": "Penilaian berdasarkan neptu tanggal itu sendiri (Pancasuda). Tradisi lengkap pernikahan Jawa juga mempertimbangkan neptu jodoh kedua mempelai (lihat fitur Perjodohan) dan bulan Jawa (Suro & Poso dihindari; Besar & Ruwah dianjurkan)."
+  },
+  {
+    "id": "ADAT_JAWA_MENIKAH_PATI",
+    "tradition": "JAWA",
+    "system": "Adat Jawa",
+    "activity": "MENIKAH",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "nama": "Pati",
+        "pancasuda_sisa": 0
+      }
+    },
+    "outputs": {
+      "category": "pantang",
+      "meaning": "Pati (sisa 0): secara tradisi dianggap rawan celaka atau perpisahan, sebaiknya dihindari untuk akad nikah."
+    },
+    "source": {
+      "title": null,
+      "supabase_id": null
+    },
+    "status": "UNVERIFIED",
+    "confidence": "LOW",
+    "notes": "Penilaian berdasarkan neptu tanggal itu sendiri (Pancasuda). Tradisi lengkap pernikahan Jawa juga mempertimbangkan neptu jodoh kedua mempelai (lihat fitur Perjodohan) dan bulan Jawa (Suro & Poso dihindari; Besar & Ruwah dianjurkan)."
+  },
+  {
+    "id": "ADAT_SUNDA_MENIKAH_GROUP1",
+    "tradition": "SUNDA",
+    "system": "Adat Sunda",
+    "activity": "MENIKAH",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "group": 1,
+        "catatan": "Kala di arah timur lurus",
+        "rizki_arah": "Tenggara",
+        "bulan_label": "Muharram-Safar-Rabiul Awal",
+        "bulan_hijriah": [
+          1,
+          2,
+          3
+        ],
+        "pantangan_days": [
+          6,
+          0
+        ],
+        "keselamatan_days": [
+          3,
+          4
+        ]
+      }
+    },
+    "outputs": {
+      "category": "netral",
+      "meaning": "Bulan Muharram-Safar-Rabiul Awal: menurut kala Palintangan Sunda, hindari melangsungkan pernikahan pada hari pantangan; hari paling aman untuk melangsungkan pernikahan. Arah rezeki bulan ini: Tenggara."
+    },
+    "source": {
+      "title": "Palintangan Sunda (naktu & kala 4 kelompok bulan)",
+      "supabase_id": "77a405c1-7416-4cbb-ad72-6a965a017bc8"
+    },
+    "status": "VERIFIED_ACADEMIC",
+    "confidence": "HIGH",
+    "notes": "VERIFIED_ACADEMIC (sebagian): kolom pantangan_days & keselamatan_days sesuai kala 4 kelompok bulan, Suryaatmana dkk., Paririmbon Sunda (Jawa Barat) 1992, Direktorat Jenderal Kebudayaan, hlm. 67-68 (dikonfirmasi via sitasi Wikipedia Palintangan Sunda). PERBAIKAN: hari yang BUKAN pantangan maupun keselamatan TIDAK memiliki rumus ambang naktu (>=12 baik/8-11 netral/<8 kurang_baik) di sumber manapun — deskripsi ambang tersebut hasil karangan sesi sebelumnya, HARUS DIHAPUS dari logika aplikasi (src/lib/hitunganHari.js). Hari di luar pantangan/keselamatan wajib ditandai TRADITION_DEPENDENT/UNKNOWN, bukan diberi skor."
+  },
+  {
+    "id": "ADAT_SUNDA_MENIKAH_GROUP2",
+    "tradition": "SUNDA",
+    "system": "Adat Sunda",
+    "activity": "MENIKAH",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "group": 2,
+        "catatan": "Kala di arah barat lurus & barat miring",
+        "rizki_arah": "Barat Laut",
+        "bulan_label": "Rabiul Akhir-Jumadil Awal-Jumadil Akhir",
+        "bulan_hijriah": [
+          4,
+          5,
+          6
+        ],
+        "pantangan_days": [
+          1,
+          2
+        ],
+        "keselamatan_days": [
+          5
+        ]
+      }
+    },
+    "outputs": {
+      "category": "netral",
+      "meaning": "Bulan Rabiul Akhir-Jumadil Awal-Jumadil Akhir: menurut kala Palintangan Sunda, hindari melangsungkan pernikahan pada hari pantangan; hari paling aman untuk melangsungkan pernikahan. Arah rezeki bulan ini: Barat Laut."
+    },
+    "source": {
+      "title": "Palintangan Sunda (naktu & kala 4 kelompok bulan)",
+      "supabase_id": "77a405c1-7416-4cbb-ad72-6a965a017bc8"
+    },
+    "status": "VERIFIED_ACADEMIC",
+    "confidence": "HIGH",
+    "notes": "VERIFIED_ACADEMIC (sebagian): kolom pantangan_days & keselamatan_days sesuai kala 4 kelompok bulan, Suryaatmana dkk., Paririmbon Sunda (Jawa Barat) 1992, Direktorat Jenderal Kebudayaan, hlm. 67-68 (dikonfirmasi via sitasi Wikipedia Palintangan Sunda). PERBAIKAN: hari yang BUKAN pantangan maupun keselamatan TIDAK memiliki rumus ambang naktu (>=12 baik/8-11 netral/<8 kurang_baik) di sumber manapun — deskripsi ambang tersebut hasil karangan sesi sebelumnya, HARUS DIHAPUS dari logika aplikasi (src/lib/hitunganHari.js). Hari di luar pantangan/keselamatan wajib ditandai TRADITION_DEPENDENT/UNKNOWN, bukan diberi skor."
+  },
+  {
+    "id": "ADAT_SUNDA_MENIKAH_GROUP3",
+    "tradition": "SUNDA",
+    "system": "Adat Sunda",
+    "activity": "MENIKAH",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "group": 3,
+        "catatan": "Kala di arah barat laut & timur",
+        "rizki_arah": "Barat Daya",
+        "bulan_label": "Rajab-Ruwah-Puasa",
+        "bulan_hijriah": [
+          7,
+          8,
+          9
+        ],
+        "pantangan_days": [
+          3,
+          4
+        ],
+        "keselamatan_days": [
+          6,
+          0
+        ]
+      }
+    },
+    "outputs": {
+      "category": "netral",
+      "meaning": "Bulan Rajab-Ruwah-Puasa: menurut kala Palintangan Sunda, hindari melangsungkan pernikahan pada hari pantangan; hari paling aman untuk melangsungkan pernikahan. Arah rezeki bulan ini: Barat Daya."
+    },
+    "source": {
+      "title": "Palintangan Sunda (naktu & kala 4 kelompok bulan)",
+      "supabase_id": "77a405c1-7416-4cbb-ad72-6a965a017bc8"
+    },
+    "status": "VERIFIED_ACADEMIC",
+    "confidence": "HIGH",
+    "notes": "VERIFIED_ACADEMIC (sebagian): kolom pantangan_days & keselamatan_days sesuai kala 4 kelompok bulan, Suryaatmana dkk., Paririmbon Sunda (Jawa Barat) 1992, Direktorat Jenderal Kebudayaan, hlm. 67-68 (dikonfirmasi via sitasi Wikipedia Palintangan Sunda). PERBAIKAN: hari yang BUKAN pantangan maupun keselamatan TIDAK memiliki rumus ambang naktu (>=12 baik/8-11 netral/<8 kurang_baik) di sumber manapun — deskripsi ambang tersebut hasil karangan sesi sebelumnya, HARUS DIHAPUS dari logika aplikasi (src/lib/hitunganHari.js). Hari di luar pantangan/keselamatan wajib ditandai TRADITION_DEPENDENT/UNKNOWN, bukan diberi skor."
+  },
+  {
+    "id": "ADAT_SUNDA_MENIKAH_GROUP4",
+    "tradition": "SUNDA",
+    "system": "Adat Sunda",
+    "activity": "MENIKAH",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "group": 4,
+        "catatan": "Kala di arah barat daya",
+        "rizki_arah": "Timur Laut",
+        "bulan_label": "Syawal-Dulkaidah-Rayagung",
+        "bulan_hijriah": [
+          10,
+          11,
+          12
+        ],
+        "pantangan_days": [
+          5
+        ],
+        "keselamatan_days": [
+          1
+        ]
+      }
+    },
+    "outputs": {
+      "category": "netral",
+      "meaning": "Bulan Syawal-Dulkaidah-Rayagung: menurut kala Palintangan Sunda, hindari melangsungkan pernikahan pada hari pantangan; hari paling aman untuk melangsungkan pernikahan. Arah rezeki bulan ini: Timur Laut."
+    },
+    "source": {
+      "title": "Palintangan Sunda (naktu & kala 4 kelompok bulan)",
+      "supabase_id": "77a405c1-7416-4cbb-ad72-6a965a017bc8"
+    },
+    "status": "VERIFIED_ACADEMIC",
+    "confidence": "HIGH",
+    "notes": "VERIFIED_ACADEMIC (sebagian): kolom pantangan_days & keselamatan_days sesuai kala 4 kelompok bulan, Suryaatmana dkk., Paririmbon Sunda (Jawa Barat) 1992, Direktorat Jenderal Kebudayaan, hlm. 67-68 (dikonfirmasi via sitasi Wikipedia Palintangan Sunda). PERBAIKAN: hari yang BUKAN pantangan maupun keselamatan TIDAK memiliki rumus ambang naktu (>=12 baik/8-11 netral/<8 kurang_baik) di sumber manapun — deskripsi ambang tersebut hasil karangan sesi sebelumnya, HARUS DIHAPUS dari logika aplikasi (src/lib/hitunganHari.js). Hari di luar pantangan/keselamatan wajib ditandai TRADITION_DEPENDENT/UNKNOWN, bukan diberi skor."
+  },
+  {
+    "id": "ADAT_JAWA_MENIKAH_SRI",
+    "tradition": "JAWA",
+    "system": "Adat Jawa",
+    "activity": "MENIKAH",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "nama": "Sri",
+        "pancasuda_sisa": 1
+      }
+    },
+    "outputs": {
+      "category": "baik",
+      "meaning": "Sri (sisa 1): rezeki dipercaya mengalir lancar dan terus tumbuh bagi rumah tangga baru."
+    },
+    "source": {
+      "title": null,
+      "supabase_id": null
+    },
+    "status": "UNVERIFIED",
+    "confidence": "LOW",
+    "notes": "Penilaian berdasarkan neptu tanggal itu sendiri (Pancasuda). Tradisi lengkap pernikahan Jawa juga mempertimbangkan neptu jodoh kedua mempelai (lihat fitur Perjodohan) dan bulan Jawa (Suro & Poso dihindari; Besar & Ruwah dianjurkan)."
+  },
+  {
+    "id": "ABU_MASYAR_MENIKAH_JUMAT",
+    "tradition": "CLASSICAL",
+    "system": "Kitab Abu Ma'syar",
+    "activity": "MENIKAH",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "planet": "Venus",
+        "day_name": "Jumat",
+        "day_of_week": 5
+      }
+    },
+    "outputs": {
+      "category": "baik",
+      "meaning": "Venus (dingin-basah, air): Venus adalah planet cinta dan keindahan, secara tradisi klasik dianggap hari paling selaras dengan pernikahan."
+    },
+    "source": {
+      "title": "Terjemah Abu Ma'syar Al-Falaki",
+      "supabase_id": "61889811-42cd-432d-9dcf-e1759eab4829"
+    },
+    "status": "UNVERIFIED",
+    "confidence": "LOW",
+    "notes": "Interpretasi turunan dari tabiat/unsur planet penguasa hari, bukan kutipan literal dari kitab."
+  },
+  {
+    "id": "ABU_MASYAR_MENIKAH_KAMIS",
+    "tradition": "CLASSICAL",
+    "system": "Kitab Abu Ma'syar",
+    "activity": "MENIKAH",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "planet": "Jupiter",
+        "day_name": "Kamis",
+        "day_of_week": 4
+      }
+    },
+    "outputs": {
+      "category": "baik",
+      "meaning": "Jupiter (panas-basah, udara, planet paling baik): membawa keberkahan dan kemakmuran bagi rumah tangga baru."
+    },
+    "source": {
+      "title": "Terjemah Abu Ma'syar Al-Falaki",
+      "supabase_id": "61889811-42cd-432d-9dcf-e1759eab4829"
+    },
+    "status": "UNVERIFIED",
+    "confidence": "LOW",
+    "notes": "Interpretasi turunan dari tabiat/unsur planet penguasa hari, bukan kutipan literal dari kitab."
+  },
+  {
+    "id": "ABU_MASYAR_MENIKAH_MINGGU",
+    "tradition": "CLASSICAL",
+    "system": "Kitab Abu Ma'syar",
+    "activity": "MENIKAH",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "planet": "Matahari",
+        "day_name": "Minggu",
+        "day_of_week": 0
+      }
+    },
+    "outputs": {
+      "category": "netral",
+      "meaning": "Matahari (panas-kering, api): memberi kesan formal dan penuh wibawa, cocok untuk akad yang ingin dirayakan besar."
+    },
+    "source": {
+      "title": "Terjemah Abu Ma'syar Al-Falaki",
+      "supabase_id": "61889811-42cd-432d-9dcf-e1759eab4829"
+    },
+    "status": "UNVERIFIED",
+    "confidence": "LOW",
+    "notes": "Interpretasi turunan dari tabiat/unsur planet penguasa hari, bukan kutipan literal dari kitab."
+  },
+  {
+    "id": "ABU_MASYAR_MENIKAH_RABU",
+    "tradition": "CLASSICAL",
+    "system": "Kitab Abu Ma'syar",
+    "activity": "MENIKAH",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "planet": "Merkurius",
+        "day_name": "Rabu",
+        "day_of_week": 3
+      }
+    },
+    "outputs": {
+      "category": "netral",
+      "meaning": "Merkurius (netral/ganda, udara): cocok untuk aspek administratif akad (pencatatan, dokumen), pengaruh terhadap hubungan bersifat wajar."
+    },
+    "source": {
+      "title": "Terjemah Abu Ma'syar Al-Falaki",
+      "supabase_id": "61889811-42cd-432d-9dcf-e1759eab4829"
+    },
+    "status": "UNVERIFIED",
+    "confidence": "LOW",
+    "notes": "Interpretasi turunan dari tabiat/unsur planet penguasa hari, bukan kutipan literal dari kitab."
+  },
+  {
+    "id": "ABU_MASYAR_MENIKAH_SABTU",
+    "tradition": "CLASSICAL",
+    "system": "Kitab Abu Ma'syar",
+    "activity": "MENIKAH",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "planet": "Saturnus",
+        "day_name": "Sabtu",
+        "day_of_week": 6
+      }
+    },
+    "outputs": {
+      "category": "kurang_baik",
+      "meaning": "Saturnus (dingin-kering, tanah, watak lambat dan membatasi): dianggap kurang mendukung perayaan yang penuh sukacita."
+    },
+    "source": {
+      "title": "Terjemah Abu Ma'syar Al-Falaki",
+      "supabase_id": "61889811-42cd-432d-9dcf-e1759eab4829"
+    },
+    "status": "UNVERIFIED",
+    "confidence": "LOW",
+    "notes": "Interpretasi turunan dari tabiat/unsur planet penguasa hari, bukan kutipan literal dari kitab."
+  },
+  {
+    "id": "ABU_MASYAR_MENIKAH_SELASA",
+    "tradition": "CLASSICAL",
+    "system": "Kitab Abu Ma'syar",
+    "activity": "MENIKAH",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "planet": "Mars",
+        "day_name": "Selasa",
+        "day_of_week": 2
+      }
+    },
+    "outputs": {
+      "category": "pantang",
+      "meaning": "Mars (panas-kering, api, watak keras): secara tradisi klasik dianggap rawan konflik dan sebaiknya dihindari untuk hari pernikahan."
+    },
+    "source": {
+      "title": "Terjemah Abu Ma'syar Al-Falaki",
+      "supabase_id": "61889811-42cd-432d-9dcf-e1759eab4829"
+    },
+    "status": "UNVERIFIED",
+    "confidence": "LOW",
+    "notes": "Interpretasi turunan dari tabiat/unsur planet penguasa hari, bukan kutipan literal dari kitab."
+  },
+  {
+    "id": "ADAT_JAWA_BEPERGIAN_PATI",
+    "tradition": "JAWA",
+    "system": "Adat Jawa",
+    "activity": "BEPERGIAN",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "nama": "Pati",
+        "pancasuda_sisa": 0
+      }
+    },
+    "outputs": {
+      "category": "pantang",
+      "meaning": "Pati (sisa 0): sebaiknya ditunda, dianggap rawan celaka atau musibah."
+    },
+    "source": {
+      "title": null,
+      "supabase_id": null
+    },
+    "status": "TRADITIONAL_LOCAL",
+    "confidence": "UNKNOWN",
+    "notes": "Data starter primbon umum, belum ditranskrip dari kitab spesifik. | Formula pembagian-5 didukung >1 sumber independen, namun ditemukan minimal 3 skema penamaan berbeda yang sama-sama mengklaim \"Pancasuda\" di sumber sekunder (lihat docs/hitungan-hari-source-research.md §1). Penamaan Sri/Lungguh/Gedhong/Lara/Pati belum diverifikasi ke sumber primer (Betaljemur Adammakna)."
+  },
+  {
+    "id": "ADAT_JAWA_BERDAGANG_SRI",
+    "tradition": "JAWA",
+    "system": "Adat Jawa",
+    "activity": "BERDAGANG",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "nama": "Sri",
+        "pancasuda_sisa": 1
+      }
+    },
+    "outputs": {
+      "category": "baik",
+      "meaning": "Sri (sisa 1): rezeki lancar dan dagangan laris."
+    },
+    "source": {
+      "title": null,
+      "supabase_id": null
+    },
+    "status": "TRADITIONAL_LOCAL",
+    "confidence": "UNKNOWN",
+    "notes": "Data starter primbon umum, belum ditranskrip dari kitab spesifik. | Formula pembagian-5 didukung >1 sumber independen, namun ditemukan minimal 3 skema penamaan berbeda yang sama-sama mengklaim \"Pancasuda\" di sumber sekunder (lihat docs/hitungan-hari-source-research.md §1). Penamaan Sri/Lungguh/Gedhong/Lara/Pati belum diverifikasi ke sumber primer (Betaljemur Adammakna)."
+  },
+  {
+    "id": "ADAT_JAWA_BERDAGANG_LUNGGUH",
+    "tradition": "JAWA",
+    "system": "Adat Jawa",
+    "activity": "BERDAGANG",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "nama": "Lungguh",
+        "pancasuda_sisa": 2
+      }
+    },
+    "outputs": {
+      "category": "baik",
+      "meaning": "Lungguh (sisa 2): membangun nama baik dan kepercayaan pelanggan."
+    },
+    "source": {
+      "title": null,
+      "supabase_id": null
+    },
+    "status": "TRADITIONAL_LOCAL",
+    "confidence": "UNKNOWN",
+    "notes": "Data starter primbon umum, belum ditranskrip dari kitab spesifik. | Formula pembagian-5 didukung >1 sumber independen, namun ditemukan minimal 3 skema penamaan berbeda yang sama-sama mengklaim \"Pancasuda\" di sumber sekunder (lihat docs/hitungan-hari-source-research.md §1). Penamaan Sri/Lungguh/Gedhong/Lara/Pati belum diverifikasi ke sumber primer (Betaljemur Adammakna)."
+  },
+  {
+    "id": "ADAT_JAWA_BERDAGANG_GEDHONG",
+    "tradition": "JAWA",
+    "system": "Adat Jawa",
+    "activity": "BERDAGANG",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "nama": "Gedhong",
+        "pancasuda_sisa": 3
+      }
+    },
+    "outputs": {
+      "category": "baik",
+      "meaning": "Gedhong (sisa 3): cocok untuk membuka usaha baru atau investasi besar."
+    },
+    "source": {
+      "title": null,
+      "supabase_id": null
+    },
+    "status": "TRADITIONAL_LOCAL",
+    "confidence": "UNKNOWN",
+    "notes": "Data starter primbon umum, belum ditranskrip dari kitab spesifik. | Formula pembagian-5 didukung >1 sumber independen, namun ditemukan minimal 3 skema penamaan berbeda yang sama-sama mengklaim \"Pancasuda\" di sumber sekunder (lihat docs/hitungan-hari-source-research.md §1). Penamaan Sri/Lungguh/Gedhong/Lara/Pati belum diverifikasi ke sumber primer (Betaljemur Adammakna)."
+  },
+  {
+    "id": "ADAT_JAWA_BERDAGANG_LARA",
+    "tradition": "JAWA",
+    "system": "Adat Jawa",
+    "activity": "BERDAGANG",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "nama": "Lara",
+        "pancasuda_sisa": 4
+      }
+    },
+    "outputs": {
+      "category": "kurang_baik",
+      "meaning": "Lara (sisa 4): rawan rugi atau piutang macet."
+    },
+    "source": {
+      "title": null,
+      "supabase_id": null
+    },
+    "status": "TRADITIONAL_LOCAL",
+    "confidence": "UNKNOWN",
+    "notes": "Data starter primbon umum, belum ditranskrip dari kitab spesifik. | Formula pembagian-5 didukung >1 sumber independen, namun ditemukan minimal 3 skema penamaan berbeda yang sama-sama mengklaim \"Pancasuda\" di sumber sekunder (lihat docs/hitungan-hari-source-research.md §1). Penamaan Sri/Lungguh/Gedhong/Lara/Pati belum diverifikasi ke sumber primer (Betaljemur Adammakna)."
+  },
+  {
+    "id": "ADAT_JAWA_BERDAGANG_PATI",
+    "tradition": "JAWA",
+    "system": "Adat Jawa",
+    "activity": "BERDAGANG",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "nama": "Pati",
+        "pancasuda_sisa": 0
+      }
+    },
+    "outputs": {
+      "category": "pantang",
+      "meaning": "Pati (sisa 0): hindari membuka usaha baru pada hari ini."
+    },
+    "source": {
+      "title": null,
+      "supabase_id": null
+    },
+    "status": "TRADITIONAL_LOCAL",
+    "confidence": "UNKNOWN",
+    "notes": "Data starter primbon umum, belum ditranskrip dari kitab spesifik. | Formula pembagian-5 didukung >1 sumber independen, namun ditemukan minimal 3 skema penamaan berbeda yang sama-sama mengklaim \"Pancasuda\" di sumber sekunder (lihat docs/hitungan-hari-source-research.md §1). Penamaan Sri/Lungguh/Gedhong/Lara/Pati belum diverifikasi ke sumber primer (Betaljemur Adammakna)."
+  },
+  {
+    "id": "ADAT_JAWA_BERTANI_SRI",
+    "tradition": "JAWA",
+    "system": "Adat Jawa",
+    "activity": "BERTANI",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "nama": "Sri",
+        "pancasuda_sisa": 1
+      }
+    },
+    "outputs": {
+      "category": "baik",
+      "meaning": "Sri (sisa 1): hasil panen diharapkan melimpah."
+    },
+    "source": {
+      "title": null,
+      "supabase_id": null
+    },
+    "status": "TRADITIONAL_LOCAL",
+    "confidence": "UNKNOWN",
+    "notes": "Data starter primbon umum, belum ditranskrip dari kitab spesifik. | Formula pembagian-5 didukung >1 sumber independen, namun ditemukan minimal 3 skema penamaan berbeda yang sama-sama mengklaim \"Pancasuda\" di sumber sekunder (lihat docs/hitungan-hari-source-research.md §1). Penamaan Sri/Lungguh/Gedhong/Lara/Pati belum diverifikasi ke sumber primer (Betaljemur Adammakna)."
+  },
+  {
+    "id": "ADAT_JAWA_BERTANI_LUNGGUH",
+    "tradition": "JAWA",
+    "system": "Adat Jawa",
+    "activity": "BERTANI",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "nama": "Lungguh",
+        "pancasuda_sisa": 2
+      }
+    },
+    "outputs": {
+      "category": "baik",
+      "meaning": "Lungguh (sisa 2): cocok untuk kegiatan bertani yang melibatkan gotong royong."
+    },
+    "source": {
+      "title": null,
+      "supabase_id": null
+    },
+    "status": "TRADITIONAL_LOCAL",
+    "confidence": "UNKNOWN",
+    "notes": "Data starter primbon umum, belum ditranskrip dari kitab spesifik. | Formula pembagian-5 didukung >1 sumber independen, namun ditemukan minimal 3 skema penamaan berbeda yang sama-sama mengklaim \"Pancasuda\" di sumber sekunder (lihat docs/hitungan-hari-source-research.md §1). Penamaan Sri/Lungguh/Gedhong/Lara/Pati belum diverifikasi ke sumber primer (Betaljemur Adammakna)."
+  },
+  {
+    "id": "ADAT_JAWA_BERTANI_GEDHONG",
+    "tradition": "JAWA",
+    "system": "Adat Jawa",
+    "activity": "BERTANI",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "nama": "Gedhong",
+        "pancasuda_sisa": 3
+      }
+    },
+    "outputs": {
+      "category": "baik",
+      "meaning": "Gedhong (sisa 3): cocok untuk menyimpan hasil panen di lumbung."
+    },
+    "source": {
+      "title": null,
+      "supabase_id": null
+    },
+    "status": "TRADITIONAL_LOCAL",
+    "confidence": "UNKNOWN",
+    "notes": "Data starter primbon umum, belum ditranskrip dari kitab spesifik. | Formula pembagian-5 didukung >1 sumber independen, namun ditemukan minimal 3 skema penamaan berbeda yang sama-sama mengklaim \"Pancasuda\" di sumber sekunder (lihat docs/hitungan-hari-source-research.md §1). Penamaan Sri/Lungguh/Gedhong/Lara/Pati belum diverifikasi ke sumber primer (Betaljemur Adammakna)."
+  },
+  {
+    "id": "ADAT_JAWA_BERTANI_LARA",
+    "tradition": "JAWA",
+    "system": "Adat Jawa",
+    "activity": "BERTANI",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "nama": "Lara",
+        "pancasuda_sisa": 4
+      }
+    },
+    "outputs": {
+      "category": "kurang_baik",
+      "meaning": "Lara (sisa 4): waspada serangan hama atau gagal panen."
+    },
+    "source": {
+      "title": null,
+      "supabase_id": null
+    },
+    "status": "TRADITIONAL_LOCAL",
+    "confidence": "UNKNOWN",
+    "notes": "Data starter primbon umum, belum ditranskrip dari kitab spesifik. | Formula pembagian-5 didukung >1 sumber independen, namun ditemukan minimal 3 skema penamaan berbeda yang sama-sama mengklaim \"Pancasuda\" di sumber sekunder (lihat docs/hitungan-hari-source-research.md §1). Penamaan Sri/Lungguh/Gedhong/Lara/Pati belum diverifikasi ke sumber primer (Betaljemur Adammakna)."
+  },
+  {
+    "id": "ADAT_JAWA_BERTANI_PATI",
+    "tradition": "JAWA",
+    "system": "Adat Jawa",
+    "activity": "BERTANI",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "nama": "Pati",
+        "pancasuda_sisa": 0
+      }
+    },
+    "outputs": {
+      "category": "pantang",
+      "meaning": "Pati (sisa 0): hindari memulai tanam pada hari ini."
+    },
+    "source": {
+      "title": null,
+      "supabase_id": null
+    },
+    "status": "TRADITIONAL_LOCAL",
+    "confidence": "UNKNOWN",
+    "notes": "Data starter primbon umum, belum ditranskrip dari kitab spesifik. | Formula pembagian-5 didukung >1 sumber independen, namun ditemukan minimal 3 skema penamaan berbeda yang sama-sama mengklaim \"Pancasuda\" di sumber sekunder (lihat docs/hitungan-hari-source-research.md §1). Penamaan Sri/Lungguh/Gedhong/Lara/Pati belum diverifikasi ke sumber primer (Betaljemur Adammakna)."
+  },
+  {
+    "id": "ADAT_JAWA_BERLAYAR_SRI",
+    "tradition": "JAWA",
+    "system": "Adat Jawa",
+    "activity": "BERLAYAR",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "nama": "Sri",
+        "pancasuda_sisa": 1
+      }
+    },
+    "outputs": {
+      "category": "baik",
+      "meaning": "Sri (sisa 1): hasil tangkapan atau pelayaran diharapkan lancar."
+    },
+    "source": {
+      "title": null,
+      "supabase_id": null
+    },
+    "status": "TRADITIONAL_LOCAL",
+    "confidence": "UNKNOWN",
+    "notes": "Data starter primbon umum, belum ditranskrip dari kitab spesifik. | Formula pembagian-5 didukung >1 sumber independen, namun ditemukan minimal 3 skema penamaan berbeda yang sama-sama mengklaim \"Pancasuda\" di sumber sekunder (lihat docs/hitungan-hari-source-research.md §1). Penamaan Sri/Lungguh/Gedhong/Lara/Pati belum diverifikasi ke sumber primer (Betaljemur Adammakna)."
+  },
+  {
+    "id": "ADAT_JAWA_BERLAYAR_LUNGGUH",
+    "tradition": "JAWA",
+    "system": "Adat Jawa",
+    "activity": "BERLAYAR",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "nama": "Lungguh",
+        "pancasuda_sisa": 2
+      }
+    },
+    "outputs": {
+      "category": "baik",
+      "meaning": "Lungguh (sisa 2): perjalanan laut relatif tenang."
+    },
+    "source": {
+      "title": null,
+      "supabase_id": null
+    },
+    "status": "TRADITIONAL_LOCAL",
+    "confidence": "UNKNOWN",
+    "notes": "Data starter primbon umum, belum ditranskrip dari kitab spesifik. | Formula pembagian-5 didukung >1 sumber independen, namun ditemukan minimal 3 skema penamaan berbeda yang sama-sama mengklaim \"Pancasuda\" di sumber sekunder (lihat docs/hitungan-hari-source-research.md §1). Penamaan Sri/Lungguh/Gedhong/Lara/Pati belum diverifikasi ke sumber primer (Betaljemur Adammakna)."
+  },
+  {
+    "id": "ADAT_JAWA_BERLAYAR_GEDHONG",
+    "tradition": "JAWA",
+    "system": "Adat Jawa",
+    "activity": "BERLAYAR",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "nama": "Gedhong",
+        "pancasuda_sisa": 3
+      }
+    },
+    "outputs": {
+      "category": "baik",
+      "meaning": "Gedhong (sisa 3): cocok untuk pelayaran niaga/bawa muatan besar."
+    },
+    "source": {
+      "title": null,
+      "supabase_id": null
+    },
+    "status": "TRADITIONAL_LOCAL",
+    "confidence": "UNKNOWN",
+    "notes": "Data starter primbon umum, belum ditranskrip dari kitab spesifik. | Formula pembagian-5 didukung >1 sumber independen, namun ditemukan minimal 3 skema penamaan berbeda yang sama-sama mengklaim \"Pancasuda\" di sumber sekunder (lihat docs/hitungan-hari-source-research.md §1). Penamaan Sri/Lungguh/Gedhong/Lara/Pati belum diverifikasi ke sumber primer (Betaljemur Adammakna)."
+  },
+  {
+    "id": "ADAT_JAWA_BERLAYAR_LARA",
+    "tradition": "JAWA",
+    "system": "Adat Jawa",
+    "activity": "BERLAYAR",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "nama": "Lara",
+        "pancasuda_sisa": 4
+      }
+    },
+    "outputs": {
+      "category": "kurang_baik",
+      "meaning": "Lara (sisa 4): waspada cuaca buruk di laut."
+    },
+    "source": {
+      "title": null,
+      "supabase_id": null
+    },
+    "status": "TRADITIONAL_LOCAL",
+    "confidence": "UNKNOWN",
+    "notes": "Data starter primbon umum, belum ditranskrip dari kitab spesifik. | Formula pembagian-5 didukung >1 sumber independen, namun ditemukan minimal 3 skema penamaan berbeda yang sama-sama mengklaim \"Pancasuda\" di sumber sekunder (lihat docs/hitungan-hari-source-research.md §1). Penamaan Sri/Lungguh/Gedhong/Lara/Pati belum diverifikasi ke sumber primer (Betaljemur Adammakna)."
+  },
+  {
+    "id": "ADAT_JAWA_BERLAYAR_PATI",
+    "tradition": "JAWA",
+    "system": "Adat Jawa",
+    "activity": "BERLAYAR",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "nama": "Pati",
+        "pancasuda_sisa": 0
+      }
+    },
+    "outputs": {
+      "category": "pantang",
+      "meaning": "Pati (sisa 0): sangat dihindari, dianggap simbol bahaya di laut."
+    },
+    "source": {
+      "title": null,
+      "supabase_id": null
+    },
+    "status": "TRADITIONAL_LOCAL",
+    "confidence": "UNKNOWN",
+    "notes": "Data starter primbon umum, belum ditranskrip dari kitab spesifik. | Formula pembagian-5 didukung >1 sumber independen, namun ditemukan minimal 3 skema penamaan berbeda yang sama-sama mengklaim \"Pancasuda\" di sumber sekunder (lihat docs/hitungan-hari-source-research.md §1). Penamaan Sri/Lungguh/Gedhong/Lara/Pati belum diverifikasi ke sumber primer (Betaljemur Adammakna)."
+  },
+  {
+    "id": "ADAT_JAWA_MEMBANGUN_RUMAH_SRI",
+    "tradition": "JAWA",
+    "system": "Adat Jawa",
+    "activity": "MEMBANGUN_RUMAH",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "nama": "Sri",
+        "pancasuda_sisa": 1
+      }
+    },
+    "outputs": {
+      "category": "baik",
+      "meaning": "Sri (sisa 1): rumah dipercaya membawa rezeki bagi penghuninya."
+    },
+    "source": {
+      "title": null,
+      "supabase_id": null
+    },
+    "status": "TRADITIONAL_LOCAL",
+    "confidence": "UNKNOWN",
+    "notes": "Data starter primbon umum, belum ditranskrip dari kitab spesifik. | Formula pembagian-5 didukung >1 sumber independen, namun ditemukan minimal 3 skema penamaan berbeda yang sama-sama mengklaim \"Pancasuda\" di sumber sekunder (lihat docs/hitungan-hari-source-research.md §1). Penamaan Sri/Lungguh/Gedhong/Lara/Pati belum diverifikasi ke sumber primer (Betaljemur Adammakna)."
+  },
+  {
+    "id": "ADAT_JAWA_MEMBANGUN_RUMAH_LUNGGUH",
+    "tradition": "JAWA",
+    "system": "Adat Jawa",
+    "activity": "MEMBANGUN_RUMAH",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "nama": "Lungguh",
+        "pancasuda_sisa": 2
+      }
+    },
+    "outputs": {
+      "category": "baik",
+      "meaning": "Lungguh (sisa 2): cocok untuk mulai mendirikan tiang/pondasi, rumah dihormati."
+    },
+    "source": {
+      "title": null,
+      "supabase_id": null
+    },
+    "status": "TRADITIONAL_LOCAL",
+    "confidence": "UNKNOWN",
+    "notes": "Data starter primbon umum, belum ditranskrip dari kitab spesifik. | Formula pembagian-5 didukung >1 sumber independen, namun ditemukan minimal 3 skema penamaan berbeda yang sama-sama mengklaim \"Pancasuda\" di sumber sekunder (lihat docs/hitungan-hari-source-research.md §1). Penamaan Sri/Lungguh/Gedhong/Lara/Pati belum diverifikasi ke sumber primer (Betaljemur Adammakna)."
+  },
+  {
+    "id": "ADAT_JAWA_MEMBANGUN_RUMAH_GEDHONG",
+    "tradition": "JAWA",
+    "system": "Adat Jawa",
+    "activity": "MEMBANGUN_RUMAH",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "nama": "Gedhong",
+        "pancasuda_sisa": 3
+      }
+    },
+    "outputs": {
+      "category": "baik",
+      "meaning": "Gedhong (sisa 3): paling dianjurkan, Gedhong melambangkan rumah dan harta benda."
+    },
+    "source": {
+      "title": null,
+      "supabase_id": null
+    },
+    "status": "TRADITIONAL_LOCAL",
+    "confidence": "UNKNOWN",
+    "notes": "Data starter primbon umum, belum ditranskrip dari kitab spesifik. | Formula pembagian-5 didukung >1 sumber independen, namun ditemukan minimal 3 skema penamaan berbeda yang sama-sama mengklaim \"Pancasuda\" di sumber sekunder (lihat docs/hitungan-hari-source-research.md §1). Penamaan Sri/Lungguh/Gedhong/Lara/Pati belum diverifikasi ke sumber primer (Betaljemur Adammakna)."
+  },
+  {
+    "id": "ADAT_JAWA_MEMBANGUN_RUMAH_LARA",
+    "tradition": "JAWA",
+    "system": "Adat Jawa",
+    "activity": "MEMBANGUN_RUMAH",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "nama": "Lara",
+        "pancasuda_sisa": 4
+      }
+    },
+    "outputs": {
+      "category": "kurang_baik",
+      "meaning": "Lara (sisa 4): dihindari untuk mulai membangun."
+    },
+    "source": {
+      "title": null,
+      "supabase_id": null
+    },
+    "status": "TRADITIONAL_LOCAL",
+    "confidence": "UNKNOWN",
+    "notes": "Data starter primbon umum, belum ditranskrip dari kitab spesifik. | Formula pembagian-5 didukung >1 sumber independen, namun ditemukan minimal 3 skema penamaan berbeda yang sama-sama mengklaim \"Pancasuda\" di sumber sekunder (lihat docs/hitungan-hari-source-research.md §1). Penamaan Sri/Lungguh/Gedhong/Lara/Pati belum diverifikasi ke sumber primer (Betaljemur Adammakna)."
+  },
+  {
+    "id": "ADAT_JAWA_MEMBANGUN_RUMAH_PATI",
+    "tradition": "JAWA",
+    "system": "Adat Jawa",
+    "activity": "MEMBANGUN_RUMAH",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "nama": "Pati",
+        "pancasuda_sisa": 0
+      }
+    },
+    "outputs": {
+      "category": "pantang",
+      "meaning": "Pati (sisa 0): hindari sama sekali untuk mendirikan rumah."
+    },
+    "source": {
+      "title": null,
+      "supabase_id": null
+    },
+    "status": "TRADITIONAL_LOCAL",
+    "confidence": "UNKNOWN",
+    "notes": "Data starter primbon umum, belum ditranskrip dari kitab spesifik. | Formula pembagian-5 didukung >1 sumber independen, namun ditemukan minimal 3 skema penamaan berbeda yang sama-sama mengklaim \"Pancasuda\" di sumber sekunder (lihat docs/hitungan-hari-source-research.md §1). Penamaan Sri/Lungguh/Gedhong/Lara/Pati belum diverifikasi ke sumber primer (Betaljemur Adammakna)."
+  },
+  {
+    "id": "ADAT_SUNDA_BEPERGIAN_GROUP3",
+    "tradition": "SUNDA",
+    "system": "Adat Sunda",
+    "activity": "BEPERGIAN",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "group": 3,
+        "catatan": "Kala di arah barat laut & timur",
+        "rizki_arah": "Barat Daya",
+        "bulan_label": "Rajab-Ruwah-Puasa",
+        "bulan_hijriah": [
+          7,
+          8,
+          9
+        ],
+        "pantangan_days": [
+          3,
+          4
+        ],
+        "keselamatan_days": [
+          6,
+          0
+        ]
+      }
+    },
+    "outputs": {
+      "category": "netral",
+      "meaning": "Bulan Rajab-Ruwah-Puasa: menurut kala Palintangan Sunda, hindari bepergian atau merantau pada hari pantangan; hari paling aman untuk bepergian atau merantau. Arah rezeki bulan ini: Barat Daya."
+    },
+    "source": {
+      "title": "Palintangan Sunda (naktu & kala 4 kelompok bulan)",
+      "supabase_id": "77a405c1-7416-4cbb-ad72-6a965a017bc8"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "VERIFIED_ACADEMIC (sebagian): kolom pantangan_days & keselamatan_days sesuai kala 4 kelompok bulan, Suryaatmana dkk., Paririmbon Sunda (Jawa Barat) 1992, Direktorat Jenderal Kebudayaan, hlm. 67-68 (dikonfirmasi via sitasi Wikipedia Palintangan Sunda). PERBAIKAN: hari yang BUKAN pantangan maupun keselamatan TIDAK memiliki rumus ambang naktu (>=12 baik/8-11 netral/<8 kurang_baik) di sumber manapun — deskripsi ambang tersebut hasil karangan sesi sebelumnya, HARUS DIHAPUS dari logika aplikasi (src/lib/hitunganHari.js). Hari di luar pantangan/keselamatan wajib ditandai TRADITION_DEPENDENT/UNKNOWN, bukan diberi skor."
+  },
+  {
+    "id": "ABU_MASYAR_BEPERGIAN_SENIN",
+    "tradition": "CLASSICAL",
+    "system": "Kitab Abu Ma'syar",
+    "activity": "BEPERGIAN",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "planet": "Bulan",
+        "day_name": "Senin",
+        "day_of_week": 1
+      }
+    },
+    "outputs": {
+      "category": "baik",
+      "meaning": "Bulan (dingin-basah, air): Bulan adalah planet perjalanan dan perubahan, cocok untuk memulai perjalanan."
+    },
+    "source": {
+      "title": "Terjemah Abu Ma'syar Al-Falaki",
+      "supabase_id": "61889811-42cd-432d-9dcf-e1759eab4829"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "Interpretasi turunan dari tabiat/unsur planet penguasa hari (planetary_day_rulers), bukan kutipan literal dari kitab. Sistem \"hari baik\" per-kegiatan seperti ini lazim dalam tradisi ikhtiyarat astrologi klasik Yunani-Arab yang menjadi rujukan Abu Ma'syar, meski bab spesifik ini tidak ditemukan eksplisit di edisi terjemahan yang digunakan aplikasi ini. | Tabiat planet (VERIFIED_ACADEMIC) berasal dari Kitab al-Mudkhal Abu Ma'syar; teks spesifik per-aktivitas adalah turunan logis, bukan kutipan literal kitab."
+  },
+  {
+    "id": "ADAT_SUNDA_BEPERGIAN_GROUP1",
+    "tradition": "SUNDA",
+    "system": "Adat Sunda",
+    "activity": "BEPERGIAN",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "group": 1,
+        "catatan": "Kala di arah timur lurus",
+        "rizki_arah": "Tenggara",
+        "bulan_label": "Muharram-Safar-Rabiul Awal",
+        "bulan_hijriah": [
+          1,
+          2,
+          3
+        ],
+        "pantangan_days": [
+          6,
+          0
+        ],
+        "keselamatan_days": [
+          3,
+          4
+        ]
+      }
+    },
+    "outputs": {
+      "category": "netral",
+      "meaning": "Bulan Muharram-Safar-Rabiul Awal: menurut kala Palintangan Sunda, hindari bepergian atau merantau pada hari pantangan; hari paling aman untuk bepergian atau merantau. Arah rezeki bulan ini: Tenggara."
+    },
+    "source": {
+      "title": "Palintangan Sunda (naktu & kala 4 kelompok bulan)",
+      "supabase_id": "77a405c1-7416-4cbb-ad72-6a965a017bc8"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "VERIFIED_ACADEMIC (sebagian): kolom pantangan_days & keselamatan_days sesuai kala 4 kelompok bulan, Suryaatmana dkk., Paririmbon Sunda (Jawa Barat) 1992, Direktorat Jenderal Kebudayaan, hlm. 67-68 (dikonfirmasi via sitasi Wikipedia Palintangan Sunda). PERBAIKAN: hari yang BUKAN pantangan maupun keselamatan TIDAK memiliki rumus ambang naktu (>=12 baik/8-11 netral/<8 kurang_baik) di sumber manapun — deskripsi ambang tersebut hasil karangan sesi sebelumnya, HARUS DIHAPUS dari logika aplikasi (src/lib/hitunganHari.js). Hari di luar pantangan/keselamatan wajib ditandai TRADITION_DEPENDENT/UNKNOWN, bukan diberi skor."
+  },
+  {
+    "id": "ADAT_SUNDA_BEPERGIAN_GROUP2",
+    "tradition": "SUNDA",
+    "system": "Adat Sunda",
+    "activity": "BEPERGIAN",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "group": 2,
+        "catatan": "Kala di arah barat lurus & barat miring",
+        "rizki_arah": "Barat Laut",
+        "bulan_label": "Rabiul Akhir-Jumadil Awal-Jumadil Akhir",
+        "bulan_hijriah": [
+          4,
+          5,
+          6
+        ],
+        "pantangan_days": [
+          1,
+          2
+        ],
+        "keselamatan_days": [
+          5
+        ]
+      }
+    },
+    "outputs": {
+      "category": "netral",
+      "meaning": "Bulan Rabiul Akhir-Jumadil Awal-Jumadil Akhir: menurut kala Palintangan Sunda, hindari bepergian atau merantau pada hari pantangan; hari paling aman untuk bepergian atau merantau. Arah rezeki bulan ini: Barat Laut."
+    },
+    "source": {
+      "title": "Palintangan Sunda (naktu & kala 4 kelompok bulan)",
+      "supabase_id": "77a405c1-7416-4cbb-ad72-6a965a017bc8"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "VERIFIED_ACADEMIC (sebagian): kolom pantangan_days & keselamatan_days sesuai kala 4 kelompok bulan, Suryaatmana dkk., Paririmbon Sunda (Jawa Barat) 1992, Direktorat Jenderal Kebudayaan, hlm. 67-68 (dikonfirmasi via sitasi Wikipedia Palintangan Sunda). PERBAIKAN: hari yang BUKAN pantangan maupun keselamatan TIDAK memiliki rumus ambang naktu (>=12 baik/8-11 netral/<8 kurang_baik) di sumber manapun — deskripsi ambang tersebut hasil karangan sesi sebelumnya, HARUS DIHAPUS dari logika aplikasi (src/lib/hitunganHari.js). Hari di luar pantangan/keselamatan wajib ditandai TRADITION_DEPENDENT/UNKNOWN, bukan diberi skor."
+  },
+  {
+    "id": "ABU_MASYAR_BEPERGIAN_KAMIS",
+    "tradition": "CLASSICAL",
+    "system": "Kitab Abu Ma'syar",
+    "activity": "BEPERGIAN",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "planet": "Jupiter",
+        "day_name": "Kamis",
+        "day_of_week": 4
+      }
+    },
+    "outputs": {
+      "category": "baik",
+      "meaning": "Jupiter (panas-basah, udara, planet paling baik): membawa keberuntungan dan kelancaran dalam perjalanan."
+    },
+    "source": {
+      "title": "Terjemah Abu Ma'syar Al-Falaki",
+      "supabase_id": "61889811-42cd-432d-9dcf-e1759eab4829"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "Interpretasi turunan dari tabiat/unsur planet penguasa hari (planetary_day_rulers), bukan kutipan literal dari kitab. Sistem \"hari baik\" per-kegiatan seperti ini lazim dalam tradisi ikhtiyarat astrologi klasik Yunani-Arab yang menjadi rujukan Abu Ma'syar, meski bab spesifik ini tidak ditemukan eksplisit di edisi terjemahan yang digunakan aplikasi ini. | Tabiat planet (VERIFIED_ACADEMIC) berasal dari Kitab al-Mudkhal Abu Ma'syar; teks spesifik per-aktivitas adalah turunan logis, bukan kutipan literal kitab."
+  },
+  {
+    "id": "ABU_MASYAR_BEPERGIAN_RABU",
+    "tradition": "CLASSICAL",
+    "system": "Kitab Abu Ma'syar",
+    "activity": "BEPERGIAN",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "planet": "Merkurius",
+        "day_name": "Rabu",
+        "day_of_week": 3
+      }
+    },
+    "outputs": {
+      "category": "baik",
+      "meaning": "Merkurius (netral/ganda, udara): baik untuk perjalanan terkait urusan administrasi, komunikasi, atau negosiasi."
+    },
+    "source": {
+      "title": "Terjemah Abu Ma'syar Al-Falaki",
+      "supabase_id": "61889811-42cd-432d-9dcf-e1759eab4829"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "Interpretasi turunan dari tabiat/unsur planet penguasa hari (planetary_day_rulers), bukan kutipan literal dari kitab. Sistem \"hari baik\" per-kegiatan seperti ini lazim dalam tradisi ikhtiyarat astrologi klasik Yunani-Arab yang menjadi rujukan Abu Ma'syar, meski bab spesifik ini tidak ditemukan eksplisit di edisi terjemahan yang digunakan aplikasi ini. | Tabiat planet (VERIFIED_ACADEMIC) berasal dari Kitab al-Mudkhal Abu Ma'syar; teks spesifik per-aktivitas adalah turunan logis, bukan kutipan literal kitab."
+  },
+  {
+    "id": "ABU_MASYAR_BEPERGIAN_SELASA",
+    "tradition": "CLASSICAL",
+    "system": "Kitab Abu Ma'syar",
+    "activity": "BEPERGIAN",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "planet": "Mars",
+        "day_name": "Selasa",
+        "day_of_week": 2
+      }
+    },
+    "outputs": {
+      "category": "kurang_baik",
+      "meaning": "Mars (panas-kering, api, watak keras): rawan risiko, konflik, atau kecelakaan di perjalanan."
+    },
+    "source": {
+      "title": "Terjemah Abu Ma'syar Al-Falaki",
+      "supabase_id": "61889811-42cd-432d-9dcf-e1759eab4829"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "Interpretasi turunan dari tabiat/unsur planet penguasa hari (planetary_day_rulers), bukan kutipan literal dari kitab. Sistem \"hari baik\" per-kegiatan seperti ini lazim dalam tradisi ikhtiyarat astrologi klasik Yunani-Arab yang menjadi rujukan Abu Ma'syar, meski bab spesifik ini tidak ditemukan eksplisit di edisi terjemahan yang digunakan aplikasi ini. | Tabiat planet (VERIFIED_ACADEMIC) berasal dari Kitab al-Mudkhal Abu Ma'syar; teks spesifik per-aktivitas adalah turunan logis, bukan kutipan literal kitab."
+  },
+  {
+    "id": "ADAT_JAWA_BEPERGIAN_SRI",
+    "tradition": "JAWA",
+    "system": "Adat Jawa",
+    "activity": "BEPERGIAN",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "nama": "Sri",
+        "pancasuda_sisa": 1
+      }
+    },
+    "outputs": {
+      "category": "baik",
+      "meaning": "Sri (sisa 1): perjalanan lancar dan membawa rezeki."
+    },
+    "source": {
+      "title": null,
+      "supabase_id": null
+    },
+    "status": "TRADITIONAL_LOCAL",
+    "confidence": "UNKNOWN",
+    "notes": "Data starter primbon umum, belum ditranskrip dari kitab spesifik. | Formula pembagian-5 didukung >1 sumber independen, namun ditemukan minimal 3 skema penamaan berbeda yang sama-sama mengklaim \"Pancasuda\" di sumber sekunder (lihat docs/hitungan-hari-source-research.md §1). Penamaan Sri/Lungguh/Gedhong/Lara/Pati belum diverifikasi ke sumber primer (Betaljemur Adammakna)."
+  },
+  {
+    "id": "ADAT_JAWA_BEPERGIAN_LUNGGUH",
+    "tradition": "JAWA",
+    "system": "Adat Jawa",
+    "activity": "BEPERGIAN",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "nama": "Lungguh",
+        "pancasuda_sisa": 2
+      }
+    },
+    "outputs": {
+      "category": "baik",
+      "meaning": "Lungguh (sisa 2): disambut baik dan dihormati di tempat tujuan."
+    },
+    "source": {
+      "title": null,
+      "supabase_id": null
+    },
+    "status": "TRADITIONAL_LOCAL",
+    "confidence": "UNKNOWN",
+    "notes": "Data starter primbon umum, belum ditranskrip dari kitab spesifik. | Formula pembagian-5 didukung >1 sumber independen, namun ditemukan minimal 3 skema penamaan berbeda yang sama-sama mengklaim \"Pancasuda\" di sumber sekunder (lihat docs/hitungan-hari-source-research.md §1). Penamaan Sri/Lungguh/Gedhong/Lara/Pati belum diverifikasi ke sumber primer (Betaljemur Adammakna)."
+  },
+  {
+    "id": "ADAT_JAWA_BEPERGIAN_GEDHONG",
+    "tradition": "JAWA",
+    "system": "Adat Jawa",
+    "activity": "BEPERGIAN",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "nama": "Gedhong",
+        "pancasuda_sisa": 3
+      }
+    },
+    "outputs": {
+      "category": "baik",
+      "meaning": "Gedhong (sisa 3): cocok untuk perjalanan dagang atau urusan bisnis besar."
+    },
+    "source": {
+      "title": null,
+      "supabase_id": null
+    },
+    "status": "TRADITIONAL_LOCAL",
+    "confidence": "UNKNOWN",
+    "notes": "Data starter primbon umum, belum ditranskrip dari kitab spesifik. | Formula pembagian-5 didukung >1 sumber independen, namun ditemukan minimal 3 skema penamaan berbeda yang sama-sama mengklaim \"Pancasuda\" di sumber sekunder (lihat docs/hitungan-hari-source-research.md §1). Penamaan Sri/Lungguh/Gedhong/Lara/Pati belum diverifikasi ke sumber primer (Betaljemur Adammakna)."
+  },
+  {
+    "id": "ADAT_JAWA_BEPERGIAN_LARA",
+    "tradition": "JAWA",
+    "system": "Adat Jawa",
+    "activity": "BEPERGIAN",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "nama": "Lara",
+        "pancasuda_sisa": 4
+      }
+    },
+    "outputs": {
+      "category": "kurang_baik",
+      "meaning": "Lara (sisa 4): waspada gangguan kesehatan atau masalah di jalan."
+    },
+    "source": {
+      "title": null,
+      "supabase_id": null
+    },
+    "status": "TRADITIONAL_LOCAL",
+    "confidence": "UNKNOWN",
+    "notes": "Data starter primbon umum, belum ditranskrip dari kitab spesifik. | Formula pembagian-5 didukung >1 sumber independen, namun ditemukan minimal 3 skema penamaan berbeda yang sama-sama mengklaim \"Pancasuda\" di sumber sekunder (lihat docs/hitungan-hari-source-research.md §1). Penamaan Sri/Lungguh/Gedhong/Lara/Pati belum diverifikasi ke sumber primer (Betaljemur Adammakna)."
+  },
+  {
+    "id": "ADAT_SUNDA_BEPERGIAN_GROUP4",
+    "tradition": "SUNDA",
+    "system": "Adat Sunda",
+    "activity": "BEPERGIAN",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "group": 4,
+        "catatan": "Kala di arah barat daya",
+        "rizki_arah": "Timur Laut",
+        "bulan_label": "Syawal-Dulkaidah-Rayagung",
+        "bulan_hijriah": [
+          10,
+          11,
+          12
+        ],
+        "pantangan_days": [
+          5
+        ],
+        "keselamatan_days": [
+          1
+        ]
+      }
+    },
+    "outputs": {
+      "category": "netral",
+      "meaning": "Bulan Syawal-Dulkaidah-Rayagung: menurut kala Palintangan Sunda, hindari bepergian atau merantau pada hari pantangan; hari paling aman untuk bepergian atau merantau. Arah rezeki bulan ini: Timur Laut."
+    },
+    "source": {
+      "title": "Palintangan Sunda (naktu & kala 4 kelompok bulan)",
+      "supabase_id": "77a405c1-7416-4cbb-ad72-6a965a017bc8"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "VERIFIED_ACADEMIC (sebagian): kolom pantangan_days & keselamatan_days sesuai kala 4 kelompok bulan, Suryaatmana dkk., Paririmbon Sunda (Jawa Barat) 1992, Direktorat Jenderal Kebudayaan, hlm. 67-68 (dikonfirmasi via sitasi Wikipedia Palintangan Sunda). PERBAIKAN: hari yang BUKAN pantangan maupun keselamatan TIDAK memiliki rumus ambang naktu (>=12 baik/8-11 netral/<8 kurang_baik) di sumber manapun — deskripsi ambang tersebut hasil karangan sesi sebelumnya, HARUS DIHAPUS dari logika aplikasi (src/lib/hitunganHari.js). Hari di luar pantangan/keselamatan wajib ditandai TRADITION_DEPENDENT/UNKNOWN, bukan diberi skor."
+  },
+  {
+    "id": "ADAT_SUNDA_BERDAGANG_GROUP1",
+    "tradition": "SUNDA",
+    "system": "Adat Sunda",
+    "activity": "BERDAGANG",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "group": 1,
+        "catatan": "Kala di arah timur lurus",
+        "rizki_arah": "Tenggara",
+        "bulan_label": "Muharram-Safar-Rabiul Awal",
+        "bulan_hijriah": [
+          1,
+          2,
+          3
+        ],
+        "pantangan_days": [
+          6,
+          0
+        ],
+        "keselamatan_days": [
+          3,
+          4
+        ]
+      }
+    },
+    "outputs": {
+      "category": "netral",
+      "meaning": "Bulan Muharram-Safar-Rabiul Awal: menurut kala Palintangan Sunda, hindari membuka usaha atau bertransaksi besar pada hari pantangan; hari paling aman untuk membuka usaha atau bertransaksi besar. Arah rezeki bulan ini: Tenggara."
+    },
+    "source": {
+      "title": "Palintangan Sunda (naktu & kala 4 kelompok bulan)",
+      "supabase_id": "77a405c1-7416-4cbb-ad72-6a965a017bc8"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "VERIFIED_ACADEMIC (sebagian): kolom pantangan_days & keselamatan_days sesuai kala 4 kelompok bulan, Suryaatmana dkk., Paririmbon Sunda (Jawa Barat) 1992, Direktorat Jenderal Kebudayaan, hlm. 67-68 (dikonfirmasi via sitasi Wikipedia Palintangan Sunda). PERBAIKAN: hari yang BUKAN pantangan maupun keselamatan TIDAK memiliki rumus ambang naktu (>=12 baik/8-11 netral/<8 kurang_baik) di sumber manapun — deskripsi ambang tersebut hasil karangan sesi sebelumnya, HARUS DIHAPUS dari logika aplikasi (src/lib/hitunganHari.js). Hari di luar pantangan/keselamatan wajib ditandai TRADITION_DEPENDENT/UNKNOWN, bukan diberi skor."
+  },
+  {
+    "id": "ADAT_SUNDA_BERDAGANG_GROUP2",
+    "tradition": "SUNDA",
+    "system": "Adat Sunda",
+    "activity": "BERDAGANG",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "group": 2,
+        "catatan": "Kala di arah barat lurus & barat miring",
+        "rizki_arah": "Barat Laut",
+        "bulan_label": "Rabiul Akhir-Jumadil Awal-Jumadil Akhir",
+        "bulan_hijriah": [
+          4,
+          5,
+          6
+        ],
+        "pantangan_days": [
+          1,
+          2
+        ],
+        "keselamatan_days": [
+          5
+        ]
+      }
+    },
+    "outputs": {
+      "category": "netral",
+      "meaning": "Bulan Rabiul Akhir-Jumadil Awal-Jumadil Akhir: menurut kala Palintangan Sunda, hindari membuka usaha atau bertransaksi besar pada hari pantangan; hari paling aman untuk membuka usaha atau bertransaksi besar. Arah rezeki bulan ini: Barat Laut."
+    },
+    "source": {
+      "title": "Palintangan Sunda (naktu & kala 4 kelompok bulan)",
+      "supabase_id": "77a405c1-7416-4cbb-ad72-6a965a017bc8"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "VERIFIED_ACADEMIC (sebagian): kolom pantangan_days & keselamatan_days sesuai kala 4 kelompok bulan, Suryaatmana dkk., Paririmbon Sunda (Jawa Barat) 1992, Direktorat Jenderal Kebudayaan, hlm. 67-68 (dikonfirmasi via sitasi Wikipedia Palintangan Sunda). PERBAIKAN: hari yang BUKAN pantangan maupun keselamatan TIDAK memiliki rumus ambang naktu (>=12 baik/8-11 netral/<8 kurang_baik) di sumber manapun — deskripsi ambang tersebut hasil karangan sesi sebelumnya, HARUS DIHAPUS dari logika aplikasi (src/lib/hitunganHari.js). Hari di luar pantangan/keselamatan wajib ditandai TRADITION_DEPENDENT/UNKNOWN, bukan diberi skor."
+  },
+  {
+    "id": "ADAT_SUNDA_BERDAGANG_GROUP3",
+    "tradition": "SUNDA",
+    "system": "Adat Sunda",
+    "activity": "BERDAGANG",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "group": 3,
+        "catatan": "Kala di arah barat laut & timur",
+        "rizki_arah": "Barat Daya",
+        "bulan_label": "Rajab-Ruwah-Puasa",
+        "bulan_hijriah": [
+          7,
+          8,
+          9
+        ],
+        "pantangan_days": [
+          3,
+          4
+        ],
+        "keselamatan_days": [
+          6,
+          0
+        ]
+      }
+    },
+    "outputs": {
+      "category": "netral",
+      "meaning": "Bulan Rajab-Ruwah-Puasa: menurut kala Palintangan Sunda, hindari membuka usaha atau bertransaksi besar pada hari pantangan; hari paling aman untuk membuka usaha atau bertransaksi besar. Arah rezeki bulan ini: Barat Daya."
+    },
+    "source": {
+      "title": "Palintangan Sunda (naktu & kala 4 kelompok bulan)",
+      "supabase_id": "77a405c1-7416-4cbb-ad72-6a965a017bc8"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "VERIFIED_ACADEMIC (sebagian): kolom pantangan_days & keselamatan_days sesuai kala 4 kelompok bulan, Suryaatmana dkk., Paririmbon Sunda (Jawa Barat) 1992, Direktorat Jenderal Kebudayaan, hlm. 67-68 (dikonfirmasi via sitasi Wikipedia Palintangan Sunda). PERBAIKAN: hari yang BUKAN pantangan maupun keselamatan TIDAK memiliki rumus ambang naktu (>=12 baik/8-11 netral/<8 kurang_baik) di sumber manapun — deskripsi ambang tersebut hasil karangan sesi sebelumnya, HARUS DIHAPUS dari logika aplikasi (src/lib/hitunganHari.js). Hari di luar pantangan/keselamatan wajib ditandai TRADITION_DEPENDENT/UNKNOWN, bukan diberi skor."
+  },
+  {
+    "id": "ADAT_SUNDA_BERDAGANG_GROUP4",
+    "tradition": "SUNDA",
+    "system": "Adat Sunda",
+    "activity": "BERDAGANG",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "group": 4,
+        "catatan": "Kala di arah barat daya",
+        "rizki_arah": "Timur Laut",
+        "bulan_label": "Syawal-Dulkaidah-Rayagung",
+        "bulan_hijriah": [
+          10,
+          11,
+          12
+        ],
+        "pantangan_days": [
+          5
+        ],
+        "keselamatan_days": [
+          1
+        ]
+      }
+    },
+    "outputs": {
+      "category": "netral",
+      "meaning": "Bulan Syawal-Dulkaidah-Rayagung: menurut kala Palintangan Sunda, hindari membuka usaha atau bertransaksi besar pada hari pantangan; hari paling aman untuk membuka usaha atau bertransaksi besar. Arah rezeki bulan ini: Timur Laut."
+    },
+    "source": {
+      "title": "Palintangan Sunda (naktu & kala 4 kelompok bulan)",
+      "supabase_id": "77a405c1-7416-4cbb-ad72-6a965a017bc8"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "VERIFIED_ACADEMIC (sebagian): kolom pantangan_days & keselamatan_days sesuai kala 4 kelompok bulan, Suryaatmana dkk., Paririmbon Sunda (Jawa Barat) 1992, Direktorat Jenderal Kebudayaan, hlm. 67-68 (dikonfirmasi via sitasi Wikipedia Palintangan Sunda). PERBAIKAN: hari yang BUKAN pantangan maupun keselamatan TIDAK memiliki rumus ambang naktu (>=12 baik/8-11 netral/<8 kurang_baik) di sumber manapun — deskripsi ambang tersebut hasil karangan sesi sebelumnya, HARUS DIHAPUS dari logika aplikasi (src/lib/hitunganHari.js). Hari di luar pantangan/keselamatan wajib ditandai TRADITION_DEPENDENT/UNKNOWN, bukan diberi skor."
+  },
+  {
+    "id": "ADAT_SUNDA_BERTANI_GROUP1",
+    "tradition": "SUNDA",
+    "system": "Adat Sunda",
+    "activity": "BERTANI",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "group": 1,
+        "catatan": "Kala di arah timur lurus",
+        "rizki_arah": "Tenggara",
+        "bulan_label": "Muharram-Safar-Rabiul Awal",
+        "bulan_hijriah": [
+          1,
+          2,
+          3
+        ],
+        "pantangan_days": [
+          6,
+          0
+        ],
+        "keselamatan_days": [
+          3,
+          4
+        ]
+      }
+    },
+    "outputs": {
+      "category": "netral",
+      "meaning": "Bulan Muharram-Safar-Rabiul Awal: menurut kala Palintangan Sunda, hindari mengolah lahan atau menanam pada hari pantangan; hari paling aman untuk mengolah lahan atau menanam. Arah rezeki bulan ini: Tenggara."
+    },
+    "source": {
+      "title": "Palintangan Sunda (naktu & kala 4 kelompok bulan)",
+      "supabase_id": "77a405c1-7416-4cbb-ad72-6a965a017bc8"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "VERIFIED_ACADEMIC (sebagian): kolom pantangan_days & keselamatan_days sesuai kala 4 kelompok bulan, Suryaatmana dkk., Paririmbon Sunda (Jawa Barat) 1992, Direktorat Jenderal Kebudayaan, hlm. 67-68 (dikonfirmasi via sitasi Wikipedia Palintangan Sunda). PERBAIKAN: hari yang BUKAN pantangan maupun keselamatan TIDAK memiliki rumus ambang naktu (>=12 baik/8-11 netral/<8 kurang_baik) di sumber manapun — deskripsi ambang tersebut hasil karangan sesi sebelumnya, HARUS DIHAPUS dari logika aplikasi (src/lib/hitunganHari.js). Hari di luar pantangan/keselamatan wajib ditandai TRADITION_DEPENDENT/UNKNOWN, bukan diberi skor."
+  },
+  {
+    "id": "ADAT_SUNDA_BERTANI_GROUP2",
+    "tradition": "SUNDA",
+    "system": "Adat Sunda",
+    "activity": "BERTANI",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "group": 2,
+        "catatan": "Kala di arah barat lurus & barat miring",
+        "rizki_arah": "Barat Laut",
+        "bulan_label": "Rabiul Akhir-Jumadil Awal-Jumadil Akhir",
+        "bulan_hijriah": [
+          4,
+          5,
+          6
+        ],
+        "pantangan_days": [
+          1,
+          2
+        ],
+        "keselamatan_days": [
+          5
+        ]
+      }
+    },
+    "outputs": {
+      "category": "netral",
+      "meaning": "Bulan Rabiul Akhir-Jumadil Awal-Jumadil Akhir: menurut kala Palintangan Sunda, hindari mengolah lahan atau menanam pada hari pantangan; hari paling aman untuk mengolah lahan atau menanam. Arah rezeki bulan ini: Barat Laut."
+    },
+    "source": {
+      "title": "Palintangan Sunda (naktu & kala 4 kelompok bulan)",
+      "supabase_id": "77a405c1-7416-4cbb-ad72-6a965a017bc8"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "VERIFIED_ACADEMIC (sebagian): kolom pantangan_days & keselamatan_days sesuai kala 4 kelompok bulan, Suryaatmana dkk., Paririmbon Sunda (Jawa Barat) 1992, Direktorat Jenderal Kebudayaan, hlm. 67-68 (dikonfirmasi via sitasi Wikipedia Palintangan Sunda). PERBAIKAN: hari yang BUKAN pantangan maupun keselamatan TIDAK memiliki rumus ambang naktu (>=12 baik/8-11 netral/<8 kurang_baik) di sumber manapun — deskripsi ambang tersebut hasil karangan sesi sebelumnya, HARUS DIHAPUS dari logika aplikasi (src/lib/hitunganHari.js). Hari di luar pantangan/keselamatan wajib ditandai TRADITION_DEPENDENT/UNKNOWN, bukan diberi skor."
+  },
+  {
+    "id": "ADAT_SUNDA_BERTANI_GROUP3",
+    "tradition": "SUNDA",
+    "system": "Adat Sunda",
+    "activity": "BERTANI",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "group": 3,
+        "catatan": "Kala di arah barat laut & timur",
+        "rizki_arah": "Barat Daya",
+        "bulan_label": "Rajab-Ruwah-Puasa",
+        "bulan_hijriah": [
+          7,
+          8,
+          9
+        ],
+        "pantangan_days": [
+          3,
+          4
+        ],
+        "keselamatan_days": [
+          6,
+          0
+        ]
+      }
+    },
+    "outputs": {
+      "category": "netral",
+      "meaning": "Bulan Rajab-Ruwah-Puasa: menurut kala Palintangan Sunda, hindari mengolah lahan atau menanam pada hari pantangan; hari paling aman untuk mengolah lahan atau menanam. Arah rezeki bulan ini: Barat Daya."
+    },
+    "source": {
+      "title": "Palintangan Sunda (naktu & kala 4 kelompok bulan)",
+      "supabase_id": "77a405c1-7416-4cbb-ad72-6a965a017bc8"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "VERIFIED_ACADEMIC (sebagian): kolom pantangan_days & keselamatan_days sesuai kala 4 kelompok bulan, Suryaatmana dkk., Paririmbon Sunda (Jawa Barat) 1992, Direktorat Jenderal Kebudayaan, hlm. 67-68 (dikonfirmasi via sitasi Wikipedia Palintangan Sunda). PERBAIKAN: hari yang BUKAN pantangan maupun keselamatan TIDAK memiliki rumus ambang naktu (>=12 baik/8-11 netral/<8 kurang_baik) di sumber manapun — deskripsi ambang tersebut hasil karangan sesi sebelumnya, HARUS DIHAPUS dari logika aplikasi (src/lib/hitunganHari.js). Hari di luar pantangan/keselamatan wajib ditandai TRADITION_DEPENDENT/UNKNOWN, bukan diberi skor."
+  },
+  {
+    "id": "ADAT_SUNDA_BERTANI_GROUP4",
+    "tradition": "SUNDA",
+    "system": "Adat Sunda",
+    "activity": "BERTANI",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "group": 4,
+        "catatan": "Kala di arah barat daya",
+        "rizki_arah": "Timur Laut",
+        "bulan_label": "Syawal-Dulkaidah-Rayagung",
+        "bulan_hijriah": [
+          10,
+          11,
+          12
+        ],
+        "pantangan_days": [
+          5
+        ],
+        "keselamatan_days": [
+          1
+        ]
+      }
+    },
+    "outputs": {
+      "category": "netral",
+      "meaning": "Bulan Syawal-Dulkaidah-Rayagung: menurut kala Palintangan Sunda, hindari mengolah lahan atau menanam pada hari pantangan; hari paling aman untuk mengolah lahan atau menanam. Arah rezeki bulan ini: Timur Laut."
+    },
+    "source": {
+      "title": "Palintangan Sunda (naktu & kala 4 kelompok bulan)",
+      "supabase_id": "77a405c1-7416-4cbb-ad72-6a965a017bc8"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "VERIFIED_ACADEMIC (sebagian): kolom pantangan_days & keselamatan_days sesuai kala 4 kelompok bulan, Suryaatmana dkk., Paririmbon Sunda (Jawa Barat) 1992, Direktorat Jenderal Kebudayaan, hlm. 67-68 (dikonfirmasi via sitasi Wikipedia Palintangan Sunda). PERBAIKAN: hari yang BUKAN pantangan maupun keselamatan TIDAK memiliki rumus ambang naktu (>=12 baik/8-11 netral/<8 kurang_baik) di sumber manapun — deskripsi ambang tersebut hasil karangan sesi sebelumnya, HARUS DIHAPUS dari logika aplikasi (src/lib/hitunganHari.js). Hari di luar pantangan/keselamatan wajib ditandai TRADITION_DEPENDENT/UNKNOWN, bukan diberi skor."
+  },
+  {
+    "id": "ADAT_SUNDA_BERLAYAR_GROUP1",
+    "tradition": "SUNDA",
+    "system": "Adat Sunda",
+    "activity": "BERLAYAR",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "group": 1,
+        "catatan": "Kala di arah timur lurus",
+        "rizki_arah": "Tenggara",
+        "bulan_label": "Muharram-Safar-Rabiul Awal",
+        "bulan_hijriah": [
+          1,
+          2,
+          3
+        ],
+        "pantangan_days": [
+          6,
+          0
+        ],
+        "keselamatan_days": [
+          3,
+          4
+        ]
+      }
+    },
+    "outputs": {
+      "category": "netral",
+      "meaning": "Bulan Muharram-Safar-Rabiul Awal: menurut kala Palintangan Sunda, hindari berlayar atau melaut pada hari pantangan; hari paling aman untuk berlayar atau melaut. Arah rezeki bulan ini: Tenggara."
+    },
+    "source": {
+      "title": "Palintangan Sunda (naktu & kala 4 kelompok bulan)",
+      "supabase_id": "77a405c1-7416-4cbb-ad72-6a965a017bc8"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "VERIFIED_ACADEMIC (sebagian): kolom pantangan_days & keselamatan_days sesuai kala 4 kelompok bulan, Suryaatmana dkk., Paririmbon Sunda (Jawa Barat) 1992, Direktorat Jenderal Kebudayaan, hlm. 67-68 (dikonfirmasi via sitasi Wikipedia Palintangan Sunda). PERBAIKAN: hari yang BUKAN pantangan maupun keselamatan TIDAK memiliki rumus ambang naktu (>=12 baik/8-11 netral/<8 kurang_baik) di sumber manapun — deskripsi ambang tersebut hasil karangan sesi sebelumnya, HARUS DIHAPUS dari logika aplikasi (src/lib/hitunganHari.js). Hari di luar pantangan/keselamatan wajib ditandai TRADITION_DEPENDENT/UNKNOWN, bukan diberi skor."
+  },
+  {
+    "id": "ADAT_SUNDA_BERLAYAR_GROUP2",
+    "tradition": "SUNDA",
+    "system": "Adat Sunda",
+    "activity": "BERLAYAR",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "group": 2,
+        "catatan": "Kala di arah barat lurus & barat miring",
+        "rizki_arah": "Barat Laut",
+        "bulan_label": "Rabiul Akhir-Jumadil Awal-Jumadil Akhir",
+        "bulan_hijriah": [
+          4,
+          5,
+          6
+        ],
+        "pantangan_days": [
+          1,
+          2
+        ],
+        "keselamatan_days": [
+          5
+        ]
+      }
+    },
+    "outputs": {
+      "category": "netral",
+      "meaning": "Bulan Rabiul Akhir-Jumadil Awal-Jumadil Akhir: menurut kala Palintangan Sunda, hindari berlayar atau melaut pada hari pantangan; hari paling aman untuk berlayar atau melaut. Arah rezeki bulan ini: Barat Laut."
+    },
+    "source": {
+      "title": "Palintangan Sunda (naktu & kala 4 kelompok bulan)",
+      "supabase_id": "77a405c1-7416-4cbb-ad72-6a965a017bc8"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "VERIFIED_ACADEMIC (sebagian): kolom pantangan_days & keselamatan_days sesuai kala 4 kelompok bulan, Suryaatmana dkk., Paririmbon Sunda (Jawa Barat) 1992, Direktorat Jenderal Kebudayaan, hlm. 67-68 (dikonfirmasi via sitasi Wikipedia Palintangan Sunda). PERBAIKAN: hari yang BUKAN pantangan maupun keselamatan TIDAK memiliki rumus ambang naktu (>=12 baik/8-11 netral/<8 kurang_baik) di sumber manapun — deskripsi ambang tersebut hasil karangan sesi sebelumnya, HARUS DIHAPUS dari logika aplikasi (src/lib/hitunganHari.js). Hari di luar pantangan/keselamatan wajib ditandai TRADITION_DEPENDENT/UNKNOWN, bukan diberi skor."
+  },
+  {
+    "id": "ADAT_SUNDA_BERLAYAR_GROUP3",
+    "tradition": "SUNDA",
+    "system": "Adat Sunda",
+    "activity": "BERLAYAR",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "group": 3,
+        "catatan": "Kala di arah barat laut & timur",
+        "rizki_arah": "Barat Daya",
+        "bulan_label": "Rajab-Ruwah-Puasa",
+        "bulan_hijriah": [
+          7,
+          8,
+          9
+        ],
+        "pantangan_days": [
+          3,
+          4
+        ],
+        "keselamatan_days": [
+          6,
+          0
+        ]
+      }
+    },
+    "outputs": {
+      "category": "netral",
+      "meaning": "Bulan Rajab-Ruwah-Puasa: menurut kala Palintangan Sunda, hindari berlayar atau melaut pada hari pantangan; hari paling aman untuk berlayar atau melaut. Arah rezeki bulan ini: Barat Daya."
+    },
+    "source": {
+      "title": "Palintangan Sunda (naktu & kala 4 kelompok bulan)",
+      "supabase_id": "77a405c1-7416-4cbb-ad72-6a965a017bc8"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "VERIFIED_ACADEMIC (sebagian): kolom pantangan_days & keselamatan_days sesuai kala 4 kelompok bulan, Suryaatmana dkk., Paririmbon Sunda (Jawa Barat) 1992, Direktorat Jenderal Kebudayaan, hlm. 67-68 (dikonfirmasi via sitasi Wikipedia Palintangan Sunda). PERBAIKAN: hari yang BUKAN pantangan maupun keselamatan TIDAK memiliki rumus ambang naktu (>=12 baik/8-11 netral/<8 kurang_baik) di sumber manapun — deskripsi ambang tersebut hasil karangan sesi sebelumnya, HARUS DIHAPUS dari logika aplikasi (src/lib/hitunganHari.js). Hari di luar pantangan/keselamatan wajib ditandai TRADITION_DEPENDENT/UNKNOWN, bukan diberi skor."
+  },
+  {
+    "id": "ADAT_SUNDA_BERLAYAR_GROUP4",
+    "tradition": "SUNDA",
+    "system": "Adat Sunda",
+    "activity": "BERLAYAR",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "group": 4,
+        "catatan": "Kala di arah barat daya",
+        "rizki_arah": "Timur Laut",
+        "bulan_label": "Syawal-Dulkaidah-Rayagung",
+        "bulan_hijriah": [
+          10,
+          11,
+          12
+        ],
+        "pantangan_days": [
+          5
+        ],
+        "keselamatan_days": [
+          1
+        ]
+      }
+    },
+    "outputs": {
+      "category": "netral",
+      "meaning": "Bulan Syawal-Dulkaidah-Rayagung: menurut kala Palintangan Sunda, hindari berlayar atau melaut pada hari pantangan; hari paling aman untuk berlayar atau melaut. Arah rezeki bulan ini: Timur Laut."
+    },
+    "source": {
+      "title": "Palintangan Sunda (naktu & kala 4 kelompok bulan)",
+      "supabase_id": "77a405c1-7416-4cbb-ad72-6a965a017bc8"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "VERIFIED_ACADEMIC (sebagian): kolom pantangan_days & keselamatan_days sesuai kala 4 kelompok bulan, Suryaatmana dkk., Paririmbon Sunda (Jawa Barat) 1992, Direktorat Jenderal Kebudayaan, hlm. 67-68 (dikonfirmasi via sitasi Wikipedia Palintangan Sunda). PERBAIKAN: hari yang BUKAN pantangan maupun keselamatan TIDAK memiliki rumus ambang naktu (>=12 baik/8-11 netral/<8 kurang_baik) di sumber manapun — deskripsi ambang tersebut hasil karangan sesi sebelumnya, HARUS DIHAPUS dari logika aplikasi (src/lib/hitunganHari.js). Hari di luar pantangan/keselamatan wajib ditandai TRADITION_DEPENDENT/UNKNOWN, bukan diberi skor."
+  },
+  {
+    "id": "ADAT_SUNDA_MEMBANGUN_RUMAH_GROUP1",
+    "tradition": "SUNDA",
+    "system": "Adat Sunda",
+    "activity": "MEMBANGUN_RUMAH",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "group": 1,
+        "catatan": "Kala di arah timur lurus",
+        "rizki_arah": "Tenggara",
+        "bulan_label": "Muharram-Safar-Rabiul Awal",
+        "bulan_hijriah": [
+          1,
+          2,
+          3
+        ],
+        "pantangan_days": [
+          6,
+          0
+        ],
+        "keselamatan_days": [
+          3,
+          4
+        ]
+      }
+    },
+    "outputs": {
+      "category": "netral",
+      "meaning": "Bulan Muharram-Safar-Rabiul Awal: menurut kala Palintangan Sunda, hindari mulai membangun rumah pada hari pantangan; hari paling aman untuk mulai membangun rumah. Arah rezeki bulan ini: Tenggara."
+    },
+    "source": {
+      "title": "Palintangan Sunda (naktu & kala 4 kelompok bulan)",
+      "supabase_id": "77a405c1-7416-4cbb-ad72-6a965a017bc8"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "VERIFIED_ACADEMIC (sebagian): kolom pantangan_days & keselamatan_days sesuai kala 4 kelompok bulan, Suryaatmana dkk., Paririmbon Sunda (Jawa Barat) 1992, Direktorat Jenderal Kebudayaan, hlm. 67-68 (dikonfirmasi via sitasi Wikipedia Palintangan Sunda). PERBAIKAN: hari yang BUKAN pantangan maupun keselamatan TIDAK memiliki rumus ambang naktu (>=12 baik/8-11 netral/<8 kurang_baik) di sumber manapun — deskripsi ambang tersebut hasil karangan sesi sebelumnya, HARUS DIHAPUS dari logika aplikasi (src/lib/hitunganHari.js). Hari di luar pantangan/keselamatan wajib ditandai TRADITION_DEPENDENT/UNKNOWN, bukan diberi skor."
+  },
+  {
+    "id": "ADAT_SUNDA_MEMBANGUN_RUMAH_GROUP2",
+    "tradition": "SUNDA",
+    "system": "Adat Sunda",
+    "activity": "MEMBANGUN_RUMAH",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "group": 2,
+        "catatan": "Kala di arah barat lurus & barat miring",
+        "rizki_arah": "Barat Laut",
+        "bulan_label": "Rabiul Akhir-Jumadil Awal-Jumadil Akhir",
+        "bulan_hijriah": [
+          4,
+          5,
+          6
+        ],
+        "pantangan_days": [
+          1,
+          2
+        ],
+        "keselamatan_days": [
+          5
+        ]
+      }
+    },
+    "outputs": {
+      "category": "netral",
+      "meaning": "Bulan Rabiul Akhir-Jumadil Awal-Jumadil Akhir: menurut kala Palintangan Sunda, hindari mulai membangun rumah pada hari pantangan; hari paling aman untuk mulai membangun rumah. Arah rezeki bulan ini: Barat Laut."
+    },
+    "source": {
+      "title": "Palintangan Sunda (naktu & kala 4 kelompok bulan)",
+      "supabase_id": "77a405c1-7416-4cbb-ad72-6a965a017bc8"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "VERIFIED_ACADEMIC (sebagian): kolom pantangan_days & keselamatan_days sesuai kala 4 kelompok bulan, Suryaatmana dkk., Paririmbon Sunda (Jawa Barat) 1992, Direktorat Jenderal Kebudayaan, hlm. 67-68 (dikonfirmasi via sitasi Wikipedia Palintangan Sunda). PERBAIKAN: hari yang BUKAN pantangan maupun keselamatan TIDAK memiliki rumus ambang naktu (>=12 baik/8-11 netral/<8 kurang_baik) di sumber manapun — deskripsi ambang tersebut hasil karangan sesi sebelumnya, HARUS DIHAPUS dari logika aplikasi (src/lib/hitunganHari.js). Hari di luar pantangan/keselamatan wajib ditandai TRADITION_DEPENDENT/UNKNOWN, bukan diberi skor."
+  },
+  {
+    "id": "ADAT_SUNDA_MEMBANGUN_RUMAH_GROUP3",
+    "tradition": "SUNDA",
+    "system": "Adat Sunda",
+    "activity": "MEMBANGUN_RUMAH",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "group": 3,
+        "catatan": "Kala di arah barat laut & timur",
+        "rizki_arah": "Barat Daya",
+        "bulan_label": "Rajab-Ruwah-Puasa",
+        "bulan_hijriah": [
+          7,
+          8,
+          9
+        ],
+        "pantangan_days": [
+          3,
+          4
+        ],
+        "keselamatan_days": [
+          6,
+          0
+        ]
+      }
+    },
+    "outputs": {
+      "category": "netral",
+      "meaning": "Bulan Rajab-Ruwah-Puasa: menurut kala Palintangan Sunda, hindari mulai membangun rumah pada hari pantangan; hari paling aman untuk mulai membangun rumah. Arah rezeki bulan ini: Barat Daya."
+    },
+    "source": {
+      "title": "Palintangan Sunda (naktu & kala 4 kelompok bulan)",
+      "supabase_id": "77a405c1-7416-4cbb-ad72-6a965a017bc8"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "VERIFIED_ACADEMIC (sebagian): kolom pantangan_days & keselamatan_days sesuai kala 4 kelompok bulan, Suryaatmana dkk., Paririmbon Sunda (Jawa Barat) 1992, Direktorat Jenderal Kebudayaan, hlm. 67-68 (dikonfirmasi via sitasi Wikipedia Palintangan Sunda). PERBAIKAN: hari yang BUKAN pantangan maupun keselamatan TIDAK memiliki rumus ambang naktu (>=12 baik/8-11 netral/<8 kurang_baik) di sumber manapun — deskripsi ambang tersebut hasil karangan sesi sebelumnya, HARUS DIHAPUS dari logika aplikasi (src/lib/hitunganHari.js). Hari di luar pantangan/keselamatan wajib ditandai TRADITION_DEPENDENT/UNKNOWN, bukan diberi skor."
+  },
+  {
+    "id": "ADAT_SUNDA_MEMBANGUN_RUMAH_GROUP4",
+    "tradition": "SUNDA",
+    "system": "Adat Sunda",
+    "activity": "MEMBANGUN_RUMAH",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "group": 4,
+        "catatan": "Kala di arah barat daya",
+        "rizki_arah": "Timur Laut",
+        "bulan_label": "Syawal-Dulkaidah-Rayagung",
+        "bulan_hijriah": [
+          10,
+          11,
+          12
+        ],
+        "pantangan_days": [
+          5
+        ],
+        "keselamatan_days": [
+          1
+        ]
+      }
+    },
+    "outputs": {
+      "category": "netral",
+      "meaning": "Bulan Syawal-Dulkaidah-Rayagung: menurut kala Palintangan Sunda, hindari mulai membangun rumah pada hari pantangan; hari paling aman untuk mulai membangun rumah. Arah rezeki bulan ini: Timur Laut."
+    },
+    "source": {
+      "title": "Palintangan Sunda (naktu & kala 4 kelompok bulan)",
+      "supabase_id": "77a405c1-7416-4cbb-ad72-6a965a017bc8"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "VERIFIED_ACADEMIC (sebagian): kolom pantangan_days & keselamatan_days sesuai kala 4 kelompok bulan, Suryaatmana dkk., Paririmbon Sunda (Jawa Barat) 1992, Direktorat Jenderal Kebudayaan, hlm. 67-68 (dikonfirmasi via sitasi Wikipedia Palintangan Sunda). PERBAIKAN: hari yang BUKAN pantangan maupun keselamatan TIDAK memiliki rumus ambang naktu (>=12 baik/8-11 netral/<8 kurang_baik) di sumber manapun — deskripsi ambang tersebut hasil karangan sesi sebelumnya, HARUS DIHAPUS dari logika aplikasi (src/lib/hitunganHari.js). Hari di luar pantangan/keselamatan wajib ditandai TRADITION_DEPENDENT/UNKNOWN, bukan diberi skor."
+  },
+  {
+    "id": "ABU_MASYAR_BEPERGIAN_SABTU",
+    "tradition": "CLASSICAL",
+    "system": "Kitab Abu Ma'syar",
+    "activity": "BEPERGIAN",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "planet": "Saturnus",
+        "day_name": "Sabtu",
+        "day_of_week": 6
+      }
+    },
+    "outputs": {
+      "category": "kurang_baik",
+      "meaning": "Saturnus (dingin-kering, tanah, watak lambat): perjalanan rawan tertunda atau terhambat."
+    },
+    "source": {
+      "title": "Terjemah Abu Ma'syar Al-Falaki",
+      "supabase_id": "61889811-42cd-432d-9dcf-e1759eab4829"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "Interpretasi turunan dari tabiat/unsur planet penguasa hari (planetary_day_rulers), bukan kutipan literal dari kitab. Sistem \"hari baik\" per-kegiatan seperti ini lazim dalam tradisi ikhtiyarat astrologi klasik Yunani-Arab yang menjadi rujukan Abu Ma'syar, meski bab spesifik ini tidak ditemukan eksplisit di edisi terjemahan yang digunakan aplikasi ini. | Tabiat planet (VERIFIED_ACADEMIC) berasal dari Kitab al-Mudkhal Abu Ma'syar; teks spesifik per-aktivitas adalah turunan logis, bukan kutipan literal kitab."
+  },
+  {
+    "id": "ABU_MASYAR_BEPERGIAN_JUMAT",
+    "tradition": "CLASSICAL",
+    "system": "Kitab Abu Ma'syar",
+    "activity": "BEPERGIAN",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "planet": "Venus",
+        "day_name": "Jumat",
+        "day_of_week": 5
+      }
+    },
+    "outputs": {
+      "category": "netral",
+      "meaning": "Venus (dingin-basah, air): perjalanan berjalan wajar, cocok untuk urusan sosial atau silaturahmi."
+    },
+    "source": {
+      "title": "Terjemah Abu Ma'syar Al-Falaki",
+      "supabase_id": "61889811-42cd-432d-9dcf-e1759eab4829"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "Interpretasi turunan dari tabiat/unsur planet penguasa hari (planetary_day_rulers), bukan kutipan literal dari kitab. Sistem \"hari baik\" per-kegiatan seperti ini lazim dalam tradisi ikhtiyarat astrologi klasik Yunani-Arab yang menjadi rujukan Abu Ma'syar, meski bab spesifik ini tidak ditemukan eksplisit di edisi terjemahan yang digunakan aplikasi ini. | Tabiat planet (VERIFIED_ACADEMIC) berasal dari Kitab al-Mudkhal Abu Ma'syar; teks spesifik per-aktivitas adalah turunan logis, bukan kutipan literal kitab."
+  },
+  {
+    "id": "ABU_MASYAR_BEPERGIAN_MINGGU",
+    "tradition": "CLASSICAL",
+    "system": "Kitab Abu Ma'syar",
+    "activity": "BEPERGIAN",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "planet": "Matahari",
+        "day_name": "Minggu",
+        "day_of_week": 0
+      }
+    },
+    "outputs": {
+      "category": "netral",
+      "meaning": "Matahari (panas-kering, api): memberi wibawa tapi bukan planet khusus perjalanan; perjalanan berjalan wajar."
+    },
+    "source": {
+      "title": "Terjemah Abu Ma'syar Al-Falaki",
+      "supabase_id": "61889811-42cd-432d-9dcf-e1759eab4829"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "Interpretasi turunan dari tabiat/unsur planet penguasa hari (planetary_day_rulers), bukan kutipan literal dari kitab. Sistem \"hari baik\" per-kegiatan seperti ini lazim dalam tradisi ikhtiyarat astrologi klasik Yunani-Arab yang menjadi rujukan Abu Ma'syar, meski bab spesifik ini tidak ditemukan eksplisit di edisi terjemahan yang digunakan aplikasi ini. | Tabiat planet (VERIFIED_ACADEMIC) berasal dari Kitab al-Mudkhal Abu Ma'syar; teks spesifik per-aktivitas adalah turunan logis, bukan kutipan literal kitab."
+  },
+  {
+    "id": "ABU_MASYAR_BERDAGANG_SABTU",
+    "tradition": "CLASSICAL",
+    "system": "Kitab Abu Ma'syar",
+    "activity": "BERDAGANG",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "planet": "Saturnus",
+        "day_name": "Sabtu",
+        "day_of_week": 6
+      }
+    },
+    "outputs": {
+      "category": "kurang_baik",
+      "meaning": "Saturnus (dingin-kering, tanah, watak lambat): hasil dagang cenderung lambat dan penuh rintangan."
+    },
+    "source": {
+      "title": "Terjemah Abu Ma'syar Al-Falaki",
+      "supabase_id": "61889811-42cd-432d-9dcf-e1759eab4829"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "Interpretasi turunan dari tabiat/unsur planet penguasa hari (planetary_day_rulers), bukan kutipan literal dari kitab. Sistem \"hari baik\" per-kegiatan seperti ini lazim dalam tradisi ikhtiyarat astrologi klasik Yunani-Arab yang menjadi rujukan Abu Ma'syar, meski bab spesifik ini tidak ditemukan eksplisit di edisi terjemahan yang digunakan aplikasi ini. | Tabiat planet (VERIFIED_ACADEMIC) berasal dari Kitab al-Mudkhal Abu Ma'syar; teks spesifik per-aktivitas adalah turunan logis, bukan kutipan literal kitab."
+  },
+  {
+    "id": "ABU_MASYAR_BERDAGANG_JUMAT",
+    "tradition": "CLASSICAL",
+    "system": "Kitab Abu Ma'syar",
+    "activity": "BERDAGANG",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "planet": "Venus",
+        "day_name": "Jumat",
+        "day_of_week": 5
+      }
+    },
+    "outputs": {
+      "category": "netral",
+      "meaning": "Venus (dingin-basah, air): baik untuk kerja sama yang bersifat sosial, hasil dagang wajar."
+    },
+    "source": {
+      "title": "Terjemah Abu Ma'syar Al-Falaki",
+      "supabase_id": "61889811-42cd-432d-9dcf-e1759eab4829"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "Interpretasi turunan dari tabiat/unsur planet penguasa hari (planetary_day_rulers), bukan kutipan literal dari kitab. Sistem \"hari baik\" per-kegiatan seperti ini lazim dalam tradisi ikhtiyarat astrologi klasik Yunani-Arab yang menjadi rujukan Abu Ma'syar, meski bab spesifik ini tidak ditemukan eksplisit di edisi terjemahan yang digunakan aplikasi ini. | Tabiat planet (VERIFIED_ACADEMIC) berasal dari Kitab al-Mudkhal Abu Ma'syar; teks spesifik per-aktivitas adalah turunan logis, bukan kutipan literal kitab."
+  },
+  {
+    "id": "ABU_MASYAR_BERDAGANG_KAMIS",
+    "tradition": "CLASSICAL",
+    "system": "Kitab Abu Ma'syar",
+    "activity": "BERDAGANG",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "planet": "Jupiter",
+        "day_name": "Kamis",
+        "day_of_week": 4
+      }
+    },
+    "outputs": {
+      "category": "baik",
+      "meaning": "Jupiter (panas-basah, udara, planet paling baik): membawa kemakmuran dan keuntungan dalam usaha."
+    },
+    "source": {
+      "title": "Terjemah Abu Ma'syar Al-Falaki",
+      "supabase_id": "61889811-42cd-432d-9dcf-e1759eab4829"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "Interpretasi turunan dari tabiat/unsur planet penguasa hari (planetary_day_rulers), bukan kutipan literal dari kitab. Sistem \"hari baik\" per-kegiatan seperti ini lazim dalam tradisi ikhtiyarat astrologi klasik Yunani-Arab yang menjadi rujukan Abu Ma'syar, meski bab spesifik ini tidak ditemukan eksplisit di edisi terjemahan yang digunakan aplikasi ini. | Tabiat planet (VERIFIED_ACADEMIC) berasal dari Kitab al-Mudkhal Abu Ma'syar; teks spesifik per-aktivitas adalah turunan logis, bukan kutipan literal kitab."
+  },
+  {
+    "id": "ABU_MASYAR_BERDAGANG_RABU",
+    "tradition": "CLASSICAL",
+    "system": "Kitab Abu Ma'syar",
+    "activity": "BERDAGANG",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "planet": "Merkurius",
+        "day_name": "Rabu",
+        "day_of_week": 3
+      }
+    },
+    "outputs": {
+      "category": "baik",
+      "meaning": "Merkurius (netral/ganda, udara): Merkurius adalah planet niaga dan komunikasi, paling cocok untuk transaksi dan perjanjian dagang."
+    },
+    "source": {
+      "title": "Terjemah Abu Ma'syar Al-Falaki",
+      "supabase_id": "61889811-42cd-432d-9dcf-e1759eab4829"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "Interpretasi turunan dari tabiat/unsur planet penguasa hari (planetary_day_rulers), bukan kutipan literal dari kitab. Sistem \"hari baik\" per-kegiatan seperti ini lazim dalam tradisi ikhtiyarat astrologi klasik Yunani-Arab yang menjadi rujukan Abu Ma'syar, meski bab spesifik ini tidak ditemukan eksplisit di edisi terjemahan yang digunakan aplikasi ini. | Tabiat planet (VERIFIED_ACADEMIC) berasal dari Kitab al-Mudkhal Abu Ma'syar; teks spesifik per-aktivitas adalah turunan logis, bukan kutipan literal kitab."
+  },
+  {
+    "id": "ABU_MASYAR_BERDAGANG_SELASA",
+    "tradition": "CLASSICAL",
+    "system": "Kitab Abu Ma'syar",
+    "activity": "BERDAGANG",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "planet": "Mars",
+        "day_name": "Selasa",
+        "day_of_week": 2
+      }
+    },
+    "outputs": {
+      "category": "kurang_baik",
+      "meaning": "Mars (panas-kering, api, watak keras): rawan perselisihan dagang atau kerugian akibat ketergesaan."
+    },
+    "source": {
+      "title": "Terjemah Abu Ma'syar Al-Falaki",
+      "supabase_id": "61889811-42cd-432d-9dcf-e1759eab4829"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "Interpretasi turunan dari tabiat/unsur planet penguasa hari (planetary_day_rulers), bukan kutipan literal dari kitab. Sistem \"hari baik\" per-kegiatan seperti ini lazim dalam tradisi ikhtiyarat astrologi klasik Yunani-Arab yang menjadi rujukan Abu Ma'syar, meski bab spesifik ini tidak ditemukan eksplisit di edisi terjemahan yang digunakan aplikasi ini. | Tabiat planet (VERIFIED_ACADEMIC) berasal dari Kitab al-Mudkhal Abu Ma'syar; teks spesifik per-aktivitas adalah turunan logis, bukan kutipan literal kitab."
+  },
+  {
+    "id": "ABU_MASYAR_BERDAGANG_SENIN",
+    "tradition": "CLASSICAL",
+    "system": "Kitab Abu Ma'syar",
+    "activity": "BERDAGANG",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "planet": "Bulan",
+        "day_name": "Senin",
+        "day_of_week": 1
+      }
+    },
+    "outputs": {
+      "category": "netral",
+      "meaning": "Bulan (dingin-basah, air): transaksi berjalan wajar, hasil bisa berubah-ubah mengikuti sifat Bulan."
+    },
+    "source": {
+      "title": "Terjemah Abu Ma'syar Al-Falaki",
+      "supabase_id": "61889811-42cd-432d-9dcf-e1759eab4829"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "Interpretasi turunan dari tabiat/unsur planet penguasa hari (planetary_day_rulers), bukan kutipan literal dari kitab. Sistem \"hari baik\" per-kegiatan seperti ini lazim dalam tradisi ikhtiyarat astrologi klasik Yunani-Arab yang menjadi rujukan Abu Ma'syar, meski bab spesifik ini tidak ditemukan eksplisit di edisi terjemahan yang digunakan aplikasi ini. | Tabiat planet (VERIFIED_ACADEMIC) berasal dari Kitab al-Mudkhal Abu Ma'syar; teks spesifik per-aktivitas adalah turunan logis, bukan kutipan literal kitab."
+  },
+  {
+    "id": "ABU_MASYAR_BERDAGANG_MINGGU",
+    "tradition": "CLASSICAL",
+    "system": "Kitab Abu Ma'syar",
+    "activity": "BERDAGANG",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "planet": "Matahari",
+        "day_name": "Minggu",
+        "day_of_week": 0
+      }
+    },
+    "outputs": {
+      "category": "baik",
+      "meaning": "Matahari (panas-kering, api): wibawa dan kepercayaan diri, cocok memulai usaha besar atau urusan resmi."
+    },
+    "source": {
+      "title": "Terjemah Abu Ma'syar Al-Falaki",
+      "supabase_id": "61889811-42cd-432d-9dcf-e1759eab4829"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "Interpretasi turunan dari tabiat/unsur planet penguasa hari (planetary_day_rulers), bukan kutipan literal dari kitab. Sistem \"hari baik\" per-kegiatan seperti ini lazim dalam tradisi ikhtiyarat astrologi klasik Yunani-Arab yang menjadi rujukan Abu Ma'syar, meski bab spesifik ini tidak ditemukan eksplisit di edisi terjemahan yang digunakan aplikasi ini. | Tabiat planet (VERIFIED_ACADEMIC) berasal dari Kitab al-Mudkhal Abu Ma'syar; teks spesifik per-aktivitas adalah turunan logis, bukan kutipan literal kitab."
+  },
+  {
+    "id": "ABU_MASYAR_BERTANI_SABTU",
+    "tradition": "CLASSICAL",
+    "system": "Kitab Abu Ma'syar",
+    "activity": "BERTANI",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "planet": "Saturnus",
+        "day_name": "Sabtu",
+        "day_of_week": 6
+      }
+    },
+    "outputs": {
+      "category": "netral",
+      "meaning": "Saturnus (dingin-kering, tanah, watak lambat): unsur tanah cocok, namun hasil membutuhkan kesabaran karena watak Saturnus yang lambat."
+    },
+    "source": {
+      "title": "Terjemah Abu Ma'syar Al-Falaki",
+      "supabase_id": "61889811-42cd-432d-9dcf-e1759eab4829"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "Interpretasi turunan dari tabiat/unsur planet penguasa hari (planetary_day_rulers), bukan kutipan literal dari kitab. Sistem \"hari baik\" per-kegiatan seperti ini lazim dalam tradisi ikhtiyarat astrologi klasik Yunani-Arab yang menjadi rujukan Abu Ma'syar, meski bab spesifik ini tidak ditemukan eksplisit di edisi terjemahan yang digunakan aplikasi ini. | Tabiat planet (VERIFIED_ACADEMIC) berasal dari Kitab al-Mudkhal Abu Ma'syar; teks spesifik per-aktivitas adalah turunan logis, bukan kutipan literal kitab."
+  },
+  {
+    "id": "ABU_MASYAR_BERTANI_JUMAT",
+    "tradition": "CLASSICAL",
+    "system": "Kitab Abu Ma'syar",
+    "activity": "BERTANI",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "planet": "Venus",
+        "day_name": "Jumat",
+        "day_of_week": 5
+      }
+    },
+    "outputs": {
+      "category": "baik",
+      "meaning": "Venus (dingin-basah, air): unsur air selaras dengan kesuburan dan keindahan hasil tanam."
+    },
+    "source": {
+      "title": "Terjemah Abu Ma'syar Al-Falaki",
+      "supabase_id": "61889811-42cd-432d-9dcf-e1759eab4829"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "Interpretasi turunan dari tabiat/unsur planet penguasa hari (planetary_day_rulers), bukan kutipan literal dari kitab. Sistem \"hari baik\" per-kegiatan seperti ini lazim dalam tradisi ikhtiyarat astrologi klasik Yunani-Arab yang menjadi rujukan Abu Ma'syar, meski bab spesifik ini tidak ditemukan eksplisit di edisi terjemahan yang digunakan aplikasi ini. | Tabiat planet (VERIFIED_ACADEMIC) berasal dari Kitab al-Mudkhal Abu Ma'syar; teks spesifik per-aktivitas adalah turunan logis, bukan kutipan literal kitab."
+  },
+  {
+    "id": "ABU_MASYAR_BERTANI_KAMIS",
+    "tradition": "CLASSICAL",
+    "system": "Kitab Abu Ma'syar",
+    "activity": "BERTANI",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "planet": "Jupiter",
+        "day_name": "Kamis",
+        "day_of_week": 4
+      }
+    },
+    "outputs": {
+      "category": "baik",
+      "meaning": "Jupiter (panas-basah, udara, planet paling baik): membawa hasil panen yang melimpah."
+    },
+    "source": {
+      "title": "Terjemah Abu Ma'syar Al-Falaki",
+      "supabase_id": "61889811-42cd-432d-9dcf-e1759eab4829"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "Interpretasi turunan dari tabiat/unsur planet penguasa hari (planetary_day_rulers), bukan kutipan literal dari kitab. Sistem \"hari baik\" per-kegiatan seperti ini lazim dalam tradisi ikhtiyarat astrologi klasik Yunani-Arab yang menjadi rujukan Abu Ma'syar, meski bab spesifik ini tidak ditemukan eksplisit di edisi terjemahan yang digunakan aplikasi ini. | Tabiat planet (VERIFIED_ACADEMIC) berasal dari Kitab al-Mudkhal Abu Ma'syar; teks spesifik per-aktivitas adalah turunan logis, bukan kutipan literal kitab."
+  },
+  {
+    "id": "ABU_MASYAR_BERTANI_RABU",
+    "tradition": "CLASSICAL",
+    "system": "Kitab Abu Ma'syar",
+    "activity": "BERTANI",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "planet": "Merkurius",
+        "day_name": "Rabu",
+        "day_of_week": 3
+      }
+    },
+    "outputs": {
+      "category": "netral",
+      "meaning": "Merkurius (netral/ganda, udara): pengaruh wajar terhadap kegiatan bertani."
+    },
+    "source": {
+      "title": "Terjemah Abu Ma'syar Al-Falaki",
+      "supabase_id": "61889811-42cd-432d-9dcf-e1759eab4829"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "Interpretasi turunan dari tabiat/unsur planet penguasa hari (planetary_day_rulers), bukan kutipan literal dari kitab. Sistem \"hari baik\" per-kegiatan seperti ini lazim dalam tradisi ikhtiyarat astrologi klasik Yunani-Arab yang menjadi rujukan Abu Ma'syar, meski bab spesifik ini tidak ditemukan eksplisit di edisi terjemahan yang digunakan aplikasi ini. | Tabiat planet (VERIFIED_ACADEMIC) berasal dari Kitab al-Mudkhal Abu Ma'syar; teks spesifik per-aktivitas adalah turunan logis, bukan kutipan literal kitab."
+  },
+  {
+    "id": "ABU_MASYAR_BERTANI_SELASA",
+    "tradition": "CLASSICAL",
+    "system": "Kitab Abu Ma'syar",
+    "activity": "BERTANI",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "planet": "Mars",
+        "day_name": "Selasa",
+        "day_of_week": 2
+      }
+    },
+    "outputs": {
+      "category": "netral",
+      "meaning": "Mars (panas-kering, api): pengaruh wajar, tidak secara khusus baik atau buruk untuk pertanian."
+    },
+    "source": {
+      "title": "Terjemah Abu Ma'syar Al-Falaki",
+      "supabase_id": "61889811-42cd-432d-9dcf-e1759eab4829"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "Interpretasi turunan dari tabiat/unsur planet penguasa hari (planetary_day_rulers), bukan kutipan literal dari kitab. Sistem \"hari baik\" per-kegiatan seperti ini lazim dalam tradisi ikhtiyarat astrologi klasik Yunani-Arab yang menjadi rujukan Abu Ma'syar, meski bab spesifik ini tidak ditemukan eksplisit di edisi terjemahan yang digunakan aplikasi ini. | Tabiat planet (VERIFIED_ACADEMIC) berasal dari Kitab al-Mudkhal Abu Ma'syar; teks spesifik per-aktivitas adalah turunan logis, bukan kutipan literal kitab."
+  },
+  {
+    "id": "ABU_MASYAR_BERTANI_SENIN",
+    "tradition": "CLASSICAL",
+    "system": "Kitab Abu Ma'syar",
+    "activity": "BERTANI",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "planet": "Bulan",
+        "day_name": "Senin",
+        "day_of_week": 1
+      }
+    },
+    "outputs": {
+      "category": "baik",
+      "meaning": "Bulan (dingin-basah, air): unsur air selaras dengan kesuburan, baik untuk menanam."
+    },
+    "source": {
+      "title": "Terjemah Abu Ma'syar Al-Falaki",
+      "supabase_id": "61889811-42cd-432d-9dcf-e1759eab4829"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "Interpretasi turunan dari tabiat/unsur planet penguasa hari (planetary_day_rulers), bukan kutipan literal dari kitab. Sistem \"hari baik\" per-kegiatan seperti ini lazim dalam tradisi ikhtiyarat astrologi klasik Yunani-Arab yang menjadi rujukan Abu Ma'syar, meski bab spesifik ini tidak ditemukan eksplisit di edisi terjemahan yang digunakan aplikasi ini. | Tabiat planet (VERIFIED_ACADEMIC) berasal dari Kitab al-Mudkhal Abu Ma'syar; teks spesifik per-aktivitas adalah turunan logis, bukan kutipan literal kitab."
+  },
+  {
+    "id": "ABU_MASYAR_BERTANI_MINGGU",
+    "tradition": "CLASSICAL",
+    "system": "Kitab Abu Ma'syar",
+    "activity": "BERTANI",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "planet": "Matahari",
+        "day_name": "Minggu",
+        "day_of_week": 0
+      }
+    },
+    "outputs": {
+      "category": "kurang_baik",
+      "meaning": "Matahari (panas-kering, api): unsur api kurang selaras dengan kesuburan tanah/air yang dibutuhkan pertanian."
+    },
+    "source": {
+      "title": "Terjemah Abu Ma'syar Al-Falaki",
+      "supabase_id": "61889811-42cd-432d-9dcf-e1759eab4829"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "Interpretasi turunan dari tabiat/unsur planet penguasa hari (planetary_day_rulers), bukan kutipan literal dari kitab. Sistem \"hari baik\" per-kegiatan seperti ini lazim dalam tradisi ikhtiyarat astrologi klasik Yunani-Arab yang menjadi rujukan Abu Ma'syar, meski bab spesifik ini tidak ditemukan eksplisit di edisi terjemahan yang digunakan aplikasi ini. | Tabiat planet (VERIFIED_ACADEMIC) berasal dari Kitab al-Mudkhal Abu Ma'syar; teks spesifik per-aktivitas adalah turunan logis, bukan kutipan literal kitab."
+  },
+  {
+    "id": "ABU_MASYAR_BERLAYAR_SABTU",
+    "tradition": "CLASSICAL",
+    "system": "Kitab Abu Ma'syar",
+    "activity": "BERLAYAR",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "planet": "Saturnus",
+        "day_name": "Sabtu",
+        "day_of_week": 6
+      }
+    },
+    "outputs": {
+      "category": "kurang_baik",
+      "meaning": "Saturnus (dingin-kering, tanah, watak lambat): rawan hambatan atau keterlambatan dalam pelayaran."
+    },
+    "source": {
+      "title": "Terjemah Abu Ma'syar Al-Falaki",
+      "supabase_id": "61889811-42cd-432d-9dcf-e1759eab4829"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "Interpretasi turunan dari tabiat/unsur planet penguasa hari (planetary_day_rulers), bukan kutipan literal dari kitab. Sistem \"hari baik\" per-kegiatan seperti ini lazim dalam tradisi ikhtiyarat astrologi klasik Yunani-Arab yang menjadi rujukan Abu Ma'syar, meski bab spesifik ini tidak ditemukan eksplisit di edisi terjemahan yang digunakan aplikasi ini. | Tabiat planet (VERIFIED_ACADEMIC) berasal dari Kitab al-Mudkhal Abu Ma'syar; teks spesifik per-aktivitas adalah turunan logis, bukan kutipan literal kitab."
+  },
+  {
+    "id": "ABU_MASYAR_BERLAYAR_JUMAT",
+    "tradition": "CLASSICAL",
+    "system": "Kitab Abu Ma'syar",
+    "activity": "BERLAYAR",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "planet": "Venus",
+        "day_name": "Jumat",
+        "day_of_week": 5
+      }
+    },
+    "outputs": {
+      "category": "netral",
+      "meaning": "Venus (dingin-basah, air): pelayaran berjalan wajar."
+    },
+    "source": {
+      "title": "Terjemah Abu Ma'syar Al-Falaki",
+      "supabase_id": "61889811-42cd-432d-9dcf-e1759eab4829"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "Interpretasi turunan dari tabiat/unsur planet penguasa hari (planetary_day_rulers), bukan kutipan literal dari kitab. Sistem \"hari baik\" per-kegiatan seperti ini lazim dalam tradisi ikhtiyarat astrologi klasik Yunani-Arab yang menjadi rujukan Abu Ma'syar, meski bab spesifik ini tidak ditemukan eksplisit di edisi terjemahan yang digunakan aplikasi ini. | Tabiat planet (VERIFIED_ACADEMIC) berasal dari Kitab al-Mudkhal Abu Ma'syar; teks spesifik per-aktivitas adalah turunan logis, bukan kutipan literal kitab."
+  },
+  {
+    "id": "ABU_MASYAR_BERLAYAR_KAMIS",
+    "tradition": "CLASSICAL",
+    "system": "Kitab Abu Ma'syar",
+    "activity": "BERLAYAR",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "planet": "Jupiter",
+        "day_name": "Kamis",
+        "day_of_week": 4
+      }
+    },
+    "outputs": {
+      "category": "baik",
+      "meaning": "Jupiter (panas-basah, udara, planet paling baik): membawa kelancaran dan keselamatan dalam pelayaran."
+    },
+    "source": {
+      "title": "Terjemah Abu Ma'syar Al-Falaki",
+      "supabase_id": "61889811-42cd-432d-9dcf-e1759eab4829"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "Interpretasi turunan dari tabiat/unsur planet penguasa hari (planetary_day_rulers), bukan kutipan literal dari kitab. Sistem \"hari baik\" per-kegiatan seperti ini lazim dalam tradisi ikhtiyarat astrologi klasik Yunani-Arab yang menjadi rujukan Abu Ma'syar, meski bab spesifik ini tidak ditemukan eksplisit di edisi terjemahan yang digunakan aplikasi ini. | Tabiat planet (VERIFIED_ACADEMIC) berasal dari Kitab al-Mudkhal Abu Ma'syar; teks spesifik per-aktivitas adalah turunan logis, bukan kutipan literal kitab."
+  },
+  {
+    "id": "ABU_MASYAR_BERLAYAR_RABU",
+    "tradition": "CLASSICAL",
+    "system": "Kitab Abu Ma'syar",
+    "activity": "BERLAYAR",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "planet": "Merkurius",
+        "day_name": "Rabu",
+        "day_of_week": 3
+      }
+    },
+    "outputs": {
+      "category": "netral",
+      "meaning": "Merkurius (netral/ganda, udara): pengaruh wajar terhadap pelayaran."
+    },
+    "source": {
+      "title": "Terjemah Abu Ma'syar Al-Falaki",
+      "supabase_id": "61889811-42cd-432d-9dcf-e1759eab4829"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "Interpretasi turunan dari tabiat/unsur planet penguasa hari (planetary_day_rulers), bukan kutipan literal dari kitab. Sistem \"hari baik\" per-kegiatan seperti ini lazim dalam tradisi ikhtiyarat astrologi klasik Yunani-Arab yang menjadi rujukan Abu Ma'syar, meski bab spesifik ini tidak ditemukan eksplisit di edisi terjemahan yang digunakan aplikasi ini. | Tabiat planet (VERIFIED_ACADEMIC) berasal dari Kitab al-Mudkhal Abu Ma'syar; teks spesifik per-aktivitas adalah turunan logis, bukan kutipan literal kitab."
+  },
+  {
+    "id": "ABU_MASYAR_BERLAYAR_SELASA",
+    "tradition": "CLASSICAL",
+    "system": "Kitab Abu Ma'syar",
+    "activity": "BERLAYAR",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "planet": "Mars",
+        "day_name": "Selasa",
+        "day_of_week": 2
+      }
+    },
+    "outputs": {
+      "category": "pantang",
+      "meaning": "Mars (panas-kering, api, watak keras): kombinasi dengan unsur air secara tradisi dianggap berisiko tinggi, seperti ombak atau badai; sebaiknya dihindari."
+    },
+    "source": {
+      "title": "Terjemah Abu Ma'syar Al-Falaki",
+      "supabase_id": "61889811-42cd-432d-9dcf-e1759eab4829"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "Interpretasi turunan dari tabiat/unsur planet penguasa hari (planetary_day_rulers), bukan kutipan literal dari kitab. Sistem \"hari baik\" per-kegiatan seperti ini lazim dalam tradisi ikhtiyarat astrologi klasik Yunani-Arab yang menjadi rujukan Abu Ma'syar, meski bab spesifik ini tidak ditemukan eksplisit di edisi terjemahan yang digunakan aplikasi ini. | Tabiat planet (VERIFIED_ACADEMIC) berasal dari Kitab al-Mudkhal Abu Ma'syar; teks spesifik per-aktivitas adalah turunan logis, bukan kutipan literal kitab."
+  },
+  {
+    "id": "ABU_MASYAR_BERLAYAR_SENIN",
+    "tradition": "CLASSICAL",
+    "system": "Kitab Abu Ma'syar",
+    "activity": "BERLAYAR",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "planet": "Bulan",
+        "day_name": "Senin",
+        "day_of_week": 1
+      }
+    },
+    "outputs": {
+      "category": "baik",
+      "meaning": "Bulan (dingin-basah, air): Bulan terkait erat dengan air, laut, dan pasang surut, baik untuk berlayar."
+    },
+    "source": {
+      "title": "Terjemah Abu Ma'syar Al-Falaki",
+      "supabase_id": "61889811-42cd-432d-9dcf-e1759eab4829"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "Interpretasi turunan dari tabiat/unsur planet penguasa hari (planetary_day_rulers), bukan kutipan literal dari kitab. Sistem \"hari baik\" per-kegiatan seperti ini lazim dalam tradisi ikhtiyarat astrologi klasik Yunani-Arab yang menjadi rujukan Abu Ma'syar, meski bab spesifik ini tidak ditemukan eksplisit di edisi terjemahan yang digunakan aplikasi ini. | Tabiat planet (VERIFIED_ACADEMIC) berasal dari Kitab al-Mudkhal Abu Ma'syar; teks spesifik per-aktivitas adalah turunan logis, bukan kutipan literal kitab."
+  },
+  {
+    "id": "ABU_MASYAR_BERLAYAR_MINGGU",
+    "tradition": "CLASSICAL",
+    "system": "Kitab Abu Ma'syar",
+    "activity": "BERLAYAR",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "planet": "Matahari",
+        "day_name": "Minggu",
+        "day_of_week": 0
+      }
+    },
+    "outputs": {
+      "category": "netral",
+      "meaning": "Matahari (panas-kering, api): pengaruh wajar terhadap pelayaran."
+    },
+    "source": {
+      "title": "Terjemah Abu Ma'syar Al-Falaki",
+      "supabase_id": "61889811-42cd-432d-9dcf-e1759eab4829"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "Interpretasi turunan dari tabiat/unsur planet penguasa hari (planetary_day_rulers), bukan kutipan literal dari kitab. Sistem \"hari baik\" per-kegiatan seperti ini lazim dalam tradisi ikhtiyarat astrologi klasik Yunani-Arab yang menjadi rujukan Abu Ma'syar, meski bab spesifik ini tidak ditemukan eksplisit di edisi terjemahan yang digunakan aplikasi ini. | Tabiat planet (VERIFIED_ACADEMIC) berasal dari Kitab al-Mudkhal Abu Ma'syar; teks spesifik per-aktivitas adalah turunan logis, bukan kutipan literal kitab."
+  },
+  {
+    "id": "ABU_MASYAR_MEMBANGUN_RUMAH_SABTU",
+    "tradition": "CLASSICAL",
+    "system": "Kitab Abu Ma'syar",
+    "activity": "MEMBANGUN_RUMAH",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "planet": "Saturnus",
+        "day_name": "Sabtu",
+        "day_of_week": 6
+      }
+    },
+    "outputs": {
+      "category": "baik",
+      "meaning": "Saturnus (dingin-kering, tanah, terkait struktur dan ketahanan jangka panjang): baik untuk fondasi meski prosesnya cenderung lambat."
+    },
+    "source": {
+      "title": "Terjemah Abu Ma'syar Al-Falaki",
+      "supabase_id": "61889811-42cd-432d-9dcf-e1759eab4829"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "Interpretasi turunan dari tabiat/unsur planet penguasa hari (planetary_day_rulers), bukan kutipan literal dari kitab. Sistem \"hari baik\" per-kegiatan seperti ini lazim dalam tradisi ikhtiyarat astrologi klasik Yunani-Arab yang menjadi rujukan Abu Ma'syar, meski bab spesifik ini tidak ditemukan eksplisit di edisi terjemahan yang digunakan aplikasi ini. | Tabiat planet (VERIFIED_ACADEMIC) berasal dari Kitab al-Mudkhal Abu Ma'syar; teks spesifik per-aktivitas adalah turunan logis, bukan kutipan literal kitab."
+  },
+  {
+    "id": "ABU_MASYAR_MEMBANGUN_RUMAH_JUMAT",
+    "tradition": "CLASSICAL",
+    "system": "Kitab Abu Ma'syar",
+    "activity": "MEMBANGUN_RUMAH",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "planet": "Venus",
+        "day_name": "Jumat",
+        "day_of_week": 5
+      }
+    },
+    "outputs": {
+      "category": "netral",
+      "meaning": "Venus (dingin-basah, air): pengaruh wajar, cocok untuk sentuhan estetika/desain bangunan."
+    },
+    "source": {
+      "title": "Terjemah Abu Ma'syar Al-Falaki",
+      "supabase_id": "61889811-42cd-432d-9dcf-e1759eab4829"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "Interpretasi turunan dari tabiat/unsur planet penguasa hari (planetary_day_rulers), bukan kutipan literal dari kitab. Sistem \"hari baik\" per-kegiatan seperti ini lazim dalam tradisi ikhtiyarat astrologi klasik Yunani-Arab yang menjadi rujukan Abu Ma'syar, meski bab spesifik ini tidak ditemukan eksplisit di edisi terjemahan yang digunakan aplikasi ini. | Tabiat planet (VERIFIED_ACADEMIC) berasal dari Kitab al-Mudkhal Abu Ma'syar; teks spesifik per-aktivitas adalah turunan logis, bukan kutipan literal kitab."
+  },
+  {
+    "id": "ABU_MASYAR_MEMBANGUN_RUMAH_KAMIS",
+    "tradition": "CLASSICAL",
+    "system": "Kitab Abu Ma'syar",
+    "activity": "MEMBANGUN_RUMAH",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "planet": "Jupiter",
+        "day_name": "Kamis",
+        "day_of_week": 4
+      }
+    },
+    "outputs": {
+      "category": "baik",
+      "meaning": "Jupiter (panas-basah, udara, planet paling baik): dianggap hari paling baik untuk memulai hal besar termasuk membangun rumah."
+    },
+    "source": {
+      "title": "Terjemah Abu Ma'syar Al-Falaki",
+      "supabase_id": "61889811-42cd-432d-9dcf-e1759eab4829"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "Interpretasi turunan dari tabiat/unsur planet penguasa hari (planetary_day_rulers), bukan kutipan literal dari kitab. Sistem \"hari baik\" per-kegiatan seperti ini lazim dalam tradisi ikhtiyarat astrologi klasik Yunani-Arab yang menjadi rujukan Abu Ma'syar, meski bab spesifik ini tidak ditemukan eksplisit di edisi terjemahan yang digunakan aplikasi ini. | Tabiat planet (VERIFIED_ACADEMIC) berasal dari Kitab al-Mudkhal Abu Ma'syar; teks spesifik per-aktivitas adalah turunan logis, bukan kutipan literal kitab."
+  },
+  {
+    "id": "ABU_MASYAR_MEMBANGUN_RUMAH_RABU",
+    "tradition": "CLASSICAL",
+    "system": "Kitab Abu Ma'syar",
+    "activity": "MEMBANGUN_RUMAH",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "planet": "Merkurius",
+        "day_name": "Rabu",
+        "day_of_week": 3
+      }
+    },
+    "outputs": {
+      "category": "netral",
+      "meaning": "Merkurius (netral/ganda, udara): pengaruh wajar, cocok untuk urusan administrasi pembangunan (izin, kontrak)."
+    },
+    "source": {
+      "title": "Terjemah Abu Ma'syar Al-Falaki",
+      "supabase_id": "61889811-42cd-432d-9dcf-e1759eab4829"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "Interpretasi turunan dari tabiat/unsur planet penguasa hari (planetary_day_rulers), bukan kutipan literal dari kitab. Sistem \"hari baik\" per-kegiatan seperti ini lazim dalam tradisi ikhtiyarat astrologi klasik Yunani-Arab yang menjadi rujukan Abu Ma'syar, meski bab spesifik ini tidak ditemukan eksplisit di edisi terjemahan yang digunakan aplikasi ini. | Tabiat planet (VERIFIED_ACADEMIC) berasal dari Kitab al-Mudkhal Abu Ma'syar; teks spesifik per-aktivitas adalah turunan logis, bukan kutipan literal kitab."
+  },
+  {
+    "id": "ABU_MASYAR_MEMBANGUN_RUMAH_SELASA",
+    "tradition": "CLASSICAL",
+    "system": "Kitab Abu Ma'syar",
+    "activity": "MEMBANGUN_RUMAH",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "planet": "Mars",
+        "day_name": "Selasa",
+        "day_of_week": 2
+      }
+    },
+    "outputs": {
+      "category": "kurang_baik",
+      "meaning": "Mars (panas-kering, api, watak keras): rawan kecelakaan kerja atau perselisihan dengan tukang/pekerja."
+    },
+    "source": {
+      "title": "Terjemah Abu Ma'syar Al-Falaki",
+      "supabase_id": "61889811-42cd-432d-9dcf-e1759eab4829"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "Interpretasi turunan dari tabiat/unsur planet penguasa hari (planetary_day_rulers), bukan kutipan literal dari kitab. Sistem \"hari baik\" per-kegiatan seperti ini lazim dalam tradisi ikhtiyarat astrologi klasik Yunani-Arab yang menjadi rujukan Abu Ma'syar, meski bab spesifik ini tidak ditemukan eksplisit di edisi terjemahan yang digunakan aplikasi ini. | Tabiat planet (VERIFIED_ACADEMIC) berasal dari Kitab al-Mudkhal Abu Ma'syar; teks spesifik per-aktivitas adalah turunan logis, bukan kutipan literal kitab."
+  },
+  {
+    "id": "ABU_MASYAR_MEMBANGUN_RUMAH_SENIN",
+    "tradition": "CLASSICAL",
+    "system": "Kitab Abu Ma'syar",
+    "activity": "MEMBANGUN_RUMAH",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "planet": "Bulan",
+        "day_name": "Senin",
+        "day_of_week": 1
+      }
+    },
+    "outputs": {
+      "category": "kurang_baik",
+      "meaning": "Bulan (dingin-basah, air, sifat berubah-ubah): dianggap kurang stabil untuk memulai fondasi bangunan."
+    },
+    "source": {
+      "title": "Terjemah Abu Ma'syar Al-Falaki",
+      "supabase_id": "61889811-42cd-432d-9dcf-e1759eab4829"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "Interpretasi turunan dari tabiat/unsur planet penguasa hari (planetary_day_rulers), bukan kutipan literal dari kitab. Sistem \"hari baik\" per-kegiatan seperti ini lazim dalam tradisi ikhtiyarat astrologi klasik Yunani-Arab yang menjadi rujukan Abu Ma'syar, meski bab spesifik ini tidak ditemukan eksplisit di edisi terjemahan yang digunakan aplikasi ini. | Tabiat planet (VERIFIED_ACADEMIC) berasal dari Kitab al-Mudkhal Abu Ma'syar; teks spesifik per-aktivitas adalah turunan logis, bukan kutipan literal kitab."
+  },
+  {
+    "id": "ABU_MASYAR_MEMBANGUN_RUMAH_MINGGU",
+    "tradition": "CLASSICAL",
+    "system": "Kitab Abu Ma'syar",
+    "activity": "MEMBANGUN_RUMAH",
+    "calculation": {
+      "method": "SOURCE_DEFINED_METHOD",
+      "criteria": {
+        "planet": "Matahari",
+        "day_name": "Minggu",
+        "day_of_week": 0
+      }
+    },
+    "outputs": {
+      "category": "baik",
+      "meaning": "Matahari (panas-kering, api): awal yang penuh wibawa, cocok untuk peletakan batu pertama bangunan penting."
+    },
+    "source": {
+      "title": "Terjemah Abu Ma'syar Al-Falaki",
+      "supabase_id": "61889811-42cd-432d-9dcf-e1759eab4829"
+    },
+    "status": "SUPPORTED_SECONDARY",
+    "confidence": "MEDIUM",
+    "notes": "Interpretasi turunan dari tabiat/unsur planet penguasa hari (planetary_day_rulers), bukan kutipan literal dari kitab. Sistem \"hari baik\" per-kegiatan seperti ini lazim dalam tradisi ikhtiyarat astrologi klasik Yunani-Arab yang menjadi rujukan Abu Ma'syar, meski bab spesifik ini tidak ditemukan eksplisit di edisi terjemahan yang digunakan aplikasi ini. | Tabiat planet (VERIFIED_ACADEMIC) berasal dari Kitab al-Mudkhal Abu Ma'syar; teks spesifik per-aktivitas adalah turunan logis, bukan kutipan literal kitab."
+  }
+]

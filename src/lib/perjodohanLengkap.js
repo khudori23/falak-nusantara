@@ -1,6 +1,6 @@
 import { hitungWeton } from './weton';
 import { UNSUR_HARI } from './dayUnsur';
-import { salakiRabiDariNeptu } from './petungSalakiRabi';
+import { salakiRabiDariNeptu } from '../traditions/jawa/petungSalakiRabi';
 import { kecocokanWeton } from './wetonJodoh';
 import { kecocokanWedal } from './wedalSunda';
 import { hitungAbjad } from './abjad';

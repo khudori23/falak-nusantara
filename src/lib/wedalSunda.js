@@ -1,5 +1,10 @@
-// Kecocokan hari lahir menurut Primbon Sunda — nilai wedal (hari lahir) kedua
-// orang dijumlahkan, dibagi 7, sisanya dicocokkan ke 7 kode babasan tradisional.
+// Kecocokan hari lahir menurut "Primbon Jodoh Sunda" / "Wedal Sunda" — tradisi
+// populer yang didokumentasikan luas (bukan kolénjér rahasia Baduy Kanekes).
+// Nilai wedal (hari lahir) kedua orang dijumlahkan, dibagi 7, sisanya
+// dicocokkan ke 7 kode babasan tradisional.
+// Catatan: nilai numerik hari berbagi akar historis dengan Saptawara Jawa
+// (akulturasi budaya Jawa-Sunda) — ini bukan kekeliruan, tapi karakter
+// tradisi ini sendiri, ditampilkan apa adanya.
 // Interpretasi budaya untuk edukasi & refleksi, bukan kepastian nasib.
 export const NILAI_WEDAL = {
   Minggu: 5, Senin: 4, Selasa: 3, Rabu: 7, Kamis: 8, Jumat: 6, Sabtu: 9,

@@ -8,7 +8,6 @@ const ITEMS = [
   { key: 'Arah', icon: Compass, label: 'Arah' },
   { key: 'Kalender', icon: Calendar, label: 'Kalender' },
   { key: 'Eksplorasi', icon: Sparkles, label: 'Eksplorasi' },
-  { key: 'Library', icon: BookOpen, label: 'Library' },
 ];
 
 export default function SideNav({ active, onNavigate }) {

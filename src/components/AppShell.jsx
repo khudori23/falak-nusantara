@@ -6,7 +6,7 @@ import { useBreakpoint } from '../theme/responsive';
 import BottomNav from './BottomNav';
 import SideNav from './SideNav';
 
-export default function AppShell({ active, onNavigate, children }) {
+export default function AppShell({ active, onNavigate, header, children }) {
   const { isWide, maxContentWidth } = useBreakpoint();
   const insets = useSafeAreaInsets();
 
@@ -14,23 +14,35 @@ export default function AppShell({ active, onNavigate, children }) {
     return (
       <View style={styles.rowRoot}>
         <SideNav active={active} onNavigate={onNavigate} />
-        <ScrollView
-          style={{ flex: 1 }}
-          contentContainerStyle={[styles.mainContent, { paddingTop: insets.top + 24 }]}
-        >
-          <View style={[styles.centerWrap, maxContentWidth && { maxWidth: maxContentWidth }]}>
-            {children}
-          </View>
-        </ScrollView>
+        <View style={{ flex: 1 }}>
+          {header ? (
+            <View style={{ paddingTop: insets.top + 24, paddingHorizontal: 24 }}>
+              {header}
+            </View>
+          ) : null}
+          <ScrollView
+            style={{ flex: 1 }}
+            contentContainerStyle={[styles.mainContent, { paddingTop: header ? 0 : insets.top + 24 }]}
+          >
+            <View style={[styles.centerWrap, maxContentWidth && { maxWidth: maxContentWidth }]}>
+              {children}
+            </View>
+          </ScrollView>
+        </View>
       </View>
     );
   }
 
   return (
     <View style={styles.colRoot}>
+      {header ? (
+        <View style={{ paddingTop: insets.top + 16, paddingHorizontal: 16 }}>
+          {header}
+        </View>
+      ) : null}
       <ScrollView
         style={{ flex: 1 }}
-        contentContainerStyle={{ padding: 16, paddingTop: insets.top + 16, paddingBottom: 8 }}
+        contentContainerStyle={{ padding: 16, paddingTop: header ? 0 : insets.top + 16, paddingBottom: 8 }}
       >
         {children}
       </ScrollView>
