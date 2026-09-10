@@ -14,13 +14,7 @@ export const colors = {
   purple: '#8E44AD',
   purpleSoft: '#F0E4F7',
   success: '#34C759',
-  // --- tambahan untuk redesign Hitungan Hari (aditif, tidak mengubah token lama) ---
   successSoft: '#E3F8EA',
-  backgroundDeep: '#0F1220',
-  surfaceElevated: '#FFFFFF',
   surfaceMuted: '#FAFAFC',
   borderStrong: '#C9D6F5',
-  primaryGlow: 'rgba(75, 123, 229, 0.18)',
-  accentGlow: 'rgba(108, 99, 255, 0.18)',
-  shadowColor: '#2B3A67',
 };

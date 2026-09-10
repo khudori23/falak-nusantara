@@ -3,7 +3,7 @@
  * -----------------------------------------------------------------------
  * MODUL ASTRONOMI — FALAK NUSANTARA
  *
- * ATURAN WAJIB (§8 Master Prompt Hitungan Hari):
+ * ATURAN WAJIB:
  * File ini HANYA berisi fakta astronomi objektif (posisi Matahari/Bulan,
  * waktu terbit/terbenam, fase Bulan, dsb). File ini TIDAK BOLEH berisi
  * interpretasi tradisi apa pun (baik/buruk, cocok/pantang, dsb).

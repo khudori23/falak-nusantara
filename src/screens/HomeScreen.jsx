@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { MapPin, Sun, Moon, Settings, Compass, Calendar, Heart, CalendarCheck } from 'lucide-react-native';
+import { MapPin, Sun, Moon, Settings, Compass, Calendar, Heart, CalendarCheck, Sprout } from 'lucide-react-native';
 import { colors } from '../theme/colors';
 import { useBreakpoint } from '../theme/responsive';
 import { useFalakData } from '../hooks/useFalakData';
@@ -13,6 +13,7 @@ const MENU = [
   { key: 'kalender', icon: Calendar, title: 'Kalender Hijriah', bg: colors.accentSoft, fg: colors.accent, route: 'Kalender' },
   { key: 'kepribadian', icon: Moon, title: 'Kepribadian', bg: colors.purpleSoft, fg: colors.purple, route: 'Kepribadian' },
   { key: 'jodoh', icon: Heart, title: 'Perjodohan', bg: colors.dangerSoft, fg: colors.danger, route: 'Perjodohan' },
+  { key: 'hari_usaha', icon: Sprout, title: 'Hari Baik Usaha', bg: colors.successSoft, fg: colors.success, route: 'HariUsaha' },
   { key: 'settings', icon: Settings, title: 'Pengaturan', bg: colors.surfaceBorder, fg: colors.textSecondary, route: 'Settings' },
 ];
 
@@ -21,7 +22,6 @@ const CATEGORY_LABELS = {
   kalender_hijriah: 'Kalender Hijriah',
   perjodohan: 'Perjodohan',
   kepribadian: 'Kepribadian',
-  hitungan_hari: 'Hitungan Hari',
   planet: "Abu Ma'syar",
 };
 

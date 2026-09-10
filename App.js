@@ -10,6 +10,7 @@ import EksplorasiScreen from './src/screens/EksplorasiScreen';
 import KepribadianScreen from './src/screens/KepribadianScreen';
 import PerjodohanWrapper from './src/screens/PerjodohanWrapper';
 import SettingsScreen from './src/screens/SettingsScreen';
+import HariUsahaScreen from './src/screens/HariUsahaScreen';
 import OnboardingScreen, { cekOnboardingSelesai } from './src/screens/OnboardingScreen';
 
 function AppContent() {
@@ -98,6 +99,8 @@ function AppContent() {
         return <PerjodohanWrapper onNavigate={setActiveScreen} />;
       case 'Settings':
         return <SettingsScreen onNavigate={setActiveScreen} />;
+      case 'HariUsaha':
+        return <HariUsahaScreen onNavigate={setActiveScreen} />;
       default:
         return <HomeScreen onNavigate={setActiveScreen} />;
     }
