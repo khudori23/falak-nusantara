@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { MapPin, Sun, Moon, Settings, Compass, Calendar, Heart, CalendarCheck, Sprout } from 'lucide-react-native';
+import { MapPin, Sun, Moon, Compass, Calendar, Heart, CalendarCheck, Sprout, Clock, ChevronDown, ChevronUp } from 'lucide-react-native';
 import { colors } from '../theme/colors';
 import { useBreakpoint } from '../theme/responsive';
 import { useFalakData } from '../hooks/useFalakData';
 import AppShell from '../components/AppShell';
 import { supabase } from '../lib/supabase';
+import { getJadwalSholat, getNextPrayer } from '../lib/jadwalSholat';
 
 const MENU = [
   { key: 'arah', icon: Compass, title: 'Arah Kiblat', bg: colors.primarySoft, fg: colors.primary, route: 'Arah' },
@@ -14,7 +15,6 @@ const MENU = [
   { key: 'kepribadian', icon: Moon, title: 'Kepribadian', bg: colors.purpleSoft, fg: colors.purple, route: 'Kepribadian' },
   { key: 'jodoh', icon: Heart, title: 'Perjodohan', bg: colors.dangerSoft, fg: colors.danger, route: 'Perjodohan' },
   { key: 'hari_usaha', icon: Sprout, title: 'Hari Baik Usaha', bg: colors.successSoft, fg: colors.success, route: 'HariUsaha' },
-  { key: 'settings', icon: Settings, title: 'Pengaturan', bg: colors.surfaceBorder, fg: colors.textSecondary, route: 'Settings' },
 ];
 
 const CATEGORY_LABELS = {
@@ -25,9 +25,46 @@ const CATEGORY_LABELS = {
   planet: "Abu Ma'syar",
 };
 
+const ALL_PRAYER_ROWS = [
+  { key: 'imsak', label: 'Imsak' },
+  { key: 'subuh', label: 'Subuh' },
+  { key: 'terbit', label: 'Terbit' },
+  { key: 'dzuhur', label: 'Dzuhur' },
+  { key: 'ashar', label: 'Ashar' },
+  { key: 'maghrib', label: 'Maghrib' },
+  { key: 'isya', label: 'Isya' },
+];
+
 export default function HomeScreen({ onNavigate }) {
   const { columns } = useBreakpoint();
   const { hariLabel, tanggalMasehi, hijriLabel, location, locationStatus, astro, refreshLocation } = useFalakData();
+  const [sholatJadwal, setSholatJadwal] = useState(null);
+  const [nextPrayer, setNextPrayer] = useState(null);
+  const [loadingSholat, setLoadingSholat] = useState(true);
+  const [errorSholat, setErrorSholat] = useState(null);
+  const [sholatExpanded, setSholatExpanded] = useState(false);
+
+  useEffect(() => {
+    if (!location?.lat || !location?.lng) return;
+    let active = true;
+    setLoadingSholat(true);
+    setErrorSholat(null);
+    getJadwalSholat({ latitude: location.lat, longitude: location.lng })
+      .then((result) => {
+        if (!active) return;
+        setSholatJadwal(result);
+        setNextPrayer(getNextPrayer(result));
+      })
+      .catch((e) => { if (active) setErrorSholat(e.message || 'Gagal memuat jadwal sholat.'); })
+      .finally(() => { if (active) setLoadingSholat(false); });
+    return () => { active = false; };
+  }, [location?.lat, location?.lng]);
+
+  useEffect(() => {
+    if (!sholatJadwal) return;
+    const interval = setInterval(() => setNextPrayer(getNextPrayer(sholatJadwal)), 60000);
+    return () => clearInterval(interval);
+  }, [sholatJadwal]);
   const tileWidth = columns >= 4 ? '23%' : columns === 3 ? '31%' : '47%';
 
   const [dailyContent, setDailyContent] = useState(null);
@@ -58,6 +95,7 @@ export default function HomeScreen({ onNavigate }) {
   const fallbackQuote = `Hari ${hariLabel} di bawah naungan unsur angin memberikan kebaikan untuk memulai perjalanan dan musyawarah penting. Tetap kedepankan ikhtiar terbaik.`;
 
   const heroHeader = (
+    <>
     <LinearGradient colors={[colors.primary, '#123F3F']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.heroCard}>
       <View style={styles.rowBetween}>
         {locationStatus === 'granted' ? (
@@ -101,6 +139,71 @@ export default function HomeScreen({ onNavigate }) {
         </View>
       </View>
     </LinearGradient>
+      <View style={styles.card}>
+        <View style={styles.rowGap}>
+          <Clock size={16} color={colors.primary} />
+          <Text style={styles.cardTitle}>Jadwal Sholat</Text>
+        </View>
+
+        {locationStatus !== 'granted' ? (
+          <Text style={styles.subInfo}>Aktifkan lokasi untuk melihat jadwal sholat.</Text>
+        ) : loadingSholat ? (
+          <ActivityIndicator size="small" color={colors.accent} style={{ marginTop: 10 }} />
+        ) : errorSholat ? (
+          <Text style={styles.subInfo}>{errorSholat}</Text>
+        ) : (
+          <>
+            <TouchableOpacity
+              style={styles.nextPrayerBox}
+              activeOpacity={0.8}
+              onPress={() => setSholatExpanded((v) => !v)}
+            >
+              <View style={styles.nextPrayerRow}>
+                <View>
+                  <Text style={styles.nextPrayerBoxLabel}>SHOLAT BERIKUTNYA</Text>
+                  <Text style={styles.nextPrayerBoxName}>{nextPrayer?.label}</Text>
+                </View>
+                <View style={styles.nextPrayerRight}>
+                  <Text style={styles.nextPrayerBoxTime}>{nextPrayer?.time}</Text>
+                  <Text style={styles.nextPrayerBoxCountdown}>
+                    {Math.floor((nextPrayer?.minutesUntil || 0) / 60)} jam {(nextPrayer?.minutesUntil || 0) % 60} menit lagi
+                  </Text>
+                </View>
+                {sholatExpanded ? (
+                  <ChevronUp size={16} color={colors.primary} style={styles.nextPrayerChevron} />
+                ) : (
+                  <ChevronDown size={16} color={colors.primary} style={styles.nextPrayerChevron} />
+                )}
+              </View>
+            </TouchableOpacity>
+
+            {sholatExpanded && (
+              <>
+                <View style={columns >= 3 ? styles.sholatListWrap : styles.sholatList}>
+                  {ALL_PRAYER_ROWS.map((p) => {
+                    const isNext = nextPrayer?.key === p.key;
+                    return (
+                      <View
+                        key={p.key}
+                        style={[
+                          columns >= 3 ? styles.sholatGridItem : styles.sholatRow,
+                          isNext && styles.sholatItemActive,
+                        ]}
+                      >
+                        <Text style={[styles.sholatRowLabel, isNext && styles.sholatRowLabelActive]}>{p.label}</Text>
+                        <Text style={[styles.sholatRowValue, isNext && styles.sholatRowValueActive]}>{sholatJadwal[p.key]}</Text>
+                      </View>
+                    );
+                  })}
+                </View>
+
+                <Text style={styles.sholatFooter}>Metode Kemenag RI (Fajr 20°, Isha 18°){sholatJadwal.timezone ? ` · ${sholatJadwal.timezone}` : ''}</Text>
+              </>
+            )}
+          </>
+        )}
+      </View>
+    </>
   );
 
   return (
@@ -155,6 +258,24 @@ const styles = StyleSheet.create({
   astroValue: { color: '#FFFFFF', fontSize: 15, fontWeight: '700' },
   card: { backgroundColor: colors.surface, borderRadius: 18, padding: 16, marginBottom: 12, borderWidth: 1, borderColor: colors.surfaceBorder },
   interpretationCard: { borderColor: colors.accent, borderWidth: 1.2 },
+  nextPrayerBox: { backgroundColor: colors.primarySoft, borderRadius: 10, paddingVertical: 10, paddingHorizontal: 12, marginTop: 10, marginBottom: 10 },
+  nextPrayerRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  nextPrayerRight: { alignItems: 'flex-end', marginRight: 18 },
+  nextPrayerChevron: { position: 'absolute', right: 0 },
+  nextPrayerBoxLabel: { color: colors.primary, fontSize: 9, fontWeight: '800', letterSpacing: 0.5 },
+  nextPrayerBoxName: { color: colors.textPrimary, fontSize: 14, fontWeight: '800', marginTop: 2 },
+  nextPrayerBoxTime: { color: colors.primary, fontSize: 16, fontWeight: '800' },
+  nextPrayerBoxCountdown: { color: colors.textSecondary, fontSize: 10, marginTop: 1 },
+  sholatList: { borderTopWidth: 1, borderTopColor: colors.surfaceBorder },
+  sholatListWrap: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' },
+  sholatRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 10, borderBottomWidth: 1, borderBottomColor: colors.surfaceBorder },
+  sholatGridItem: { width: '31%', flexDirection: 'row', justifyContent: 'space-between', backgroundColor: colors.surfaceMuted, borderRadius: 10, paddingHorizontal: 10, paddingVertical: 8, marginBottom: 8 },
+  sholatItemActive: { backgroundColor: colors.primarySoft, borderRadius: 8, paddingHorizontal: 8 },
+  sholatRowLabel: { color: colors.textPrimary, fontSize: 14 },
+  sholatRowValue: { color: colors.textPrimary, fontSize: 14, fontWeight: '700' },
+  sholatRowLabelActive: { color: colors.primary, fontWeight: '700' },
+  sholatRowValueActive: { color: colors.primary },
+  sholatFooter: { color: colors.textSecondary, fontSize: 11, fontStyle: 'italic', marginTop: 10, textAlign: 'center' },
   cardTitle: { color: colors.textPrimary, fontWeight: '700', fontSize: 15 },
   subInfo: { color: colors.textSecondary, fontSize: 13, marginTop: 2 },
   button: { backgroundColor: colors.primary, paddingVertical: 10, paddingHorizontal: 16, borderRadius: 12 },

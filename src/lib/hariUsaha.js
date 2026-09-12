@@ -1,5 +1,8 @@
 import { supabase } from './supabase';
 
+// Taksonomi disederhanakan jadi 9 activity_code datar sesuai kontrak
+// backend v10 (Master Prompt). Kategori di bawah cuma pengelompokan UI,
+// TIDAK dikirim ke API.
 export const KATEGORI_USAHA = [
   { value: 'PERTANIAN', label: 'Bercocok Tanam' },
   { value: 'PETERNAKAN', label: 'Peternakan' },
@@ -9,16 +12,13 @@ export const KATEGORI_USAHA = [
 
 export const KEGIATAN_PER_KATEGORI = {
   PERTANIAN: [
-    { value: 'OLAH_TANAH', label: 'Olah Tanah' },
-    { value: 'TANAM_BIBIT', label: 'Tanam Bibit' },
+    { value: 'TANAM_BUAH', label: 'Tanam Buah-buahan' },
+    { value: 'TANAM_UMBI', label: 'Tanam Umbi / Palawija' },
     { value: 'PANEN', label: 'Panen' },
-    { value: 'SIMPAN_HASIL', label: 'Simpan Hasil' },
+    { value: 'SIMPAN_LUMBUNG', label: 'Simpan Hasil ke Lumbung' },
   ],
   PETERNAKAN: [
-    { value: 'BELI_TERNAK', label: 'Beli Ternak' },
-    { value: 'JUAL_TERNAK', label: 'Jual Ternak' },
-    { value: 'MENGAWINKAN_TERNAK', label: 'Mengawinkan Ternak' },
-    { value: 'PINDAH_KANDANG', label: 'Pindah Kandang' },
+    { value: 'TERNAK', label: 'Kegiatan Ternak' },
   ],
   PEMBANGUNAN: [
     { value: 'BANGUN_RUMAH', label: 'Bangun Rumah Tinggal' },
@@ -30,31 +30,18 @@ export const KEGIATAN_PER_KATEGORI = {
   ],
 };
 
-export const METODE_TRADISI = [
-  { value: 'GABUNGAN', label: 'Gabungan (Rekomendasi)' },
-  { value: 'SUNDA', label: 'Adat Sunda' },
-  { value: 'JAWA', label: 'Adat Jawa' },
-  { value: 'ABU_MASYAR', label: "Kitab Abu Ma'syar" },
-];
-
 export const GRADE_LABEL = {
-  OPTIMAL_EXCELLENCE: 'Sangat Optimal',
   SANGAT_BAIK: 'Sangat Baik',
-  BAIK: 'Baik',
   NETRAL: 'Netral',
-  KURANG_BAIK: 'Kurang Baik',
   HINDARI: 'Sebaiknya Dihindari',
 };
 
 export function gradeColor(colors, grade) {
   switch (grade) {
-    case 'OPTIMAL_EXCELLENCE':
     case 'SANGAT_BAIK':
       return { bg: colors.successSoft, fg: colors.success };
-    case 'BAIK':
+    case 'NETRAL':
       return { bg: colors.primarySoft, fg: colors.primary };
-    case 'KURANG_BAIK':
-      return { bg: '#FFF3DD', fg: '#B8860B' };
     case 'HINDARI':
       return { bg: colors.dangerSoft, fg: colors.danger };
     default:
@@ -66,29 +53,32 @@ function formatDate(date) {
   return date.toISOString().slice(0, 10);
 }
 
-export async function hitungHariUsaha({ kategori, kegiatan, metode, tanggal, lokasi }) {
+export async function hitungHariUsaha({ activityCode, tanggal, lokasi }) {
   const { data, error } = await supabase.functions.invoke('calculate-hari-baik-usaha', {
     body: {
-      kategori,
-      kegiatan,
-      metode,
-      target_date: formatDate(tanggal),
+      activity_code: activityCode,
+      date: formatDate(tanggal),
       ...(lokasi ? { latitude: lokasi.lat, longitude: lokasi.lng } : {}),
     },
   });
   if (error) throw new Error(error.message || 'Gagal menghubungi mesin penghitung.');
-  if (data?.meta?.status === 'error') throw new Error(data.message || 'Gagal menghitung hari baik.');
+  if (data?.meta?.status === 'error') throw new Error(data.error?.message || 'Gagal menghitung hari baik.');
   return data;
 }
 
-export async function cariHariTerbaik({ kategori, kegiatan, metode, mulai, jumlahHari, lokasi }) {
+export async function cariHariTerbaik({ activityCode, mulai, jumlahHari, lokasi }) {
   const hasil = [];
   for (let i = 0; i < jumlahHari; i++) {
     const tanggal = new Date(mulai);
     tanggal.setDate(tanggal.getDate() + i);
     try {
-      const r = await hitungHariUsaha({ kategori, kegiatan, metode, tanggal, lokasi });
-      hasil.push({ tanggal: formatDate(tanggal), ...r.assessment });
+      const r = await hitungHariUsaha({ activityCode, tanggal, lokasi });
+      hasil.push({
+        tanggal: formatDate(tanggal),
+        ...r.data,
+        spatial_advice: r.spatial_advice,
+        breakdown: r.breakdown,
+      });
     } catch (_e) {
       // lewati tanggal yang gagal dihitung, jangan hentikan seluruh pencarian
     }

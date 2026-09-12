@@ -11,6 +11,7 @@ import KepribadianScreen from './src/screens/KepribadianScreen';
 import PerjodohanWrapper from './src/screens/PerjodohanWrapper';
 import SettingsScreen from './src/screens/SettingsScreen';
 import HariUsahaScreen from './src/screens/HariUsahaScreen';
+import MetodologiScreen from './src/screens/MetodologiScreen';
 import OnboardingScreen, { cekOnboardingSelesai } from './src/screens/OnboardingScreen';
 
 function AppContent() {
@@ -101,6 +102,8 @@ function AppContent() {
         return <SettingsScreen onNavigate={setActiveScreen} />;
       case 'HariUsaha':
         return <HariUsahaScreen onNavigate={setActiveScreen} />;
+      case 'Metodologi':
+        return <MetodologiScreen onNavigate={setActiveScreen} />;
       default:
         return <HomeScreen onNavigate={setActiveScreen} />;
     }

@@ -153,8 +153,8 @@ export default function SettingsScreen({ onNavigate }) {
         </TouchableOpacity>
 
         <Text style={styles.sectionTitle}>Tentang</Text>
-        <TouchableOpacity style={styles.linkRow}>
-          <Text style={styles.linkText}>Tentang Metode Perhitungan</Text>
+        <TouchableOpacity style={styles.linkRow} onPress={() => onNavigate?.('Metodologi')}>
+          <Text style={styles.linkText}>Metodologi & Transparansi</Text>
         </TouchableOpacity>
       </ScrollView>
       <BottomNav active="Lainnya" onNavigate={onNavigate} />
