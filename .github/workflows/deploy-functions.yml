@@ -1,0 +1,27 @@
+name: Deploy Supabase Edge Functions
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'supabase/functions/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - run: supabase link --project-ref zwaziqlhiotcmkqgxtsl
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ f5212507e6221cf8350af9ddb4e7581507d65a85849a9420698f2b22fdd87a4c
+ }}
+
+      - run: supabase functions deploy calculate-hari-baik-usaha
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ f5212507e6221cf8350af9ddb4e7581507d65a85849a9420698f2b22fdd87a4c
+ }}
