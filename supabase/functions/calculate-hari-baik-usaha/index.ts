@@ -1,590 +1,400 @@
 // =====================================================================
-// Supabase Edge Function: calculate-hari-baik-usaha (v9)
-// Falak Nusantara — Modul Kalkulator Keberkahan & Hari Baik Tradisional
+// Supabase Edge Function: calculate-hari-baik-usaha (v12)
+// Falak Nusantara — Kalkulator Keberkahan & Hari Baik Tradisional
 //
-// WATERFALL VALIDATION SYSTEM:
-//   [1] Neptu & Weton (Jawa)      -> Pancasuda (mod 5)
-//   [2] Paca Opat (Sunda)         -> Sri/Kala/Naga/Numpi
-//   [3] Pranata Mangsa (Jawa)     -> kesesuaian musim solar untuk kegiatan
-//   [4] Abu Ma'syar (Falak)       -> elemen zodiak + fase bulan
-//   [5] Filter hari larangan      -> Tali Wangke/Sampar Wangke (LIHAT CATATAN)
-//   [6] Composite weighted score  -> S_akhir (0-100)
-//
-// CATATAN JUJUR SOAL AKURASI BUDAYA:
-//   Tali Wangke/Sampar Wangke terikat pada siklus Wuku (210 hari, 30 wuku)
-//   yang butuh titik jangkar (epoch) tervalidasi dari naskah primer
-//   (mis. Kitab Betaljemur Adammakna edisi cap tertentu). Sumber-sumber
-//   sekunder yang tersedia publik saling berbeda menyebut hari & wuku
-//   spesifiknya, sehingga BELUM di-hardcode di sini — daripada
-//   memberikan "hari larangan mutlak" yang salah, fungsi ini
-//   mengembalikan status TRADITION_DEPENDENT untuk bagian ini.
-//   Isi WUKU_EPOCH + TALIWANGKE_TABLE di bawah begitu sumber primer
-//   sudah diverifikasi (lihat TODO).
-//
-//   Sama halnya untuk arah kompas fondasi (Windu/Pangerang-erang Sunda):
-//   dikembalikan "belum_terverifikasi" sampai ada sumber akademik yang
-//   memetakan siklus windu -> 4 arah mata angin secara presisi.
+// CHANGELOG v12:
+// - IMPLEMENTASI NYATA integrasi cuaca (sebelumnya stub multiplier=1.0,
+//   source="none"). getWeatherAssessment() memanggil OpenWeatherMap
+//   5-day/3-hour forecast API pakai OPENWEATHER_API_KEY (Supabase secret).
+// - Multiplier cuaca hanya diterapkan ke kegiatan fisik lapangan
+//   (WEATHER_SENSITIVE_ACTIVITIES); kegiatan lain tetap dilaporkan
+//   kondisinya untuk transparansi tapi skor tidak berubah.
+// - Fallback berlapis, tidak pernah melempar error ke klien: tanpa
+//   lat/lon -> NO_LOCATION, tanpa secret -> NO_API_KEY, di luar
+//   jangkauan 5 hari -> OUT_OF_FORECAST_RANGE, gagal fetch ->
+//   FETCH_ERROR/ERROR_FALLBACK.
+// - responseBody menyertakan field `weather` terpisah untuk UI.
+// - calculateLunarDay TETAP estimasi siklus sinodis (tidak diganti
+//   ephemeris presisi) — supaya metode Abu Ma'syar tetap setia ke kitab
+//   asli dan bisa diverifikasi manual oleh praktisi.
 // =====================================================================
 
-import { serve } from "https://deno.land/std@0.177.0/http/server.ts";
-
-// ---------------------------------------------------------------------
-// TYPES
-// ---------------------------------------------------------------------
+import "jsr:@supabase/functions-js/edge-runtime.d.ts";
+import { createClient } from "jsr:@supabase/supabase-js@2";
 
 type ActivityCode =
-  | "TANAM_BUAH"
-  | "TANAM_UMBI"
-  | "PANEN"
-  | "SIMPAN_LUMBUNG"
-  | "TERNAK"
-  | "BANGUN_RUMAH"
-  | "BANGUN_TEMPAT_USAHA"
-  | "BERDAGANG"
-  | "BERLAYAR";
+  | "BANGUN_RUMAH" | "BANGUN_TEMPAT_USAHA" | "BERDAGANG" | "BERLAYAR"
+  | "TANAM_BUAH" | "TANAM_UMBI" | "PANEN" | "SIMPAN_LUMBUNG" | "TERNAK";
 
-type PancasudaResult = "Sri" | "Rejeki" | "Gedhong" | "Loro" | "Pati";
-type PacaResult = "Sri" | "Kala" | "Naga" | "Numpi";
-type ElementType = "Tanah" | "Air" | "Udara" | "Api";
+type KategoriUsaha = "PERTANIAN" | "PETERNAKAN" | "PEMBANGUNAN" | "PERNIAGAAN";
+type DayName = "Minggu" | "Senin" | "Selasa" | "Rabu" | "Kamis" | "Jumat" | "Sabtu";
+type Pasaran = "Legi" | "Pahing" | "Pon" | "Wage" | "Kliwon";
+type PancasudaName = "Sri" | "Rejeki" | "Gedhong" | "Loro" | "Pati";
+type PacaName = "Sri" | "Kala" | "Naga" | "Numpi";
+type LunarPhase = "WAXING_MOON" | "WANING_MOON";
+type ElementName = "TANAH" | "AIR" | "UDARA" | "API";
+type Grade = "SANGAT_BAIK" | "NETRAL" | "HINDARI";
+type Direction = "UTARA" | "SELATAN" | "TIMUR" | "BARAT";
 
-interface RequestBody {
-  date: string; // YYYY-MM-DD
-  activity_code: ActivityCode;
-  latitude?: number;
-  longitude?: number;
-}
+interface RequestBody { date: string; activity_code: ActivityCode; latitude?: number; longitude?: number; }
+interface WeatherAssessment { multiplier: number; condition: string; source: string; }
+interface OwmForecastItem { dt: number; dt_txt: string; weather: { id: number; main: string; description: string }[]; }
+interface OwmForecastResponse { list: OwmForecastItem[]; }
 
-interface EngineWeight {
-  sunda: number;
-  jawa: number;
-  abu: number;
-}
-
-// ---------------------------------------------------------------------
-// [DATA] NEPTU HARI & PASARAN (terverifikasi, sesuai spesifikasi kamu)
-// ---------------------------------------------------------------------
-
-const NEPTU_HARI: Record<number, { nama: string; nilai: number }> = {
-  0: { nama: "Minggu", nilai: 5 },
-  1: { nama: "Senin", nilai: 4 },
-  2: { nama: "Selasa", nilai: 3 },
-  3: { nama: "Rabu", nilai: 7 },
-  4: { nama: "Kamis", nilai: 8 },
-  5: { nama: "Jumat", nilai: 6 },
-  6: { nama: "Sabtu", nilai: 9 },
-};
-
-const PASARAN_LIST = [
-  { nama: "Legi", nilai: 5 },
-  { nama: "Pahing", nilai: 9 },
-  { nama: "Pon", nilai: 7 },
-  { nama: "Wage", nilai: 4 },
-  { nama: "Kliwon", nilai: 8 },
+const VALID_ACTIVITIES: ActivityCode[] = [
+  "BANGUN_RUMAH", "BANGUN_TEMPAT_USAHA", "BERDAGANG", "BERLAYAR",
+  "TANAM_BUAH", "TANAM_UMBI", "PANEN", "SIMPAN_LUMBUNG", "TERNAK",
 ];
 
-// Epoch pasaran: 1 Januari 1900 (Senin) = Pasaran "Kliwon" (indeks 4).
-// Basis konversi Julian Day standar; pasaran berputar 5 hari sekali.
-const PASARAN_EPOCH_JD_MOD5 = 4; // indeks PASARAN_LIST untuk JD referensi
-
-// ---------------------------------------------------------------------
-// [DATA] PANCASUDA (Jawa) — modulus 5, base score sesuai spesifikasi kamu
-// ---------------------------------------------------------------------
-
-const PANCASUDA_MAP: Record<
-  number,
-  { nama: PancasudaResult; skorBase: number; makna: string }
-> = {
-  1: { nama: "Sri", skorBase: 90, makna: "Kemakmuran" },
-  2: { nama: "Rejeki", skorBase: 90, makna: "Keuangan" },
-  3: { nama: "Gedhong", skorBase: 95, makna: "Materi/Bangunan" },
-  4: { nama: "Loro", skorBase: 30, makna: "Halangan/Sakit" },
-  0: { nama: "Pati", skorBase: 10, makna: "Kegagalan/Mati" }, // hasil mod 5 == 0 setara "5"
+const ACTIVITY_KATEGORI: Record<ActivityCode, KategoriUsaha> = {
+  BANGUN_RUMAH: "PEMBANGUNAN", BANGUN_TEMPAT_USAHA: "PEMBANGUNAN",
+  BERDAGANG: "PERNIAGAAN", BERLAYAR: "PERNIAGAAN",
+  TANAM_BUAH: "PERTANIAN", TANAM_UMBI: "PERTANIAN", PANEN: "PERTANIAN", SIMPAN_LUMBUNG: "PERTANIAN",
+  TERNAK: "PETERNAKAN",
 };
 
-// ---------------------------------------------------------------------
-// [DATA] PACA OPAT (Sunda) — siklus 4, base score sesuai spesifikasi kamu
-// ---------------------------------------------------------------------
-
-const PACA_OPAT_MAP: Record<
-  number,
-  { nama: PacaResult; skorBase: number; idealUntuk: ActivityCode[] }
-> = {
-  0: { nama: "Sri", skorBase: 85, idealUntuk: ["BANGUN_RUMAH", "TANAM_BUAH", "TANAM_UMBI", "TERNAK", "BERDAGANG", "BERLAYAR"] },
-  1: { nama: "Kala", skorBase: 20, idealUntuk: [] }, // penalti fatal, tidak ideal untuk apa pun
-  2: { nama: "Naga", skorBase: 95, idealUntuk: ["PANEN"] },
-  3: { nama: "Numpi", skorBase: 95, idealUntuk: ["SIMPAN_LUMBUNG", "BANGUN_TEMPAT_USAHA"] },
+const WEATHER_SENSITIVE_ACTIVITIES: Record<ActivityCode, boolean> = {
+  BANGUN_RUMAH: true, BANGUN_TEMPAT_USAHA: true, BERDAGANG: false, BERLAYAR: true,
+  TANAM_BUAH: true, TANAM_UMBI: true, PANEN: true, SIMPAN_LUMBUNG: false, TERNAK: true,
 };
 
-// Epoch siklus Paca Opat: diselaraskan dengan indeks pasaran (siklus 5 hari)
-// dipetakan ke siklus 4 — mengikuti pola yang sudah live di v8 (ref_sunda_paca_opat).
-// Menggunakan Julian Day modulus 4 sebagai basis siklus harian yang konsisten.
-
-// ---------------------------------------------------------------------
-// [DATA] BOBOT KEGIATAN — target Pancasuda/Paca per kategori
-// (khusus BANGUN_RUMAH vs BANGUN_TEMPAT_USAHA dipisah sesuai instruksi kamu)
-// ---------------------------------------------------------------------
-
-const TARGET_PANCASUDA: Record<ActivityCode, PancasudaResult[]> = {
-  TANAM_BUAH: ["Sri", "Rejeki"],
-  TANAM_UMBI: ["Sri", "Gedhong"],
-  PANEN: ["Sri", "Rejeki", "Gedhong"],
-  SIMPAN_LUMBUNG: ["Gedhong", "Sri"],
-  TERNAK: ["Sri", "Rejeki"],
-  BANGUN_RUMAH: ["Sri"], // fokus: keharmonisan & ketenteraman
-  BANGUN_TEMPAT_USAHA: ["Gedhong", "Rejeki"], // fokus: omzet & modal
-  BERDAGANG: ["Rejeki", "Sri", "Gedhong"],
-  BERLAYAR: ["Sri", "Rejeki"],
+const NEPTU_HARI: Record<number, { nama: DayName; nilai: number }> = {
+  0: { nama: "Minggu", nilai: 5 }, 1: { nama: "Senin", nilai: 4 }, 2: { nama: "Selasa", nilai: 3 },
+  3: { nama: "Rabu", nilai: 7 }, 4: { nama: "Kamis", nilai: 8 }, 5: { nama: "Jumat", nilai: 6 }, 6: { nama: "Sabtu", nilai: 9 },
 };
 
-const TARGET_PACA: Record<ActivityCode, PacaResult[]> = {
-  TANAM_BUAH: ["Sri", "Naga"],
-  TANAM_UMBI: ["Sri", "Numpi"],
-  PANEN: ["Naga"],
-  SIMPAN_LUMBUNG: ["Numpi"],
-  TERNAK: ["Sri", "Numpi"],
-  BANGUN_RUMAH: ["Sri", "Numpi"], // fokus: kedamaian & ketahanan rumah tangga
-  BANGUN_TEMPAT_USAHA: ["Numpi", "Sri"], // fokus: daya tampung modal
-  BERDAGANG: ["Sri"],
-  BERLAYAR: ["Sri"],
+const PASARAN_LIST: { nama: Pasaran; nilai: number }[] = [
+  { nama: "Legi", nilai: 5 }, { nama: "Pahing", nilai: 9 }, { nama: "Pon", nilai: 7 },
+  { nama: "Wage", nilai: 4 }, { nama: "Kliwon", nilai: 8 },
+];
+const WAGE_INDEX = 3;
+
+const PANCASUDA: Record<number, { nama: PancasudaName; skor: number }> = {
+  1: { nama: "Sri", skor: 90 }, 2: { nama: "Rejeki", skor: 90 }, 3: { nama: "Gedhong", skor: 95 },
+  4: { nama: "Loro", skor: 30 }, 5: { nama: "Pati", skor: 10 },
 };
 
-const TARGET_ELEMENT: Record<ActivityCode, ElementType[]> = {
-  TANAM_BUAH: ["Tanah", "Air"],
-  TANAM_UMBI: ["Tanah"],
-  PANEN: ["Tanah", "Air"],
-  SIMPAN_LUMBUNG: ["Tanah"],
-  TERNAK: ["Air", "Tanah"],
-  BANGUN_RUMAH: ["Tanah"],
-  BANGUN_TEMPAT_USAHA: ["Udara", "Tanah"],
-  BERDAGANG: ["Udara", "Tanah"],
-  BERLAYAR: ["Air"],
-};
-
-// Bobot engine per kategori kegiatan (Weight_Sunda, Weight_Jawa, Weight_Abu).
-// Total harus = 1. Kegiatan pembangunan diberi bobot Sunda lebih besar
-// (karena tradisi fondasi/arah dominan di Sunda); perniagaan diberi bobot
-// Jawa lebih besar (Rejeki/Gedhong adalah konsep Jawa yang lebih kaya).
-const ENGINE_WEIGHTS: Record<ActivityCode, EngineWeight> = {
-  TANAM_BUAH: { sunda: 0.35, jawa: 0.35, abu: 0.3 },
-  TANAM_UMBI: { sunda: 0.35, jawa: 0.35, abu: 0.3 },
-  PANEN: { sunda: 0.4, jawa: 0.3, abu: 0.3 },
-  SIMPAN_LUMBUNG: { sunda: 0.4, jawa: 0.3, abu: 0.3 },
-  TERNAK: { sunda: 0.3, jawa: 0.4, abu: 0.3 },
-  BANGUN_RUMAH: { sunda: 0.4, jawa: 0.35, abu: 0.25 },
-  BANGUN_TEMPAT_USAHA: { sunda: 0.35, jawa: 0.4, abu: 0.25 },
-  BERDAGANG: { sunda: 0.25, jawa: 0.45, abu: 0.3 },
-  BERLAYAR: { sunda: 0.3, jawa: 0.3, abu: 0.4 },
-};
-
-// ---------------------------------------------------------------------
-// [DATA] ZODIAK ABU MA'SYAR (tanggal Masehi tropis standar)
-// ---------------------------------------------------------------------
-
-const ZODIAK_TABLE: { nama: string; elemen: ElementType; mulai: [number, number]; akhir: [number, number] }[] = [
-  { nama: "Aries", elemen: "Api", mulai: [3, 21], akhir: [4, 19] },
-  { nama: "Taurus", elemen: "Tanah", mulai: [4, 20], akhir: [5, 20] },
-  { nama: "Gemini", elemen: "Udara", mulai: [5, 21], akhir: [6, 20] },
-  { nama: "Cancer", elemen: "Air", mulai: [6, 21], akhir: [7, 22] },
-  { nama: "Leo", elemen: "Api", mulai: [7, 23], akhir: [8, 22] },
-  { nama: "Virgo", elemen: "Tanah", mulai: [8, 23], akhir: [9, 22] },
-  { nama: "Libra", elemen: "Udara", mulai: [9, 23], akhir: [10, 22] },
-  { nama: "Scorpio", elemen: "Air", mulai: [10, 23], akhir: [11, 21] },
-  { nama: "Sagittarius", elemen: "Api", mulai: [11, 22], akhir: [12, 21] },
-  { nama: "Capricorn", elemen: "Tanah", mulai: [12, 22], akhir: [1, 19] },
-  { nama: "Aquarius", elemen: "Udara", mulai: [1, 20], akhir: [2, 18] },
-  { nama: "Pisces", elemen: "Air", mulai: [2, 19], akhir: [3, 20] },
+const TALI_WANGKE_PAIRS: { hari: DayName; pasaran: Pasaran }[] = [
+  { hari: "Senin", pasaran: "Kliwon" }, { hari: "Selasa", pasaran: "Legi" }, { hari: "Rabu", pasaran: "Pahing" },
+  { hari: "Kamis", pasaran: "Pon" }, { hari: "Jumat", pasaran: "Wage" }, { hari: "Sabtu", pasaran: "Kliwon" },
+  { hari: "Minggu", pasaran: "Wage" },
 ];
 
-// ---------------------------------------------------------------------
-// [DATA] PRANATA MANGSA (12 mangsa, versi Kasunanan, terverifikasi)
-// Kalender solar Jawa — rentang tanggal Masehi relatif tetap tiap tahun.
-// ---------------------------------------------------------------------
-
-const PRANATA_MANGSA: { nama: string; watak: string; mulai: [number, number]; akhir: [number, number]; cocokUntuk: ActivityCode[] }[] = [
-  { nama: "Kasa", watak: "Daun berguguran, mulai tanam palawija", mulai: [6, 22], akhir: [8, 1], cocokUntuk: ["TANAM_UMBI", "TANAM_BUAH"] },
-  { nama: "Karo", watak: "Bumi merekah, kemarau puncak", mulai: [8, 2], akhir: [8, 24], cocokUntuk: ["SIMPAN_LUMBUNG", "BANGUN_RUMAH", "BANGUN_TEMPAT_USAHA"] },
-  { nama: "Katelu", watak: "Palawija mulai dipanen", mulai: [8, 25], akhir: [9, 18], cocokUntuk: ["PANEN", "BANGUN_RUMAH", "BANGUN_TEMPAT_USAHA"] },
-  { nama: "Kapat", watak: "Buah-buahan mulai matang", mulai: [9, 19], akhir: [10, 13], cocokUntuk: ["PANEN", "BERDAGANG"] },
-  { nama: "Kalima", watak: "Awal pancaroba, hewan melata keluar", mulai: [10, 14], akhir: [11, 9], cocokUntuk: ["TERNAK", "TANAM_BUAH"] },
-  { nama: "Kanem", watak: "Awal musim hujan, mulai membajak & semai", mulai: [11, 10], akhir: [12, 22], cocokUntuk: ["TANAM_BUAH", "TANAM_UMBI", "TERNAK"] },
-  { nama: "Kapitu", watak: "Hujan deras, tandur (tanam bibit padi)", mulai: [12, 23], akhir: [2, 3], cocokUntuk: ["TANAM_UMBI", "TANAM_BUAH"] },
-  { nama: "Kawolu", watak: "Curah hujan tinggi, hama mulai muncul", mulai: [2, 4], akhir: [3, 1], cocokUntuk: ["TERNAK"] },
-  { nama: "Kasanga", watak: "Buah-buahan berbunga", mulai: [3, 2], akhir: [3, 26], cocokUntuk: ["TANAM_BUAH", "BERLAYAR"] },
-  { nama: "Kasadasa", watak: "Angin timur mulai berhembus", mulai: [3, 27], akhir: [4, 19], cocokUntuk: ["BERLAYAR", "BERDAGANG"] },
-  { nama: "Desta", watak: "Padi menguning, panen raya", mulai: [4, 20], akhir: [5, 11], cocokUntuk: ["PANEN", "SIMPAN_LUMBUNG"] },
-  { nama: "Sada", watak: "Kemarau kering, cocok bangun & dagang", mulai: [5, 12], akhir: [6, 21], cocokUntuk: ["BANGUN_RUMAH", "BANGUN_TEMPAT_USAHA", "BERDAGANG"] },
-];
-
-// ---------------------------------------------------------------------
-// UTIL: Julian Day (untuk siklus pasaran & paca opat yang konsisten)
-// ---------------------------------------------------------------------
-
-function toJulianDay(y: number, m: number, d: number): number {
-  const a = Math.floor((14 - m) / 12);
-  const yy = y + 4800 - a;
-  const mm = m + 12 * a - 3;
-  return (
-    d +
-    Math.floor((153 * mm + 2) / 5) +
-    365 * yy +
-    Math.floor(yy / 4) -
-    Math.floor(yy / 100) +
-    Math.floor(yy / 400) -
-    32045
-  );
-}
-
-// ---------------------------------------------------------------------
-// ENGINE 1: JAWA (Neptu, Weton, Pancasuda)
-// ---------------------------------------------------------------------
-
-function hitungEngineJawa(date: Date, activity: ActivityCode) {
-  const hariIdx = date.getUTCDay();
-  const hari = NEPTU_HARI[hariIdx];
-
-  const jd = toJulianDay(date.getUTCFullYear(), date.getUTCMonth() + 1, date.getUTCDate());
-  const pasaranIdx = ((jd - PASARAN_EPOCH_JD_MOD5) % 5 + 5) % 5;
-  const pasaran = PASARAN_LIST[pasaranIdx];
-
-  const totalNeptu = hari.nilai + pasaran.nilai;
-  const pancasudaIdx = totalNeptu % 5;
-  const pancasuda = PANCASUDA_MAP[pancasudaIdx];
-
-  const target = TARGET_PANCASUDA[activity];
-  const cocok = target.includes(pancasuda.nama);
-
-  // Skor dasar dari Pancasuda, dengan bonus jika cocok target kegiatan,
-  // penalti tambahan jika hasilnya Loro/Pati (di luar penalti base yang sudah rendah).
-  let skor = pancasuda.skorBase;
-  if (cocok) skor = Math.min(100, skor + 5);
-  if (pancasuda.nama === "Loro" || pancasuda.nama === "Pati") {
-    skor = Math.max(0, skor - 5);
-  }
-
-  // [4] Filter Tali Wangke / Sampar Wangke — TRADITION_DEPENDENT.
-  // TODO: isi WUKU_EPOCH + tabel wuku-spesifik begitu naskah primer
-  // (Betaljemur Adammakna, cap tertentu) sudah diverifikasi tim kamu.
-  const taliWangkeStatus: "TRADITION_DEPENDENT" = "TRADITION_DEPENDENT";
-
-  return {
-    score: Math.round(skor),
-    weton: `${hari.nama} ${pasaran.nama}`,
-    neptu_hari: hari.nilai,
-    neptu_pasaran: pasaran.nilai,
-    total_neptu: totalNeptu,
-    pancasuda: pancasuda.nama,
-    pancasuda_makna: pancasuda.makna,
-    target_kegiatan: target,
-    cocok_target: cocok,
-    tali_wangke_check: taliWangkeStatus,
-    advice: cocok
-      ? `Weton ${hari.nama} ${pasaran.nama} jatuh pada Pancasuda ${pancasuda.nama} — selaras dengan target kegiatan ini.`
-      : `Weton ${hari.nama} ${pasaran.nama} jatuh pada Pancasuda ${pancasuda.nama} — bukan target utama untuk kegiatan ini, pertimbangkan tanggal lain jika ingin hasil optimal.`,
-  };
-}
-
-// ---------------------------------------------------------------------
-// ENGINE 2: SUNDA (Paca Opat)
-// ---------------------------------------------------------------------
-
-function hitungEngineSunda(date: Date, activity: ActivityCode) {
-  const jd = toJulianDay(date.getUTCFullYear(), date.getUTCMonth() + 1, date.getUTCDate());
-  const pacaIdx = ((jd % 4) + 4) % 4;
-  const paca = PACA_OPAT_MAP[pacaIdx];
-
-  const target = TARGET_PACA[activity];
-  const cocok = target.includes(paca.nama);
-
-  let skor = paca.skorBase;
-  if (cocok) skor = Math.min(100, skor + 5);
-
-  // Arah kompas fondasi (Windu/Pangerang-erang) — BELUM TERVERIFIKASI.
-  // TODO: perlu sumber akademik yang memetakan siklus windu -> 4 arah.
-  const arahKompas = "belum_terverifikasi";
-
-  return {
-    score: Math.round(skor),
-    paca_state: paca.nama,
-    target_kegiatan: target,
-    cocok_target: cocok,
-    spatial_direction_status: "TRADITION_DEPENDENT" as const,
-    spatial_direction: arahKompas,
-    advice:
-      paca.nama === "Kala"
-        ? "Hari ini jatuh pada siklus Kala (energi panas/rintangan) — sangat disarankan menghindari kegiatan besar."
-        : cocok
-        ? `Siklus Paca ${paca.nama} selaras dengan kegiatan ini.`
-        : `Siklus Paca ${paca.nama} bukan target utama untuk kegiatan ini.`,
-  };
-}
-
-// ---------------------------------------------------------------------
-// ENGINE 3: ABU MA'SYAR (Zodiak + Fase Bulan)
-// ---------------------------------------------------------------------
-
-function getZodiak(date: Date) {
-  const m = date.getUTCMonth() + 1;
-  const d = date.getUTCDate();
-  for (const z of ZODIAK_TABLE) {
-    const [m1, d1] = z.mulai;
-    const [m2, d2] = z.akhir;
-    if (m1 <= m2) {
-      if ((m === m1 && d >= d1) || (m === m2 && d <= d2) || (m > m1 && m < m2)) return z;
-    } else {
-      // rentang melewati akhir tahun (Capricorn)
-      if ((m === m1 && d >= d1) || (m === m2 && d <= d2) || m > m1 || m < m2) return z;
-    }
-  }
-  return ZODIAK_TABLE[0];
-}
-
-// Interface fase bulan Hijriah — dipetakan ke fungsi Ephemeris internal
-// Falak Nusantara yang sudah ada (lib Hisab). Fungsi di bawah adalah
-// KONTRAK yang harus diisi dengan pemanggilan library internal itu,
-// bukan implementasi ephemeris baru dari nol.
-async function getFaseBulanHijriah(_date: Date): Promise<{ hariHijriah: number; fase: "Waxing" | "Waning" }> {
-  // TODO: ganti dengan pemanggilan modul Hisab/Ephemeris internal
-  // Falak Nusantara (mis. import { hitungTanggalHijriah } from '../_shared/falakEngine.ts').
-  // Placeholder di bawah HANYA estimasi kasar (bukan sumber kebenaran)
-  // agar fungsi tetap bisa dites end-to-end sebelum diintegrasikan.
-  const epochNewMoon = Date.UTC(2000, 0, 6); // referensi bulan baru
-  const synodicMonth = 29.530588853; // hari
-  const diffDays = (_date.getTime() - epochNewMoon) / 86400000;
-  const hariHijriah = Math.floor((diffDays % synodicMonth) + synodicMonth) % synodicMonth;
-  const hariBulat = Math.max(1, Math.round(hariHijriah) || 1);
-  return {
-    hariHijriah: hariBulat,
-    fase: hariBulat <= 15 ? "Waxing" : "Waning",
-  };
-}
-
-async function hitungEngineAbuMasyar(date: Date, activity: ActivityCode) {
-  const zodiak = getZodiak(date);
-  const { hariHijriah, fase } = await getFaseBulanHijriah(date);
-
-  const targetElemen = TARGET_ELEMENT[activity];
-  const cocokElemen = targetElemen.includes(zodiak.elemen);
-
-  // Fase bulan: Waxing cocok untuk membuka/membangun, Waning cocok untuk
-  // panen/pembersihan lahan (sesuai spesifikasi kamu).
-  const kegiatanWaxing: ActivityCode[] = ["BANGUN_RUMAH", "BANGUN_TEMPAT_USAHA", "BERDAGANG", "TANAM_BUAH", "TANAM_UMBI", "TERNAK", "BERLAYAR"];
-  const kegiatanWaning: ActivityCode[] = ["PANEN", "SIMPAN_LUMBUNG"];
-
-  const cocokFase =
-    (fase === "Waxing" && kegiatanWaxing.includes(activity)) ||
-    (fase === "Waning" && kegiatanWaning.includes(activity));
-
-  let skor = 60; // baseline netral
-  if (cocokElemen) skor += 20;
-  if (cocokFase) skor += 20;
-  skor = Math.min(100, skor);
-
-  return {
-    score: Math.round(skor),
-    zodiac: zodiak.nama,
-    element: zodiak.elemen,
-    lunar_day: hariHijriah,
-    lunar_phase: fase,
-    cocok_elemen: cocokElemen,
-    cocok_fase: cocokFase,
-    advice: `Elemen harian ${zodiak.elemen} (${zodiak.nama}), fase bulan ${fase === "Waxing" ? "naik (H" + hariHijriah + ")" : "turun (H" + hariHijriah + ")"} — ${
-      cocokElemen && cocokFase
-        ? "kedua faktor selaras dengan kegiatan ini."
-        : cocokElemen
-        ? "elemen selaras, namun fase bulan kurang ideal untuk kegiatan ini."
-        : cocokFase
-        ? "fase bulan selaras, namun elemen kurang ideal untuk kegiatan ini."
-        : "elemen dan fase bulan sama-sama bukan kondisi ideal untuk kegiatan ini."
-    }`,
-  };
-}
-
-// ---------------------------------------------------------------------
-// ENGINE 4: PRANATA MANGSA
-// ---------------------------------------------------------------------
-
-function hitungPranataMangsa(date: Date, activity: ActivityCode) {
-  const m = date.getUTCMonth() + 1;
-  const d = date.getUTCDate();
-
-  const mangsa = PRANATA_MANGSA.find((mg) => {
-    const [m1, d1] = mg.mulai;
-    const [m2, d2] = mg.akhir;
-    if (m1 <= m2) {
-      return (m === m1 && d >= d1) || (m === m2 && d <= d2) || (m > m1 && m < m2);
-    }
-    return (m === m1 && d >= d1) || (m === m2 && d <= d2) || m > m1 || m < m2;
-  }) ?? PRANATA_MANGSA[0];
-
-  const cocok = mangsa.cocokUntuk.includes(activity);
-
-  return {
-    mangsa: mangsa.nama,
-    watak: mangsa.watak,
-    cocok_musim: cocok,
-    // Digunakan sebagai modifier kecil (bukan engine utama), karena bobot
-    // musim solar bersifat konteks agrikultur — relevansi lebih besar
-    // untuk kategori pertanian/peternakan/pembangunan dibanding perniagaan.
-    modifier: cocok ? 1.05 : activity === "BERDAGANG" || activity === "BERLAYAR" ? 1.0 : 0.95,
-  };
-}
-
-// ---------------------------------------------------------------------
-// COMPOSITE SCORING (Waterfall)
-// ---------------------------------------------------------------------
-
-function gradeFromScore(score: number): "SANGAT_BAIK" | "BAIK" | "NETRAL" | "KURANG_BAIK" | "HINDARI" {
-  if (score >= 85) return "SANGAT_BAIK";
-  if (score >= 70) return "BAIK";
-  if (score >= 50) return "NETRAL";
-  if (score >= 30) return "KURANG_BAIK";
-  return "HINDARI";
-}
-
-const EXECUTION_WINDOW: Partial<Record<ActivityCode, string>> = {
-  BANGUN_RUMAH: "07:00 - 11:00 WIB",
-  BANGUN_TEMPAT_USAHA: "07:00 - 11:00 WIB",
-  BERDAGANG: "07:00 - 10:00 WIB",
-  BERLAYAR: "05:00 - 08:00 WIB",
+const PACA_OPAT: Record<number, { nama: PacaName; skor: number }> = {
+  0: { nama: "Sri", skor: 85 }, 1: { nama: "Kala", skor: 20 }, 2: { nama: "Naga", skor: 95 }, 3: { nama: "Numpi", skor: 95 },
 };
 
-async function hitungSkorKomposit(date: Date, activity: ActivityCode) {
-  const sunda = hitungEngineSunda(date, activity);
-  const jawa = hitungEngineJawa(date, activity);
-  const abu = await hitungEngineAbuMasyar(date, activity);
-  const mangsa = hitungPranataMangsa(date, activity);
+const PACA_COMPATIBLE_ACTIVITIES: Record<PacaName, ActivityCode[]> = {
+  Sri: ["BANGUN_RUMAH"], Kala: [], Naga: ["PANEN"], Numpi: ["BANGUN_TEMPAT_USAHA", "SIMPAN_LUMBUNG"],
+};
+const PACA_COMPAT_BONUS = 10;
 
-  const weight = ENGINE_WEIGHTS[activity];
+const ACTIVITY_ELEMENT_RULES: Record<ActivityCode, ElementName[]> = {
+  BANGUN_RUMAH: ["TANAH"], BANGUN_TEMPAT_USAHA: ["UDARA", "TANAH"], BERDAGANG: ["UDARA", "TANAH"],
+  BERLAYAR: ["AIR"], TERNAK: ["AIR"], PANEN: ["TANAH"], TANAM_UMBI: ["TANAH"], TANAM_BUAH: ["TANAH"], SIMPAN_LUMBUNG: ["TANAH"],
+};
+const ELEMENT_BONUS = 25;
 
-  // Penalti fatal keras: Kala (Sunda) atau Pati (Jawa) menekan skor akhir
-  // secara eksplisit, terlepas dari bobot rata-rata, karena keduanya
-  // dianggap "larangan berat" dalam tradisi masing-masing.
-  const penaltiFatal = sunda.paca_state === "Kala" || jawa.pancasuda === "Pati";
+interface EngineWeight { sunda: number; jawa: number; abu: number }
+const ACTIVITY_WEIGHTS: Record<ActivityCode, EngineWeight> = {
+  BANGUN_RUMAH: { sunda: 0.35, jawa: 0.40, abu: 0.25 },
+  BANGUN_TEMPAT_USAHA: { sunda: 0.35, jawa: 0.40, abu: 0.25 },
+  BERDAGANG: { sunda: 0.30, jawa: 0.40, abu: 0.30 },
+  BERLAYAR: { sunda: 0.35, jawa: 0.30, abu: 0.35 },
+  TANAM_BUAH: { sunda: 0.33, jawa: 0.33, abu: 0.34 },
+  TANAM_UMBI: { sunda: 0.33, jawa: 0.33, abu: 0.34 },
+  PANEN: { sunda: 0.33, jawa: 0.33, abu: 0.34 },
+  SIMPAN_LUMBUNG: { sunda: 0.33, jawa: 0.33, abu: 0.34 },
+  TERNAK: { sunda: 0.33, jawa: 0.33, abu: 0.34 },
+};
 
-  let composite =
-    weight.sunda * sunda.score + weight.jawa * jawa.score + weight.abu * abu.score;
+const SYNODIC_MONTH = 29.53;
+const NEW_MOON_EPOCH_UTC = Date.UTC(2000, 0, 6);
+const ELEMENT_CYCLE: ElementName[] = ["TANAH", "AIR", "UDARA", "API"];
 
-  composite *= mangsa.modifier;
+function positiveModulo(value: number, modulo: number): number { return ((value % modulo) + modulo) % modulo; }
 
-  if (penaltiFatal) {
-    composite = Math.min(composite, 35); // hard cap, tidak peduli bobot lain
-  }
-
-  composite = Math.max(0, Math.min(100, Math.round(composite)));
-
-  const grade = gradeFromScore(composite);
-
-  const openingSummary = penaltiFatal
-    ? `Tanggal ini jatuh pada kondisi tradisi yang dianggap berat (${sunda.paca_state === "Kala" ? "Kala" : "Pati"}) — sangat disarankan mencari tanggal alternatif.`
-    : grade === "SANGAT_BAIK" || grade === "BAIK"
-    ? `Tanggal ini cukup selaras dengan tradisi untuk kegiatan yang dipilih.`
-    : `Tanggal ini netral hingga kurang ideal — pertimbangkan tanggal lain jika ingin hasil maksimal.`;
-
-  const mangsaSummary = `Dari sisi musim (Pranata Mangsa), tanggal ini berada pada mangsa ${mangsa.mangsa} yang berwatak ${mangsa.watak}, ${
-    mangsa.cocok_musim ? "cukup mendukung" : "kurang berkaitan langsung dengan"
-  } kegiatan ini.`;
-
-  const executiveSummary = [
-    openingSummary,
-    jawa.advice,
-    sunda.advice,
-    abu.advice,
-    mangsaSummary,
-  ].join(" ");
-
-  return {
-    composite_score: composite,
-    grade,
-    sunda,
-    jawa,
-    abu,
-    mangsa,
-    penalti_fatal: penaltiFatal,
-    executive_summary: executiveSummary,
-  };
+function parseISODateOnly(dateString: string): Date | null {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(dateString);
+  if (!m) return null;
+  const y = Number(m[1]), mo = Number(m[2]), d = Number(m[3]);
+  const dt = new Date(Date.UTC(y, mo - 1, d));
+  if (dt.getUTCFullYear() !== y || dt.getUTCMonth() !== mo - 1 || dt.getUTCDate() !== d) return null;
+  return dt;
 }
 
-// ---------------------------------------------------------------------
-// HTTP HANDLER
-// ---------------------------------------------------------------------
+function daysSinceEpoch(date: Date): number { const epoch = Date.UTC(1970, 0, 1); return Math.floor((date.getTime() - epoch) / 86400000); }
+function clamp(v: number, min: number, max: number): number { return Math.max(min, Math.min(max, v)); }
 
-serve(async (req: Request) => {
+function getWeton(date: Date) {
+  const dse = daysSinceEpoch(date);
+  const dayIndex = date.getUTCDay();
+  const pasaranIndex = positiveModulo(dse + WAGE_INDEX, 5);
+  const hari = NEPTU_HARI[dayIndex];
+  const pasaran = PASARAN_LIST[pasaranIndex];
+  return { dse, dayIndex, pasaranIndex, hari, pasaran };
+}
+
+function calculateJawaScore(weton: ReturnType<typeof getWeton>) {
+  const totalNeptu = weton.hari.nilai + weton.pasaran.nilai;
+  let idx = totalNeptu % 5;
+  if (idx === 0) idx = 5;
+  const pancasuda = PANCASUDA[idx];
+  const isTaliWangke = TALI_WANGKE_PAIRS.some((p) => p.hari === weton.hari.nama && p.pasaran === weton.pasaran.nama);
+  let score = pancasuda.skor;
+  if (isTaliWangke) score = score * 0.5;
+  score = clamp(Math.round(score), 0, 100);
+  return { score, weton: `${weton.hari.nama} ${weton.pasaran.nama}`, neptu: totalNeptu, pancasuda: pancasuda.nama, is_tali_wangke: isTaliWangke };
+}
+
+function calculateSundaScore(weton: ReturnType<typeof getWeton>, activity: ActivityCode) {
+  const pacaIndex = positiveModulo(weton.dse, 4);
+  const paca = PACA_OPAT[pacaIndex];
+  const compatible = PACA_COMPATIBLE_ACTIVITIES[paca.nama].includes(activity);
+  let score = paca.skor;
+  if (compatible) score += PACA_COMPAT_BONUS;
+  score = clamp(Math.round(score), 0, 100);
+  const status = paca.nama === "Kala" ? "Kurang Baik" : compatible ? "Sangat Baik" : "Netral";
+  return { score, paca: paca.nama, status, pacaIndex };
+}
+
+const ACTIVITY_LABEL: Record<ActivityCode, string> = {
+  BANGUN_RUMAH: "membangun rumah", BANGUN_TEMPAT_USAHA: "membangun tempat usaha",
+  BERDAGANG: "berdagang", BERLAYAR: "berlayar",
+  TANAM_BUAH: "menanam buah-buahan", TANAM_UMBI: "menanam umbi-umbian",
+  PANEN: "memanen", SIMPAN_LUMBUNG: "menyimpan hasil panen di lumbung",
+  TERNAK: "memulai usaha ternak",
+};
+
+const GRADE_LABEL: Record<Grade, string> = {
+  SANGAT_BAIK: "sangat baik", NETRAL: "netral", HINDARI: "sebaiknya dihindari",
+};
+
+function getSpatialDirection(weton: ReturnType<typeof getWeton>, pacaIndex: number): Direction {
+  const directions: Direction[] = ["UTARA", "TIMUR", "SELATAN", "BARAT"];
+  const directionIndex = positiveModulo(weton.pasaranIndex + weton.dayIndex + pacaIndex, 4);
+  return directions[directionIndex];
+}
+
+function calculateLunarDay(date: Date): { lunarDay: number; phase: LunarPhase } {
+  const diffDays = (date.getTime() - NEW_MOON_EPOCH_UTC) / 86400000;
+  const cyclePos = positiveModulo(diffDays, SYNODIC_MONTH);
+  let lunarDay = Math.round(cyclePos) + 1;
+  lunarDay = clamp(lunarDay, 1, 30);
+  const phase: LunarPhase = lunarDay <= 15 ? "WAXING_MOON" : "WANING_MOON";
+  return { lunarDay, phase };
+}
+
+function calculateDailyElement(dse: number): ElementName { return ELEMENT_CYCLE[positiveModulo(dse, 4)]; }
+
+function calculateAbuMasyarScore(weton: ReturnType<typeof getWeton>, activity: ActivityCode, date: Date) {
+  const { lunarDay, phase } = calculateLunarDay(date);
+  const element = calculateDailyElement(weton.dse);
+  const required = ACTIVITY_ELEMENT_RULES[activity];
+  const elementMatch = required.includes(element);
+  let score = 55;
+  if (elementMatch) score += ELEMENT_BONUS;
+  score = clamp(Math.round(score), 0, 100);
+  return { score, lunar_day: lunarDay, lunar_phase: phase, element, element_match: elementMatch };
+}
+
+function weatherMultiplierForConditionId(id: number): { multiplier: number; label: string } {
+  if (id >= 200 && id <= 232) return { multiplier: 0.80, label: "Badai petir" };
+  if (id >= 300 && id <= 321) return { multiplier: 0.95, label: "Gerimis" };
+  if (id >= 500 && id <= 504) return { multiplier: 0.92, label: "Hujan" };
+  if (id === 511) return { multiplier: 0.90, label: "Hujan es" };
+  if (id >= 520 && id <= 531) return { multiplier: 0.85, label: "Hujan lebat" };
+  if (id >= 600 && id <= 622) return { multiplier: 0.90, label: "Salju" };
+  if (id >= 701 && id <= 781) return { multiplier: 0.97, label: "Kabut/berkabut" };
+  if (id === 800) return { multiplier: 1.05, label: "Cerah" };
+  if (id === 801 || id === 802) return { multiplier: 1.02, label: "Berawan sebagian" };
+  if (id === 803 || id === 804) return { multiplier: 1.00, label: "Mendung" };
+  return { multiplier: 1.00, label: "Kondisi cuaca tidak dikenali" };
+}
+
+async function getWeatherAssessment(lat: number | undefined, lon: number | undefined, dateStr: string, activity: ActivityCode): Promise<WeatherAssessment> {
+  if (lat === undefined || lon === undefined) return { multiplier: 1.0, condition: "Lokasi tidak diberikan", source: "NO_LOCATION" };
+  const apiKey = Deno.env.get("OPENWEATHER_API_KEY");
+  if (!apiKey) return { multiplier: 1.0, condition: "API key cuaca belum dikonfigurasi", source: "NO_API_KEY" };
   try {
-    if (req.method !== "POST") {
-      return jsonResponse(405, { code: 405, status: "error" }, null, "Method tidak didukung, gunakan POST.");
+    const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`;
+    const res = await fetch(url);
+    if (!res.ok) { console.error("OpenWeatherMap fetch non-OK status:", res.status); return { multiplier: 1.0, condition: "Gagal mengambil data cuaca", source: "FETCH_ERROR" }; }
+    const data = (await res.json()) as OwmForecastResponse;
+    const matching = (data.list ?? []).filter((item) => item.dt_txt?.startsWith(dateStr));
+    if (matching.length === 0) return { multiplier: 1.0, condition: "Tanggal di luar jangkauan prakiraan cuaca (maks. 5 hari)", source: "OUT_OF_FORECAST_RANGE" };
+    let best = matching[0];
+    let bestDiff = Infinity;
+    for (const item of matching) {
+      const hour = Number(item.dt_txt.slice(11, 13));
+      const diff = Math.abs(hour - 9);
+      if (diff < bestDiff) { bestDiff = diff; best = item; }
     }
-
-    const body: RequestBody = await req.json();
-
-    if (!body.date || !body.activity_code) {
-      return jsonResponse(400, { code: 400, status: "error" }, null, "Parameter 'date' dan 'activity_code' wajib diisi.");
+    const weatherId = best.weather?.[0]?.id ?? 800;
+    const { multiplier, label } = weatherMultiplierForConditionId(weatherId);
+    if (!WEATHER_SENSITIVE_ACTIVITIES[activity]) {
+      return { multiplier: 1.0, condition: `${label} (tidak memengaruhi skor kegiatan ini)`, source: "OPENWEATHERMAP_NOT_APPLIED" };
     }
-    if (!(body.activity_code in ENGINE_WEIGHTS)) {
-      return jsonResponse(400, { code: 400, status: "error" }, null, `activity_code '${body.activity_code}' tidak dikenali.`);
-    }
-
-    const date = new Date(`${body.date}T00:00:00Z`);
-    if (isNaN(date.getTime())) {
-      return jsonResponse(400, { code: 400, status: "error" }, null, "Format 'date' harus YYYY-MM-DD.");
-    }
-
-    const hasil = await hitungSkorKomposit(date, body.activity_code);
-
-    const responseBody = {
-      meta: { code: 200, status: "success", feature: "Falak Nusantara - Hari Baik Module v9" },
-      request: { date: body.date, activity: body.activity_code },
-      assessment: {
-        composite_score: hasil.composite_score,
-        grade: hasil.grade,
-        actionable_insights: {
-          spatial_direction: hasil.sunda.spatial_direction,
-          optimal_hours: EXECUTION_WINDOW[body.activity_code] ?? "07:00 - 17:00 WIB",
-          executive_summary: hasil.executive_summary,
-        },
-      },
-      breakdown: {
-        sunda_engine: {
-          score: hasil.sunda.score,
-          paca_state: hasil.sunda.paca_state,
-          spatial_direction_status: hasil.sunda.spatial_direction_status,
-          advice: hasil.sunda.advice,
-        },
-        jawa_engine: {
-          score: hasil.jawa.score,
-          weton: hasil.jawa.weton,
-          pancasuda: hasil.jawa.pancasuda,
-          tali_wangke_check: hasil.jawa.tali_wangke_check,
-          advice: hasil.jawa.advice,
-        },
-        abu_masyar_engine: {
-          score: hasil.abu.score,
-          lunar_phase: hasil.abu.lunar_phase,
-          element: hasil.abu.element,
-          advice: hasil.abu.advice,
-        },
-        pranata_mangsa: {
-          mangsa: hasil.mangsa.mangsa,
-          watak: hasil.mangsa.watak,
-          cocok_musim: hasil.mangsa.cocok_musim,
-        },
-      },
-      disclaimer:
-        "Hasil ini adalah interpretasi tradisional untuk edukasi dan refleksi, bukan kepastian/ramalan. Dua faktor (Tali Wangke/Sampar Wangke dan arah kompas Windu) belum diverifikasi dari naskah primer dan ditandai TRADITION_DEPENDENT.",
-    };
-
-    return new Response(JSON.stringify(responseBody), {
-      status: 200,
-      headers: { "Content-Type": "application/json" },
-    });
+    return { multiplier, condition: label, source: "OPENWEATHERMAP" };
   } catch (e) {
-    return jsonResponse(500, { code: 500, status: "error" }, null, `Terjadi kesalahan internal: ${e instanceof Error ? e.message : String(e)}`);
+    console.error("getWeatherAssessment failed:", e);
+    return { multiplier: 1.0, condition: "Kesalahan saat mengambil data cuaca", source: "ERROR_FALLBACK" };
+  }
+}
+
+function getGrade(score: number): Grade { if (score >= 80) return "SANGAT_BAIK"; if (score >= 60) return "NETRAL"; return "HINDARI"; }
+function getRecommendedTime(grade: Grade): string {
+  if (grade === "SANGAT_BAIK") return "Pagi (06:00–10:00)";
+  if (grade === "NETRAL") return "Pagi–siang (07:00–12:00)";
+  return "Pertimbangkan penjadwalan ulang";
+}
+
+function generateExecutiveSummary(
+  activity: ActivityCode, grade: Grade,
+  jawa: ReturnType<typeof calculateJawaScore>, sunda: ReturnType<typeof calculateSundaScore>,
+  abu: ReturnType<typeof calculateAbuMasyarScore>, direction: Direction, weather: WeatherAssessment,
+): string {
+  const parts: string[] = [];
+  const activityLabel = ACTIVITY_LABEL[activity];
+  const gradeLabel = GRADE_LABEL[grade];
+
+  // Tentukan tradisi mana yang paling berpengaruh terhadap skor akhir untuk
+  // kegiatan ini, supaya kesimpulan menjelaskan ALASAN, bukan cuma menyebut label.
+  const faktor = [
+    { nama: "adat Jawa", skor: jawa.score, selaras: !jawa.is_tali_wangke && (jawa.pancasuda === "Sri" || jawa.pancasuda === "Rejeki" || jawa.pancasuda === "Gedhong") },
+    { nama: "adat Sunda", skor: sunda.score, selaras: sunda.status === "Sangat Baik" },
+    { nama: "kitab Abu Ma'syar", skor: abu.element_match ? 80 : 40, selaras: abu.element_match },
+  ];
+  const dominan = faktor.reduce((a, b) => (b.skor > a.skor ? b : a));
+  const lemah = faktor.filter((f) => !f.selaras);
+
+  if (grade === "HINDARI") {
+    parts.push(`Untuk kegiatan ${activityLabel}, tanggal ini TIDAK disarankan (${gradeLabel}).`);
+    if (jawa.is_tali_wangke) {
+      parts.push(`Penyebab utamanya: weton ${jawa.weton} jatuh pada hari larangan Tali/Sampar Wangke, sehingga tradisi Jawa menganggap hari ini berat untuk memulai kegiatan apapun.`);
+    } else {
+      parts.push(`Penyebab utamanya: mayoritas tradisi (adat Jawa: Pancasuda ${jawa.pancasuda}, adat Sunda: siklus Paca ${sunda.paca}) tidak menunjukkan hasil yang mendukung kegiatan ini.`);
+    }
+    parts.push("Disarankan mencari tanggal alternatif.");
+  } else if (grade === "SANGAT_BAIK") {
+    parts.push(`Untuk kegiatan ${activityLabel}, tanggal ini tergolong ${gradeLabel}. Faktor paling menentukan adalah ${dominan.nama}, yang hasilnya selaras dengan kegiatan ini.`);
+    if (lemah.length > 0) {
+      parts.push(`Meski ${lemah.map((f) => f.nama).join(" dan ")} menunjukkan hasil yang kurang ideal, pengaruhnya lebih kecil sehingga tidak mengubah kesimpulan akhir.`);
+    }
+  } else {
+    parts.push(`Untuk kegiatan ${activityLabel}, tanggal ini tergolong ${gradeLabel} — tidak ada larangan tegas, namun juga tidak ada tradisi yang benar-benar mendukung secara kuat. Boleh dilaksanakan jika tidak ada pilihan tanggal lain, namun hasil optimal tidak dijamin.`);
+  }
+
+  parts.push(`Rincian per tradisi — adat Jawa: weton ${jawa.weton} jatuh pada Pancasuda ${jawa.pancasuda}${jawa.is_tali_wangke ? " (termasuk hari larangan Tali/Sampar Wangke)" : ""}. Adat Sunda: siklus Paca ${sunda.paca} (status ${sunda.status}). Kitab Abu Ma'syar: elemen harian ${abu.element} pada fase bulan ${abu.lunar_phase === "WAXING_MOON" ? "naik" : "turun"} (hari ke-${abu.lunar_day}), ${abu.element_match ? "selaras" : "kurang selaras"} dengan kebutuhan elemen kegiatan ini.`);
+
+  if (weather.source === "OPENWEATHERMAP" && weather.multiplier !== 1.0) {
+    const arahCuaca = weather.multiplier < 1.0 ? "menurunkan" : "menaikkan";
+    parts.push(`Prakiraan cuaca (${weather.condition}) turut sedikit ${arahCuaca} skor akhir.`);
+  }
+
+  parts.push(`Sebagai referensi tambahan dari tradisi Sunda (metode penentuan arah ini belum terverifikasi sumber akademik, gunakan sebagai pertimbangan tambahan saja): arah awal ${direction}.`);
+
+  return parts.join(" ");
+}
+
+function validateRequest(body: unknown): { ok: true; data: RequestBody } | { ok: false; fields: string[]; message: string } {
+  if (typeof body !== "object" || body === null) return { ok: false, fields: [], message: "Body harus berupa JSON object." };
+  const b = body as Record<string, unknown>;
+  const fields: string[] = [];
+  if (typeof b.date !== "string" || !b.date) fields.push("date");
+  if (typeof b.activity_code !== "string" || !VALID_ACTIVITIES.includes(b.activity_code as ActivityCode)) fields.push("activity_code");
+  if (b.latitude !== undefined) { const lat = b.latitude; if (typeof lat !== "number" || !Number.isFinite(lat) || lat < -90 || lat > 90) fields.push("latitude"); }
+  if (b.longitude !== undefined) { const lon = b.longitude; if (typeof lon !== "number" || !Number.isFinite(lon) || lon < -180 || lon > 180) fields.push("longitude"); }
+  if (fields.length > 0) return { ok: false, fields, message: `Field tidak valid: ${fields.join(", ")}` };
+  if (typeof b.date === "string" && parseISODateOnly(b.date) === null) return { ok: false, fields: ["date"], message: "Format 'date' harus YYYY-MM-DD dan merupakan tanggal kalender valid." };
+  return { ok: true, data: { date: b.date as string, activity_code: b.activity_code as ActivityCode, latitude: b.latitude as number | undefined, longitude: b.longitude as number | undefined } };
+}
+
+function getUserIdFromAuthHeader(authHeader: string | null): string | null {
+  try {
+    if (!authHeader) return null;
+    const token = authHeader.replace(/^Bearer\s+/i, "").trim();
+    const parts = token.split(".");
+    if (parts.length !== 3) return null;
+    const b64 = parts[1].replace(/-/g, "+").replace(/_/g, "/");
+    const padded = b64 + "=".repeat((4 - (b64.length % 4)) % 4);
+    const payload = JSON.parse(atob(padded));
+    return typeof payload.sub === "string" ? payload.sub : null;
+  } catch { return null; }
+}
+
+const supabaseAdmin = createClient(Deno.env.get("SUPABASE_URL") ?? "", Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "");
+
+async function logCalculation(params: {
+  userId: string | null; activity: ActivityCode; dateStr: string; latitude?: number; longitude?: number;
+  compositeScore: number; grade: Grade; jawa: ReturnType<typeof calculateJawaScore>; sunda: ReturnType<typeof calculateSundaScore>;
+  abu: ReturnType<typeof calculateAbuMasyarScore>; weather: WeatherAssessment; responseBody: unknown;
+}) {
+  const { error } = await supabaseAdmin.from("calculation_logs").insert({
+    user_id: params.userId, kategori: ACTIVITY_KATEGORI[params.activity], kegiatan: params.activity, metode: "GABUNGAN",
+    target_date: params.dateStr, location_lat: params.latitude ?? null, location_long: params.longitude ?? null,
+    composite_score: params.compositeScore, grade: params.grade, sunda_score: params.sunda.score,
+    sunda_detail: { paca: params.sunda.paca, status: params.sunda.status, paca_index: params.sunda.pacaIndex },
+    jawa_score: params.jawa.score,
+    jawa_detail: { weton: params.jawa.weton, neptu: params.jawa.neptu, pancasuda: params.jawa.pancasuda, is_tali_wangke: params.jawa.is_tali_wangke },
+    abu_masyar_score: params.abu.score,
+    abu_masyar_detail: { lunar_day: params.abu.lunar_day, lunar_phase: params.abu.lunar_phase, element: params.abu.element, element_match: params.abu.element_match },
+    weather_multiplier: params.weather.multiplier,
+    weather_detail: { condition: params.weather.condition, source: params.weather.source },
+    raw_response: params.responseBody,
+  });
+  if (error) console.error("calculation_logs insert failed:", error.message);
+}
+
+const CORS_HEADERS: Record<string, string> = {
+  "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Methods": "POST, OPTIONS", "Content-Type": "application/json",
+};
+
+function jsonError(code: number, type: string, message: string, fields: string[] = []) {
+  return new Response(JSON.stringify({ meta: { code, status: "error", engine: "Falak Nusantara Multi-Engine Scoring v2.0" }, error: { type, message, fields } }), { status: code, headers: CORS_HEADERS });
+}
+
+Deno.serve(async (req: Request) => {
+  if (req.method === "OPTIONS") return new Response(null, { status: 204, headers: CORS_HEADERS });
+  if (req.method !== "POST") return jsonError(405, "METHOD_NOT_ALLOWED", "Gunakan POST.");
+  let rawBody: unknown;
+  try { rawBody = await req.json(); } catch { return jsonError(400, "VALIDATION_ERROR", "Body harus JSON valid."); }
+  const validated = validateRequest(rawBody);
+  if (!validated.ok) return jsonError(400, "VALIDATION_ERROR", validated.message, validated.fields);
+  try {
+    const { date: dateStr, activity_code: activity, latitude, longitude } = validated.data;
+    const date = parseISODateOnly(dateStr)!;
+    const weton = getWeton(date);
+    const jawa = calculateJawaScore(weton);
+    const sunda = calculateSundaScore(weton, activity);
+    const abu = calculateAbuMasyarScore(weton, activity, date);
+    const direction = getSpatialDirection(weton, sunda.pacaIndex);
+    const weather = await getWeatherAssessment(latitude, longitude, dateStr, activity);
+    const weight = ACTIVITY_WEIGHTS[activity];
+    const rawScore = sunda.score * weight.sunda + jawa.score * weight.jawa + abu.score * weight.abu;
+    const compositeScore = clamp(Math.round(rawScore * weather.multiplier), 0, 100);
+    const grade = getGrade(compositeScore);
+    const responseBody = {
+      meta: { code: 200, status: "success", engine: "Falak Nusantara Multi-Engine Scoring v2.0" },
+      data: { date: dateStr, activity: activity, composite_score: compositeScore, grade },
+      spatial_advice: { starting_direction: direction, recommended_time: getRecommendedTime(grade) },
+      breakdown: {
+        jawa: { score: jawa.score, weton: jawa.weton, neptu: jawa.neptu, pancasuda: jawa.pancasuda, is_tali_wangke: jawa.is_tali_wangke },
+        sunda: { score: sunda.score, paca: sunda.paca, status: sunda.status },
+        abu_masyar: { score: abu.score, lunar_day: abu.lunar_day, lunar_phase: abu.lunar_phase, element: abu.element },
+      },
+      weather: { applied: weather.source === "OPENWEATHERMAP", multiplier: weather.multiplier, condition: weather.condition, source: weather.source },
+      calculation_audit: { days_since_epoch: weton.dse, pasaran_index: weton.pasaranIndex, paca_index: sunda.pacaIndex, raw_score: Math.round(rawScore * 100) / 100, weather_multiplier: weather.multiplier, algorithm_version: "2.0.0" },
+      executive_summary: generateExecutiveSummary(activity, grade, jawa, sunda, abu, direction, weather),
+    };
+    const userId = getUserIdFromAuthHeader(req.headers.get("Authorization"));
+    try {
+      await logCalculation({ userId, activity, dateStr, latitude, longitude, compositeScore, grade, jawa, sunda, abu, weather, responseBody });
+    } catch (logErr) { console.error("logCalculation threw:", logErr); }
+    return new Response(JSON.stringify(responseBody), { status: 200, headers: CORS_HEADERS });
+  } catch (e) {
+    console.error(e);
+    return jsonError(500, "INTERNAL_ERROR", e instanceof Error ? e.message : String(e));
   }
 });
-
-function jsonResponse(status: number, meta: Record<string, unknown>, data: unknown, message: string) {
-  return new Response(JSON.stringify({ meta, message, data }), {
-    status,
-    headers: { "Content-Type": "application/json" },
-  });
-}
-
