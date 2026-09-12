@@ -18,10 +18,8 @@ jobs:
 
       - run: supabase link --project-ref zwaziqlhiotcmkqgxtsl
         env:
-          SUPABASE_ACCESS_TOKEN: ${{ f5212507e6221cf8350af9ddb4e7581507d65a85849a9420698f2b22fdd87a4c
- }}
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
 
       - run: supabase functions deploy calculate-hari-baik-usaha
         env:
-          SUPABASE_ACCESS_TOKEN: ${{ f5212507e6221cf8350af9ddb4e7581507d65a85849a9420698f2b22fdd87a4c
- }}
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
