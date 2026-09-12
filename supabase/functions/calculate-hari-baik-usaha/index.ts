@@ -158,6 +158,28 @@ function calculateSundaScore(weton: ReturnType<typeof getWeton>, activity: Activ
   return { score, paca: paca.nama, status, pacaIndex };
 }
 
+const PANCASUDA_MEANING: Record<PancasudaName, string> = {
+  Sri: "pertanda kemakmuran dan rezeki yang lancar",
+  Rejeki: "pertanda kemudahan rezeki dan hasil usaha yang berlimpah",
+  Gedhong: "pertanda kemapanan dan cocok untuk membangun atau menyimpan harta",
+  Loro: "pertanda rawan gangguan atau kesulitan, kurang ideal untuk memulai sesuatu",
+  Pati: "pertanda berat, dianggap pantangan besar dalam tradisi Jawa",
+};
+
+const PACA_MEANING: Record<PacaName, string> = {
+  Sri: "pertanda kemakmuran dan keberuntungan",
+  Kala: "pertanda bahaya atau rintangan besar, sangat dihindari untuk memulai kegiatan",
+  Naga: "pertanda kekuatan dan kesuburan, cocok untuk kegiatan memanen atau menuai hasil",
+  Numpi: "pertanda ketenangan dan kekokohan, cocok untuk membangun atau menyimpan",
+};
+
+const ELEMENT_MEANING: Record<ElementName, string> = {
+  TANAH: "melambangkan kestabilan, kesuburan, dan ketekunan — baik untuk pertanian dan pembangunan",
+  AIR: "melambangkan kelenturan dan keharmonisan — baik untuk pelayaran dan peternakan",
+  UDARA: "melambangkan komunikasi dan mobilitas — baik untuk perniagaan",
+  API: "melambangkan semangat dan energi kuat, namun cenderung labil",
+};
+
 const ACTIVITY_LABEL: Record<ActivityCode, string> = {
   BANGUN_RUMAH: "membangun rumah", BANGUN_TEMPAT_USAHA: "membangun tempat usaha",
   BERDAGANG: "berdagang", BERLAYAR: "berlayar",
@@ -257,9 +279,8 @@ function generateExecutiveSummary(
   const parts: string[] = [];
   const activityLabel = ACTIVITY_LABEL[activity];
   const gradeLabel = GRADE_LABEL[grade];
+  const elementLabel = abu.element.toLowerCase();
 
-  // Tentukan tradisi mana yang paling berpengaruh terhadap skor akhir untuk
-  // kegiatan ini, supaya kesimpulan menjelaskan ALASAN, bukan cuma menyebut label.
   const faktor = [
     { nama: "adat Jawa", skor: jawa.score, selaras: !jawa.is_tali_wangke && (jawa.pancasuda === "Sri" || jawa.pancasuda === "Rejeki" || jawa.pancasuda === "Gedhong") },
     { nama: "adat Sunda", skor: sunda.score, selaras: sunda.status === "Sangat Baik" },
@@ -268,31 +289,32 @@ function generateExecutiveSummary(
   const dominan = faktor.reduce((a, b) => (b.skor > a.skor ? b : a));
   const lemah = faktor.filter((f) => !f.selaras);
 
-  if (grade === "HINDARI") {
-    parts.push(`Untuk kegiatan ${activityLabel}, tanggal ini TIDAK disarankan (${gradeLabel}).`);
-    if (jawa.is_tali_wangke) {
-      parts.push(`Penyebab utamanya: weton ${jawa.weton} jatuh pada hari larangan Tali/Sampar Wangke, sehingga tradisi Jawa menganggap hari ini berat untuk memulai kegiatan apapun.`);
-    } else {
-      parts.push(`Penyebab utamanya: mayoritas tradisi (adat Jawa: Pancasuda ${jawa.pancasuda}, adat Sunda: siklus Paca ${sunda.paca}) tidak menunjukkan hasil yang mendukung kegiatan ini.`);
-    }
-    parts.push("Disarankan mencari tanggal alternatif.");
-  } else if (grade === "SANGAT_BAIK") {
-    parts.push(`Untuk kegiatan ${activityLabel}, tanggal ini tergolong ${gradeLabel}. Faktor paling menentukan adalah ${dominan.nama}, yang hasilnya selaras dengan kegiatan ini.`);
-    if (lemah.length > 0) {
-      parts.push(`Meski ${lemah.map((f) => f.nama).join(" dan ")} menunjukkan hasil yang kurang ideal, pengaruhnya lebih kecil sehingga tidak mengubah kesimpulan akhir.`);
-    }
-  } else {
-    parts.push(`Untuk kegiatan ${activityLabel}, tanggal ini tergolong ${gradeLabel} — tidak ada larangan tegas, namun juga tidak ada tradisi yang benar-benar mendukung secara kuat. Boleh dilaksanakan jika tidak ada pilihan tanggal lain, namun hasil optimal tidak dijamin.`);
-  }
-
-  parts.push(`Rincian per tradisi — adat Jawa: weton ${jawa.weton} jatuh pada Pancasuda ${jawa.pancasuda}${jawa.is_tali_wangke ? " (termasuk hari larangan Tali/Sampar Wangke)" : ""}. Adat Sunda: siklus Paca ${sunda.paca} (status ${sunda.status}). Kitab Abu Ma'syar: elemen harian ${abu.element} pada fase bulan ${abu.lunar_phase === "WAXING_MOON" ? "naik" : "turun"} (hari ke-${abu.lunar_day}), ${abu.element_match ? "selaras" : "kurang selaras"} dengan kebutuhan elemen kegiatan ini.`);
+  // Penjelasan per-tradisi: sebut istilah, lalu jelaskan artinya.
+  parts.push(`Menurut adat Jawa, weton ${jawa.weton} jatuh pada Pancasuda ${jawa.pancasuda} — ${PANCASUDA_MEANING[jawa.pancasuda]}${jawa.is_tali_wangke ? ", namun hari ini termasuk hari larangan Tali/Sampar Wangke sehingga skor dipotong 50%" : ""}.`);
+  parts.push(`Untuk adat Sunda, tanggal ini jatuh pada siklus Paca ${sunda.paca} — ${PACA_MEANING[sunda.paca]}.`);
+  parts.push(`Sedangkan menurut kitab Abu Ma'syar, elemen harian pada tanggal ini adalah ${elementLabel} (${ELEMENT_MEANING[abu.element]}), pada fase bulan ${abu.lunar_phase === "WAXING_MOON" ? "naik" : "turun"} (hari ke-${abu.lunar_day}), yang ${abu.element_match ? "selaras" : "kurang selaras"} dengan kebutuhan elemen untuk kegiatan ${activityLabel}.`);
 
   if (weather.source === "OPENWEATHERMAP" && weather.multiplier !== 1.0) {
     const arahCuaca = weather.multiplier < 1.0 ? "menurunkan" : "menaikkan";
     parts.push(`Prakiraan cuaca (${weather.condition}) turut sedikit ${arahCuaca} skor akhir.`);
   }
 
-  parts.push(`Sebagai referensi tambahan dari tradisi Sunda (metode penentuan arah ini belum terverifikasi sumber akademik, gunakan sebagai pertimbangan tambahan saja): arah awal ${direction}.`);
+  // Kesimpulan akhir — tegas, menyebut alasan.
+  if (grade === "HINDARI") {
+    if (jawa.is_tali_wangke) {
+      parts.push(`Jadi, kesimpulannya: untuk kegiatan ${activityLabel}, tanggal ini TIDAK disarankan karena jatuh pada hari larangan Tali/Sampar Wangke menurut adat Jawa. Disarankan mencari tanggal alternatif.`);
+    } else {
+      parts.push(`Jadi, kesimpulannya: untuk kegiatan ${activityLabel}, tanggal ini TIDAK disarankan (${gradeLabel}) karena mayoritas tradisi tidak menunjukkan hasil yang mendukung. Disarankan mencari tanggal alternatif.`);
+    }
+  } else if (grade === "SANGAT_BAIK") {
+    let kesimpulan = `Jadi, kesimpulannya: untuk kegiatan ${activityLabel}, tanggal ini tergolong ${gradeLabel}. Faktor paling menentukan adalah ${dominan.nama}, yang hasilnya selaras dengan kegiatan ini.`;
+    if (lemah.length > 0) {
+      kesimpulan += ` Meski ${lemah.map((f) => f.nama).join(" dan ")} menunjukkan hasil yang kurang ideal, pengaruhnya lebih kecil sehingga tidak mengubah kesimpulan akhir.`;
+    }
+    parts.push(kesimpulan);
+  } else {
+    parts.push(`Jadi, kesimpulannya: untuk kegiatan ${activityLabel}, tanggal ini tergolong ${gradeLabel} — tidak ada larangan tegas, namun juga tidak ada tradisi yang benar-benar mendukung secara kuat. Boleh dilaksanakan jika tidak ada pilihan tanggal lain, namun hasil optimal tidak dijamin.`);
+  }
 
   return parts.join(" ");
 }
