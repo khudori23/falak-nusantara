@@ -474,11 +474,23 @@ async function hitungSkorKomposit(date: Date, activity: ActivityCode) {
 
   const grade = gradeFromScore(composite);
 
-  const executiveSummary = penaltiFatal
+  const openingSummary = penaltiFatal
     ? `Tanggal ini jatuh pada kondisi tradisi yang dianggap berat (${sunda.paca_state === "Kala" ? "Kala" : "Pati"}) — sangat disarankan mencari tanggal alternatif.`
     : grade === "SANGAT_BAIK" || grade === "BAIK"
     ? `Tanggal ini cukup selaras dengan tradisi untuk kegiatan yang dipilih.`
     : `Tanggal ini netral hingga kurang ideal — pertimbangkan tanggal lain jika ingin hasil maksimal.`;
+
+  const mangsaSummary = `Dari sisi musim (Pranata Mangsa), tanggal ini berada pada mangsa ${mangsa.mangsa} yang berwatak ${mangsa.watak}, ${
+    mangsa.cocok_musim ? "cukup mendukung" : "kurang berkaitan langsung dengan"
+  } kegiatan ini.`;
+
+  const executiveSummary = [
+    openingSummary,
+    jawa.advice,
+    sunda.advice,
+    abu.advice,
+    mangsaSummary,
+  ].join(" ");
 
   return {
     composite_score: composite,
