@@ -32,6 +32,7 @@ function AppContent() {
   }, [screenHistory]);
 
   const navigateTo = (screen) => {
+    console.log('>>> navigateTo dipanggil dengan:', screen);
     setScreenHistory((prev) => {
       // Hindari duplikat berturut-turut kalau nav ke screen yang sama
       if (prev[prev.length - 1] === screen) return prev;
@@ -43,6 +44,7 @@ function AppContent() {
   useEffect(() => {
     const backAction = () => {
       const history = historyRef.current;
+      console.log('>>> BACK ditekan, history saat ini:', JSON.stringify(history));
       if (history.length > 1) {
         const newHistory = history.slice(0, -1);
         const prevScreen = newHistory[newHistory.length - 1];
