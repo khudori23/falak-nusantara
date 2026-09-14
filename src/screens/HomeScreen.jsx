@@ -15,6 +15,7 @@ const MENU = [
   { key: 'kepribadian', icon: Moon, title: 'Kepribadian', bg: colors.purpleSoft, fg: colors.purple, route: 'Kepribadian' },
   { key: 'jodoh', icon: Heart, title: 'Perjodohan', bg: colors.dangerSoft, fg: colors.danger, route: 'Perjodohan' },
   { key: 'hari_usaha', icon: Sprout, title: 'Hari Baik Usaha', bg: colors.successSoft, fg: colors.success, route: 'HariUsaha' },
+  { key: 'akad_nikah', icon: Calendar, title: 'Akad Nikah', bg: colors.purpleSoft, fg: colors.purple, route: 'AkadNikah' },
 ];
 
 const CATEGORY_LABELS = {

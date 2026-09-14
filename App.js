@@ -9,6 +9,7 @@ import KalenderScreen from './src/screens/KalenderScreen';
 import EksplorasiScreen from './src/screens/EksplorasiScreen';
 import KepribadianScreen from './src/screens/KepribadianScreen';
 import PerjodohanWrapper from './src/screens/PerjodohanWrapper';
+import AkadNikahScreen from './src/screens/kecocokan/AkadNikahScreen';
 import SettingsScreen from './src/screens/SettingsScreen';
 import HariUsahaScreen from './src/screens/HariUsahaScreen';
 import MetodologiScreen from './src/screens/MetodologiScreen';
@@ -135,6 +136,8 @@ function AppContent() {
         return <KepribadianScreen onNavigate={navigateTo} />;
       case 'Perjodohan':
         return <PerjodohanWrapper onNavigate={navigateTo} />;
+      case 'AkadNikah':
+        return <AkadNikahScreen onBack={() => navigateTo('Beranda')} />;
       case 'Settings':
         return <SettingsScreen onNavigate={navigateTo} />;
       case 'HariUsaha':
