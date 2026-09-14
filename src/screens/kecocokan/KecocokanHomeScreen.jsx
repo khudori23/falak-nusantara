@@ -67,6 +67,16 @@ const METHODS = [
     desc: 'Nama + nama ibu → buruj (zodiak) → planet & unsur → kecenderungan jodoh.',
     wip: false,
   },
+  {
+    key: 'akad-nikah',
+    target: 'akad-nikah',
+    title: 'Akad Nikah',
+    badge: 'Ensemble Jawa + Abu Ma\'syar',
+    palette: colors.abu,
+    icon: 'calendar',
+    desc: 'Gabungan Petung Salaki Rabi No.22/23, Jodoh & Buruj Abu Ma\'syar — hasil tiap pakem ditampilkan terpisah.',
+    wip: false,
+  },
 ];
 
 function MethodCard({ item, onPress }) {
