@@ -27,16 +27,16 @@ function buildKesimpulanLengkap(hasil, consensus) {
     .replace(/\s{2,}/g, ' ')
     .trim();
   if (hasil?.laku) {
-    teks += ` Secara watak, weton ini tergolong ${hasil.laku.nama} — ${hasil.laku.desc}`;
+    teks += ` Secara watak asli, weton Anda ini termasuk golongan ${hasil.laku.nama} \u2014 istilahnya begini: ${hasil.laku.desc}`;
   }
   if (hasil?.planet) {
-    teks += ` Dari sisi Abu Ma'syar, hari lahir Anda dinaungi planet ${hasil.planet.planet} berunsur ${hasil.planet.unsur}, yang cenderung membawa sifat ${hasil.planet.sifat}.`;
+    teks += ` Sekarang saya lihat dari sisi Abu Ma'syar. Hari kelahiran Anda dinaungi ${hasil.planet.planet} yang berunsur ${hasil.planet.unsur} \u2014 dan unsur ini biasanya melahirkan pribadi yang ${hasil.planet.sifat}.`;
   }
   if (hasil?.unsur) {
-    teks += ` Menurut Primbon Jawa, kelahiran pada hari berunsur ${hasil.unsur.unsur} ini membawa kecenderungan ${hasil.unsur.positif}, meski perlu diwaspadai sisi ${hasil.unsur.perhatian}. Bidang karier yang sering dikaitkan dengan unsur ini antara lain ${hasil.unsur.karier}.`;
+    teks += ` Ini konsisten juga dengan apa yang saya baca di Primbon Jawa: kelahiran pada hari berunsur ${hasil.unsur.unsur} cenderung ${hasil.unsur.positif}. Tapi ya, saya juga perlu ingatkan, sisi yang perlu dijaga adalah ${hasil.unsur.perhatian}. Untuk bidang pekerjaan, unsur ini cocoknya ke arah ${hasil.unsur.karier}.`;
   }
   if (hasil?.naas) {
-    teks += ` Hari yang perlu lebih diwaspadai bagi weton ini adalah hari ${hasil.naas}.`;
+    teks += ` Satu lagi titipan dari hitungan ini: kalau Anda mau berhati-hati, hari ${hasil.naas} itu yang sebaiknya lebih diwaspadai untuk weton Anda.`;
   }
   return teks;
 }

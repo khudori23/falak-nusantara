@@ -29,7 +29,7 @@ type ActivityCode =
 type KategoriUsaha = "PERTANIAN" | "PETERNAKAN" | "PEMBANGUNAN" | "PERNIAGAAN";
 type DayName = "Minggu" | "Senin" | "Selasa" | "Rabu" | "Kamis" | "Jumat" | "Sabtu";
 type Pasaran = "Legi" | "Pahing" | "Pon" | "Wage" | "Kliwon";
-type PancasudaName = "Sri" | "Rejeki" | "Gedhong" | "Loro" | "Pati";
+type PancasudaName = "Sri" | "Lungguh" | "Gedhong" | "Loro" | "Pati";
 type PacaName = "Sri" | "Kala" | "Naga" | "Numpi";
 type LunarPhase = "WAXING_MOON" | "WANING_MOON";
 type ElementName = "TANAH" | "AIR" | "UDARA" | "API";
@@ -70,7 +70,7 @@ const PASARAN_LIST: { nama: Pasaran; nilai: number }[] = [
 const WAGE_INDEX = 3;
 
 const PANCASUDA: Record<number, { nama: PancasudaName; skor: number }> = {
-  1: { nama: "Sri", skor: 90 }, 2: { nama: "Rejeki", skor: 90 }, 3: { nama: "Gedhong", skor: 95 },
+  1: { nama: "Sri", skor: 90 }, 2: { nama: "Lungguh", skor: 90 }, 3: { nama: "Gedhong", skor: 95 },
   4: { nama: "Loro", skor: 30 }, 5: { nama: "Pati", skor: 10 },
 };
 
@@ -160,7 +160,7 @@ function calculateSundaScore(weton: ReturnType<typeof getWeton>, activity: Activ
 
 const PANCASUDA_MEANING: Record<PancasudaName, string> = {
   Sri: "pertanda kemakmuran dan rezeki yang lancar",
-  Rejeki: "pertanda kemudahan rezeki dan hasil usaha yang berlimpah",
+  Lungguh: "pertanda kedudukan dan kemampuan yang diakui, cocok untuk memulai sesuatu yang mengangkat derajat/nama baik",
   Gedhong: "pertanda kemapanan dan cocok untuk membangun atau menyimpan harta",
   Loro: "pertanda rawan gangguan atau kesulitan, kurang ideal untuk memulai sesuatu",
   Pati: "pertanda berat, dianggap pantangan besar dalam tradisi Jawa",
@@ -209,15 +209,47 @@ function calculateLunarDay(date: Date): { lunarDay: number; phase: LunarPhase } 
 
 function calculateDailyElement(dse: number): ElementName { return ELEMENT_CYCLE[positiveModulo(dse, 4)]; }
 
+type PlanetName = "Matahari" | "Bulan" | "Mars" | "Merkurius" | "Jupiter" | "Venus" | "Saturnus";
+
+// Planet penguasa hari (astrologi elektional klasik, dipakai Abu Ma'syar & tradisi falak umum).
+const PLANET_HARI: Record<number, PlanetName> = {
+  0: "Matahari", 1: "Bulan", 2: "Mars", 3: "Merkurius", 4: "Jupiter", 5: "Venus", 6: "Saturnus",
+};
+
+// Afinitas klasik tiap planet terhadap kategori kegiatan.
+const PLANET_ACTIVITY_AFFINITY: Record<PlanetName, ActivityCode[]> = {
+  Matahari: ["BANGUN_RUMAH", "BANGUN_TEMPAT_USAHA"],
+  Bulan: ["BERLAYAR", "TANAM_BUAH", "TANAM_UMBI", "PANEN"],
+  Mars: [],
+  Merkurius: ["BERDAGANG"],
+  Jupiter: ["BANGUN_TEMPAT_USAHA", "BERDAGANG", "TERNAK"],
+  Venus: ["TERNAK", "BANGUN_RUMAH"],
+  Saturnus: ["BANGUN_RUMAH", "SIMPAN_LUMBUNG", "BANGUN_TEMPAT_USAHA"],
+};
+
+const PLANET_MEANING: Record<PlanetName, string> = {
+  Matahari: "melambangkan kepemimpinan dan otoritas, baik untuk peresmian",
+  Bulan: "melambangkan perubahan dan kesuburan, baik untuk perjalanan dan pertanian",
+  Mars: "melambangkan ketegasan dan energi keras, kurang ideal untuk memulai kerja sama baru",
+  Merkurius: "melambangkan komunikasi dan perhitungan, baik untuk perdagangan dan perjanjian",
+  Jupiter: "melambangkan perluasan dan kemakmuran, baik untuk usaha besar",
+  Venus: "melambangkan keharmonisan, baik untuk kerja sama dan hal yang bersifat memelihara",
+  Saturnus: "melambangkan ketahanan jangka panjang, baik untuk membangun dan menyimpan",
+};
+
 function calculateAbuMasyarScore(weton: ReturnType<typeof getWeton>, activity: ActivityCode, date: Date) {
   const { lunarDay, phase } = calculateLunarDay(date);
   const element = calculateDailyElement(weton.dse);
   const required = ACTIVITY_ELEMENT_RULES[activity];
   const elementMatch = required.includes(element);
-  let score = 55;
-  if (elementMatch) score += ELEMENT_BONUS;
+  const planet = PLANET_HARI[weton.dayIndex];
+  const planetMatch = PLANET_ACTIVITY_AFFINITY[planet].includes(activity);
+
+  let score = 50;
+  if (elementMatch) score += 20;
+  if (planetMatch) score += 25;
   score = clamp(Math.round(score), 0, 100);
-  return { score, lunar_day: lunarDay, lunar_phase: phase, element, element_match: elementMatch };
+  return { score, lunar_day: lunarDay, lunar_phase: phase, element, element_match: elementMatch, planet, planet_match: planetMatch };
 }
 
 function weatherMultiplierForConditionId(id: number): { multiplier: number; label: string } {
@@ -282,7 +314,7 @@ function generateExecutiveSummary(
   const elementLabel = abu.element.toLowerCase();
 
   const faktor = [
-    { nama: "adat Jawa", skor: jawa.score, selaras: !jawa.is_tali_wangke && (jawa.pancasuda === "Sri" || jawa.pancasuda === "Rejeki" || jawa.pancasuda === "Gedhong") },
+    { nama: "adat Jawa", skor: jawa.score, selaras: !jawa.is_tali_wangke && (jawa.pancasuda === "Sri" || jawa.pancasuda === "Lungguh" || jawa.pancasuda === "Gedhong") },
     { nama: "adat Sunda", skor: sunda.score, selaras: sunda.status === "Sangat Baik" },
     { nama: "kitab Abu Ma'syar", skor: abu.element_match ? 80 : 40, selaras: abu.element_match },
   ];
@@ -292,7 +324,7 @@ function generateExecutiveSummary(
   // Penjelasan per-tradisi: sebut istilah, lalu jelaskan artinya.
   parts.push(`Menurut adat Jawa, weton ${jawa.weton} jatuh pada Pancasuda ${jawa.pancasuda} — ${PANCASUDA_MEANING[jawa.pancasuda]}${jawa.is_tali_wangke ? ", namun hari ini termasuk hari larangan Tali/Sampar Wangke sehingga skor dipotong 50%" : ""}.`);
   parts.push(`Untuk adat Sunda, tanggal ini jatuh pada siklus Paca ${sunda.paca} — ${PACA_MEANING[sunda.paca]}.`);
-  parts.push(`Sedangkan menurut kitab Abu Ma'syar, elemen harian pada tanggal ini adalah ${elementLabel} (${ELEMENT_MEANING[abu.element]}), pada fase bulan ${abu.lunar_phase === "WAXING_MOON" ? "naik" : "turun"} (hari ke-${abu.lunar_day}), yang ${abu.element_match ? "selaras" : "kurang selaras"} dengan kebutuhan elemen untuk kegiatan ${activityLabel}.`);
+  parts.push(`Sedangkan menurut kitab Abu Ma'syar, hari ini dinaungi planet ${abu.planet} — ${PLANET_MEANING[abu.planet]} — yang ${abu.planet_match ? "selaras" : "kurang selaras"} dengan kegiatan ${activityLabel}. Elemen harian pada tanggal ini adalah ${elementLabel} (${ELEMENT_MEANING[abu.element]}), pada fase bulan ${abu.lunar_phase === "WAXING_MOON" ? "naik" : "turun"} (hari ke-${abu.lunar_day}), yang ${abu.element_match ? "selaras" : "kurang selaras"} dengan kebutuhan elemen untuk kegiatan ${activityLabel}.`);
 
   if (weather.source === "OPENWEATHERMAP" && weather.multiplier !== 1.0) {
     const arahCuaca = weather.multiplier < 1.0 ? "menurunkan" : "menaikkan";

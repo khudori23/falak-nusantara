@@ -35,3 +35,34 @@ export const HARI_NAAS = {
   Minggu: 'Rabu', Senin: 'Sabtu', Selasa: 'Senin', Rabu: 'Jumat',
   Kamis: 'Minggu', Jumat: 'Selasa', Sabtu: 'Kamis',
 };
+
+// Pasangan unsur yang punya catatan simbolis khusus di banyak primbon populer
+// (Api x Air, dsb). Ini BUKAN rumus terverifikasi -- murni bumbu naratif ringan,
+// tetap dalam koridor "ringkasan primbon umum, bukan kepastian".
+const CATATAN_PASANGAN = {
+  'Api|Air': 'Dalam simbolisme primbon, api dan air adalah dua unsur yang saling berlawanan tabiat, tapi justru karena itu keduanya sering digambarkan bisa saling meredam dan melengkapi -- yang satu memberi semangat, yang satu memberi ketenangan.',
+  'Mega|Bunga': 'Mega dan bunga sama-sama unsur yang "ringan" dan terbuka, sehingga dalam banyak ringkasan primbon dua unsur ini digambarkan mudah nyambung dalam pergaulan sehari-hari.',
+  'Bumi|Air': 'Bumi yang kokoh dan air yang mengalir sering digambarkan sebagai pasangan yang saling menopang -- satu memberi kestabilan, satu memberi kelenturan.',
+};
+
+export function catatanPasangan(unsurA, unsurB) {
+  return CATATAN_PASANGAN[`${unsurA}|${unsurB}`] || CATATAN_PASANGAN[`${unsurB}|${unsurA}`] || null;
+}
+
+export function buatNarasiUnsurHari({ hariPria, unsurPria, hariWanita, unsurWanita, sama }) {
+  const pembuka = sama
+    ? `Melihat hari lahir keduanya, pria (${hariPria}) dan wanita (${hariWanita}) sama-sama membawa unsur ${unsurPria.unsur}. Kesamaan dasar karakter ini biasanya membuat komunikasi terasa lebih cepat nyambung sejak awal, karena keduanya cenderung memandang banyak hal dari sudut yang mirip.`
+    : `Melihat hari lahir keduanya, pihak pria (${hariPria}) membawa unsur ${unsurPria.unsur}, sementara pihak wanita (${hariWanita}) membawa unsur ${unsurWanita.unsur}. Perbedaan unsur ini bukan berarti tidak cocok -- justru dua karakter yang berbeda seringkali saling mengisi kekurangan satu sama lain, asal keduanya mau saling memahami ritme masing-masing.`;
+
+  const uraianPria = `Dari sisi pria, karakter unsur ${unsurPria.unsur} cenderung ${unsurPria.positif}. Yang perlu jadi perhatian bersama: ${unsurPria.perhatian}.`;
+  const uraianWanita = `Dari sisi wanita, karakter unsur ${unsurWanita.unsur} cenderung ${unsurWanita.positif}. Yang perlu jadi perhatian bersama: ${unsurWanita.perhatian}.`;
+
+  const catatan = !sama ? catatanPasangan(unsurPria.unsur, unsurWanita.unsur) : null;
+
+  const penutup = sama
+    ? `Dengan bekal karakter dasar yang serupa ini, tantangan terbesar biasanya bukan soal saling memahami, melainkan soal saling mengingatkan agar sisi yang perlu diperhatikan pada unsur ${unsurPria.unsur} tidak muncul berbarengan di saat yang sama.`
+    : `Kombinasi ${unsurPria.unsur} dan ${unsurWanita.unsur} ini bisa berjalan baik selama keduanya sadar bahwa perbedaan cara merespons keadaan adalah hal yang wajar, bukan tanda ketidakcocokan.${catatan ? ' ' + catatan : ''}`;
+
+  return [pembuka, uraianPria, uraianWanita, penutup].join('\n\n')
+    + '\n\nCatatan: ini ringkasan primbon umum sebagai bahan refleksi, bukan kepastian atau vonis atas hubungan kalian.';
+}

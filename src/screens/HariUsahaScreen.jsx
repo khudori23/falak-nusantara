@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { formatWeatherDisplay } from '../lib/weatherLabel';
 import {
   View,
   Text,
@@ -441,11 +442,6 @@ export default function HariUsahaScreen({ onNavigate }) {
               </View>
             </View>
             {spatial?.recommended_time && <Text style={styles.resultDesc}>Waktu terbaik: {spatial.recommended_time}</Text>}
-            {spatial?.starting_direction && (
-              <Text style={styles.resultDesc}>
-                Arah mulai: {String(spatial.starting_direction).replace(/_/g, ' ').toLowerCase()}
-              </Text>
-            )}
             {perluMitigasi && (
               <View style={styles.mitigationBox}>
                 <Text style={styles.mitigationText}>
@@ -494,7 +490,7 @@ export default function HariUsahaScreen({ onNavigate }) {
                 <View style={styles.rowBetween}>
                   <Text style={styles.engineLabel}>Cuaca Real-time</Text>
                   <Text style={styles.engineScore}>
-                    {hasil.weather.applied ? `×${hasil.weather.multiplier.toFixed(2)}` : '—'}
+                    {formatWeatherDisplay(hasil.weather)}
                   </Text>
                 </View>
                 {showDetail && (
