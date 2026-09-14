@@ -28,3 +28,7 @@ npm-debug.log*
 
 # misc typo files
 =
+*.bak
+*.bak2
+dump_*.txt
+install.log
