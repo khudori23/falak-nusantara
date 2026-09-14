@@ -1,13 +1,15 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   View,
   Text,
   StyleSheet,
   Animated,
   TouchableOpacity,
+  Linking,
   Platform,
 } from 'react-native';
 import { Magnetometer } from 'expo-sensors';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Location from 'expo-location';
 
 const KAABA_LAT = 21.4225;
@@ -50,55 +52,16 @@ function angleDiff(a, b) {
   return diff > 180 ? 360 - diff : diff;
 }
 
-function webHasOrientationSupport() {
-  return typeof window !== 'undefined' && 'DeviceOrientationEvent' in window;
-}
-
-function webNeedsOrientationPermission() {
-  return webHasOrientationSupport()
-    && typeof window.DeviceOrientationEvent.requestPermission === 'function';
-}
-
-async function requestWebOrientationPermission() {
-  try {
-    const result = await window.DeviceOrientationEvent.requestPermission();
-    return result === 'granted';
-  } catch (_) {
-    return false;
-  }
-}
-
-function subscribeWebCompass(onHeading) {
-  const handleAbsolute = (event) => {
-    if (event.alpha != null) {
-      onHeading((360 - event.alpha) % 360);
-    }
-  };
-  const handleWebkit = (event) => {
-    if (event.webkitCompassHeading != null) {
-      onHeading(event.webkitCompassHeading);
-    } else if (event.alpha != null) {
-      onHeading((360 - event.alpha) % 360);
-    }
-  };
-  if ('ondeviceorientationabsolute' in window) {
-    window.addEventListener('deviceorientationabsolute', handleAbsolute);
-    return () => window.removeEventListener('deviceorientationabsolute', handleAbsolute);
-  }
-  window.addEventListener('deviceorientation', handleWebkit);
-  return () => window.removeEventListener('deviceorientation', handleWebkit);
-}
-
 const SCREEN_STATE = {
   LOADING: 'loading',
   NO_GPS: 'no_gps',
   INVALID_LOCATION: 'invalid_location',
   NO_MAGNETOMETER: 'no_magnetometer',
-  NEEDS_ORIENTATION_PERMISSION: 'needs_orientation_permission',
   READY: 'ready',
 };
 
 export default function KiblatScreen({ onNavigate }) {
+  const insets = useSafeAreaInsets();
   const [screenState, setScreenState] = useState(SCREEN_STATE.LOADING);
   const [location, setLocation] = useState(null);
   const [heading, setHeading] = useState(0);
@@ -106,64 +69,12 @@ export default function KiblatScreen({ onNavigate }) {
   const rotateAnim = useRef(new Animated.Value(0)).current;
   const headingSubscriptionRef = useRef(null);
 
-  function updateAccuracyFromNative(nativeAccuracy) {
-    if (Platform.OS === 'ios') {
-      if (nativeAccuracy < 0) setAccuracy('kalibrasi');
-      else if (nativeAccuracy <= 5) setAccuracy('baik');
-      else if (nativeAccuracy <= 15) setAccuracy('sedang');
-      else setAccuracy('kalibrasi');
-    } else {
-      if (nativeAccuracy >= 3) setAccuracy('baik');
-      else if (nativeAccuracy === 2) setAccuracy('sedang');
-      else setAccuracy('kalibrasi');
-    }
-  }
-
-  function startWebCompass() {
-    setAccuracy('sedang');
-    const unsubscribe = subscribeWebCompass((newHeading) => {
-      setHeading(newHeading);
-    });
-    headingSubscriptionRef.current = { remove: unsubscribe };
-    setScreenState(SCREEN_STATE.READY);
-  }
-
-  const checkCompassAndSubscribe = useCallback(async () => {
-    if (Platform.OS === 'web') {
-      if (!webHasOrientationSupport()) {
-        setScreenState(SCREEN_STATE.NO_MAGNETOMETER);
+  useEffect(() => {
+    (async () => {
+      const servicesEnabled = await Location.hasServicesEnabledAsync();
+      if (!servicesEnabled) {
+        setScreenState(SCREEN_STATE.NO_GPS);
         return;
-      }
-      if (webNeedsOrientationPermission()) {
-        setScreenState(SCREEN_STATE.NEEDS_ORIENTATION_PERMISSION);
-        return;
-      }
-      startWebCompass();
-      return;
-    }
-
-    const available = await Magnetometer.isAvailableAsync();
-    if (!available) {
-      setScreenState(SCREEN_STATE.NO_MAGNETOMETER);
-      return;
-    }
-    headingSubscriptionRef.current = await Location.watchHeadingAsync((data) => {
-      const newHeading = data.trueHeading != null && data.trueHeading >= 0 ? data.trueHeading : data.magHeading;
-      setHeading(newHeading);
-      updateAccuracyFromNative(data.accuracy);
-    });
-    setScreenState(SCREEN_STATE.READY);
-  }, []);
-
-  const initLocation = useCallback(async () => {
-    setScreenState(SCREEN_STATE.LOADING);
-    try {
-      if (Platform.OS !== 'web') {
-        const servicesEnabled = await Location.hasServicesEnabledAsync();
-        if (!servicesEnabled) {
-          setScreenState(SCREEN_STATE.NO_GPS);
-          return;
-        }
       }
       const { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
@@ -180,24 +91,37 @@ export default function KiblatScreen({ onNavigate }) {
 
       setLocation({ lat: latitude, lng: longitude });
       await checkCompassAndSubscribe();
-    } catch (_) {
-      setScreenState(SCREEN_STATE.NO_GPS);
-    }
-  }, [checkCompassAndSubscribe]);
+    })();
 
-  useEffect(() => {
-    initLocation();
     return () => {
       headingSubscriptionRef.current?.remove();
     };
-  }, [initLocation]);
+  }, []);
 
-  async function handleRequestOrientationPermission() {
-    const granted = await requestWebOrientationPermission();
-    if (granted) {
-      startWebCompass();
-    } else {
+  async function checkCompassAndSubscribe() {
+    const available = await Magnetometer.isAvailableAsync();
+    if (!available) {
       setScreenState(SCREEN_STATE.NO_MAGNETOMETER);
+      return;
+    }
+    headingSubscriptionRef.current = await Location.watchHeadingAsync((data) => {
+      const newHeading = data.trueHeading != null && data.trueHeading >= 0 ? data.trueHeading : data.magHeading;
+      setHeading(newHeading);
+      updateAccuracyFromNative(data.accuracy);
+    });
+    setScreenState(SCREEN_STATE.READY);
+  }
+
+  function updateAccuracyFromNative(nativeAccuracy) {
+    if (Platform.OS === 'ios') {
+      if (nativeAccuracy < 0) setAccuracy('kalibrasi');
+      else if (nativeAccuracy <= 5) setAccuracy('baik');
+      else if (nativeAccuracy <= 15) setAccuracy('sedang');
+      else setAccuracy('kalibrasi');
+    } else {
+      if (nativeAccuracy >= 3) setAccuracy('baik');
+      else if (nativeAccuracy === 2) setAccuracy('sedang');
+      else setAccuracy('kalibrasi');
     }
   }
 
@@ -208,6 +132,23 @@ export default function KiblatScreen({ onNavigate }) {
       useNativeDriver: true,
     }).start();
   }, [heading]);
+
+  function openLocationSettings() {
+    if (Platform.OS === 'ios') Linking.openURL('app-settings:');
+    else Linking.openSettings();
+  }
+
+  function BackButton() {
+    return (
+      <TouchableOpacity
+        style={[styles.backButton, { paddingTop: insets.top + 4 }]}
+        onPress={() => onNavigate?.('Beranda')}
+        hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
+      >
+        <Text style={styles.backButtonText}>‹ Kembali</Text>
+      </TouchableOpacity>
+    );
+  }
 
   let content;
 
@@ -220,13 +161,9 @@ export default function KiblatScreen({ onNavigate }) {
   } else if (screenState === SCREEN_STATE.NO_GPS) {
     content = (
       <View style={styles.center}>
-        <Text style={styles.bodyText}>
-          {Platform.OS === 'web'
-            ? 'Izinkan akses lokasi di browser untuk menampilkan arah kiblat'
-            : 'Aktifkan GPS untuk menampilkan arah kiblat'}
-        </Text>
-        <TouchableOpacity style={styles.button} onPress={initLocation}>
-          <Text style={styles.buttonText}>Coba Lagi</Text>
+        <Text style={styles.bodyText}>Aktifkan GPS untuk menampilkan arah kiblat</Text>
+        <TouchableOpacity style={styles.button} onPress={openLocationSettings}>
+          <Text style={styles.buttonText}>Buka Pengaturan</Text>
         </TouchableOpacity>
       </View>
     );
@@ -234,20 +171,6 @@ export default function KiblatScreen({ onNavigate }) {
     content = (
       <View style={styles.center}>
         <Text style={styles.bodyText}>Lokasi tidak valid, coba lagi</Text>
-      </View>
-    );
-  } else if (screenState === SCREEN_STATE.NEEDS_ORIENTATION_PERMISSION) {
-    const bearing = bearingToQibla(location.lat, location.lng);
-    const distance = distanceToKaaba(location.lat, location.lng);
-    content = (
-      <View style={styles.center}>
-        <Text style={styles.bodyText}>Izinkan akses sensor arah untuk mengaktifkan kompas</Text>
-        <Text style={styles.degreeText}>{Math.round(bearing)}°</Text>
-        <Text style={styles.bodyText}>dari Utara sejati</Text>
-        <Text style={styles.distanceText}>{distance} km ke Ka'bah</Text>
-        <TouchableOpacity style={styles.button} onPress={handleRequestOrientationPermission}>
-          <Text style={styles.buttonText}>Aktifkan Kompas</Text>
-        </TouchableOpacity>
       </View>
     );
   } else if (screenState === SCREEN_STATE.NO_MAGNETOMETER) {
@@ -299,12 +222,15 @@ export default function KiblatScreen({ onNavigate }) {
 
   return (
     <View style={{ flex: 1, backgroundColor: '#F7F6F3' }}>
+      <BackButton />
       {content}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  backButton: { paddingHorizontal: 20, paddingBottom: 4 },
+  backButtonText: { fontSize: 15, color: '#0F4C4C', fontWeight: '700' },
   container: { flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#F7F6F3', padding: 24 },
   center: { flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#F7F6F3', padding: 24 },
   bodyText: { fontSize: 16, color: '#2B2B2B', textAlign: 'center', marginBottom: 12 },

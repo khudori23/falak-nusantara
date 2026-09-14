@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState, useCallback } from 'react';
-import { Platform } from 'react-native';
 import * as Location from 'expo-location';
 import * as SunCalc from 'suncalc';
 import { gregorianToHijri } from '../lib/hijri';
@@ -24,8 +23,8 @@ function formatJam(date) {
 
 export function useFalakData() {
   const [now, setNow] = useState(new Date());
-  const [location, setLocation] = useState(null);
-  const [locationStatus, setLocationStatus] = useState('loading');
+  const [location, setLocation] = useState(null); // { lat, lng, label }
+  const [locationStatus, setLocationStatus] = useState('loading'); // loading | granted | denied
 
   useEffect(() => {
     const t = setInterval(() => setNow(new Date()), 1000);
@@ -35,10 +34,7 @@ export function useFalakData() {
   const fetchLocation = useCallback(async () => {
     setLocationStatus('loading');
     try {
-      let servicesEnabled = true;
-      if (Platform.OS !== 'web') {
-        servicesEnabled = await Location.hasServicesEnabledAsync();
-      }
+      const servicesEnabled = await Location.hasServicesEnabledAsync();
       const { status } = await Location.requestForegroundPermissionsAsync();
       if (!servicesEnabled || status !== 'granted') {
         setLocationStatus('denied');
