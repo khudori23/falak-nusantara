@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, ActivityIndicator } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { View, Text, TextInput, Button, StyleSheet, ActivityIndicator, BackHandler } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { supabase } from './src/lib/supabase';
 import { signInWithOtp, verifyOtp, signInAnonymously, onAuthStateChange, getSession, signOut } from './src/lib/auth';
@@ -23,6 +23,40 @@ function AppContent() {
   const [error, setError] = useState('');
   const [activeScreen, setActiveScreen] = useState('Beranda');
   const [onboardingDone, setOnboardingDone] = useState(null);
+
+  // --- History stack untuk tombol back hardware Android ---
+  const [screenHistory, setScreenHistory] = useState(['Beranda']);
+  const historyRef = useRef(screenHistory);
+  useEffect(() => {
+    historyRef.current = screenHistory;
+  }, [screenHistory]);
+
+  const navigateTo = (screen) => {
+    setScreenHistory((prev) => {
+      // Hindari duplikat berturut-turut kalau nav ke screen yang sama
+      if (prev[prev.length - 1] === screen) return prev;
+      return [...prev, screen];
+    });
+    setActiveScreen(screen);
+  };
+
+  useEffect(() => {
+    const backAction = () => {
+      const history = historyRef.current;
+      if (history.length > 1) {
+        const newHistory = history.slice(0, -1);
+        const prevScreen = newHistory[newHistory.length - 1];
+        setScreenHistory(newHistory);
+        setActiveScreen(prevScreen);
+        return true; // sudah ditangani, jangan keluar app
+      }
+      return false; // sudah di layar paling awal, biarkan app keluar/minimize
+    };
+
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
+    return () => backHandler.remove();
+  }, []);
+  // --- Akhir history stack ---
 
   useEffect(() => {
     getSession().then((s) => {
@@ -78,6 +112,7 @@ function AppContent() {
       <OnboardingScreen
         onNavigate={(screen) => {
           setOnboardingDone(true);
+          setScreenHistory([screen]);
           setActiveScreen(screen);
         }}
       />
@@ -87,25 +122,25 @@ function AppContent() {
   if (session) {
     switch (activeScreen) {
       case 'Beranda':
-        return <HomeScreen onNavigate={setActiveScreen} />;
+        return <HomeScreen onNavigate={navigateTo} />;
       case 'Arah':
-        return <KiblatScreen onNavigate={setActiveScreen} />;
+        return <KiblatScreen onNavigate={navigateTo} />;
       case 'Kalender':
-        return <KalenderScreen onNavigate={setActiveScreen} />;
+        return <KalenderScreen onNavigate={navigateTo} />;
       case 'Eksplorasi':
-        return <EksplorasiScreen onNavigate={setActiveScreen} />;
+        return <EksplorasiScreen onNavigate={navigateTo} />;
       case 'Kepribadian':
-        return <KepribadianScreen onNavigate={setActiveScreen} />;
+        return <KepribadianScreen onNavigate={navigateTo} />;
       case 'Perjodohan':
-        return <PerjodohanWrapper onNavigate={setActiveScreen} />;
+        return <PerjodohanWrapper onNavigate={navigateTo} />;
       case 'Settings':
-        return <SettingsScreen onNavigate={setActiveScreen} />;
+        return <SettingsScreen onNavigate={navigateTo} />;
       case 'HariUsaha':
-        return <HariUsahaScreen onNavigate={setActiveScreen} />;
+        return <HariUsahaScreen onNavigate={navigateTo} />;
       case 'Metodologi':
-        return <MetodologiScreen onNavigate={setActiveScreen} />;
+        return <MetodologiScreen onNavigate={navigateTo} />;
       default:
-        return <HomeScreen onNavigate={setActiveScreen} />;
+        return <HomeScreen onNavigate={navigateTo} />;
     }
   }
 
