@@ -20,8 +20,8 @@ jobs:
 
       - name: Create .env
         run: |
-          echo "EXPO_PUBLIC_SUPABASE_URL=${{ secrets.EXPO_PUBLIC_SUPABASE_URL }}" >> .env
-          echo "EXPO_PUBLIC_SUPABASE_ANON_KEY=${{ secrets.EXPO_PUBLIC_SUPABASE_ANON_KEY }}" >> .env
+          echo "https://zwaziqlhiotcmkqgxtsl.supabase.co=${{ secrets.EXPO_PUBLIC_SUPABASE_URL }}" >> .env
+          echo "EXPO_PUBLIC_SUPABASE_ANON_KEY=${{ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp3YXppcWxoaW90Y21rcWd4dHNsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg1ODkxMzMsImV4cCI6MjEwNDE2NTEzM30.DztA04Caqv7mvdxmWutqzbPgL2xm_95GpUJtsRh-Nco }}" >> .env
 
       - name: Install dependencies
         run: npm install
