@@ -1,52 +1,203 @@
 import { supabase } from '../supabase';
-import { hitungWeton } from '../weton';
-import { hitungAbjad } from '../abjad';
 
-export async function engineAkadNikah({ tglPria, tglWanita, namaPria, namaIbuPria, namaWanita, namaIbuWanita }) {
-  const wetonPria = hitungWeton(tglPria);
-  const wetonWanita = hitungWeton(tglWanita);
+function toISODate(value) {
+  if (!(value instanceof Date) || Number.isNaN(value.getTime())) {
+    return null;
+  }
 
-  const abjadPria = hitungAbjad(namaPria);
-  const abjadWanita = hitungAbjad(namaWanita);
-  const abjadIbuPria = hitungAbjad(namaIbuPria);
-  const abjadIbuWanita = hitungAbjad(namaIbuWanita);
+  const y = value.getFullYear();
+  const m = String(value.getMonth() + 1).padStart(2, '0');
+  const d = String(value.getDate()).padStart(2, '0');
 
-  const { data, error } = await supabase.rpc('fn_kecocokan_akad_nikah', {
-    p_nweton_pria: wetonPria.totalNeptu,
-    p_nweton_wanita: wetonWanita.totalNeptu,
-    p_vnama_pria: abjadPria.total,
-    p_vnama_wanita: abjadWanita.total,
-    p_vibu_pria: abjadIbuPria.total,
-    p_vibu_wanita: abjadIbuWanita.total,
-  });
+  return `${y}-${m}-${d}`;
+}
 
-  if (error) throw error;
-  const row = Array.isArray(data) ? data[0] : data;
-  if (!row) throw new Error('Server tidak mengembalikan hasil perhitungan.');
+function addDays(date, days) {
+  const result = new Date(date);
+  result.setDate(result.getDate() + days);
+  return result;
+}
 
-  const jodohBaik = [2, 5, 7].includes(row.jodoh_r);
-  const no23Baik = row.no23_status === 'baik';
-  const adaHariBersama = (row.hari_baik_bersama?.length ?? 0) > 0;
+function normalizeReasons(reasons) {
+  if (!reasons) return [];
 
-  let status;
-  if (no23Baik && jodohBaik && adaHariBersama) {
-    status = 'SANGAT DIREKOMENDASIKAN';
-  } else if (no23Baik && jodohBaik) {
-    status = 'DIREKOMENDASIKAN';
-  } else if (no23Baik || jodohBaik) {
-    status = 'CUKUP BAIK';
-  } else {
-    status = 'PERLU DIPERTIMBANGKAN';
+  if (Array.isArray(reasons)) {
+    return reasons.map(String);
+  }
+
+  if (typeof reasons === 'object') {
+    return Object.entries(reasons).map(([key, value]) => {
+      if (typeof value === 'boolean') {
+        return `${key}: ${value ? 'Ya' : 'Tidak'}`;
+      }
+
+      return `${key}: ${String(value)}`;
+    });
+  }
+
+  return [String(reasons)];
+}
+
+export async function evaluateAkadDate({
+  namaPria,
+  namaAyahPria = '',
+  namaIbuPria,
+  tglPria,
+  namaWanita,
+  namaAyahWanita = '',
+  namaIbuWanita,
+  tglWanita,
+  plannedAkadDate,
+  plannedAkadTime = null,
+  tanggalMulai = null,
+  tanggalSelesai = null,
+  timezone = 'Asia/Jakarta',
+  locationText = '',
+}) {
+  const plannedISO = toISODate(plannedAkadDate);
+
+  if (!plannedISO) {
+    throw new Error('Tanggal rencana akad wajib dipilih.');
+  }
+
+  const startDate = tanggalMulai || plannedAkadDate;
+  const endDate = tanggalSelesai || addDays(plannedAkadDate, 60);
+
+  const startISO = toISODate(startDate);
+  const endISO = toISODate(endDate);
+
+  if (!startISO || !endISO) {
+    throw new Error('Rentang tanggal akad tidak valid.');
+  }
+
+  if (startISO > endISO) {
+    throw new Error(
+      'Tanggal mulai pencarian tidak boleh lebih besar dari tanggal selesai.'
+    );
+  }
+
+  const diffDays =
+    Math.round(
+      (endDate.getTime() - startDate.getTime()) / 86400000
+    ) + 1;
+
+  if (diffDays > 366) {
+    throw new Error('Rentang pencarian maksimal 366 hari.');
+  }
+
+  const { data, error } = await supabase.functions.invoke(
+    'calculate-akad-date-v2',
+    {
+      body: {
+        nama_pria: namaPria.trim(),
+        nama_ayah_pria: namaAyahPria.trim() || null,
+        nama_ibu_pria: namaIbuPria.trim(),
+        tanggal_lahir_pria: toISODate(tglPria),
+
+        nama_wanita: namaWanita.trim(),
+        nama_ayah_wanita: namaAyahWanita.trim() || null,
+        nama_ibu_wanita: namaIbuWanita.trim(),
+        tanggal_lahir_wanita: toISODate(tglWanita),
+
+        planned_akad_date: plannedISO,
+        planned_akad_time: plannedAkadTime || null,
+
+        tanggal_mulai: startISO,
+        tanggal_selesai: endISO,
+
+        timezone,
+        location_text: locationText.trim() || null,
+      },
+    }
+  );
+
+  if (error) {
+    console.error('calculate-akad-date-v2 error:', error);
+
+    let serverError = null;
+
+    try {
+      if (error.context) {
+        const response = error.context.clone
+          ? error.context.clone()
+          : error.context;
+
+        const contentType =
+          response.headers?.get?.('content-type') || '';
+
+        if (contentType.includes('application/json')) {
+          const body = await response.json();
+          serverError =
+            body?.error ||
+            body?.message ||
+            JSON.stringify(body);
+        } else {
+          serverError = await response.text();
+        }
+      }
+    } catch (detailError) {
+      console.warn(
+        'Tidak dapat membaca detail error Edge Function:',
+        detailError
+      );
+    }
+
+    const detail =
+      serverError ||
+      error.message ||
+      'Gagal menjalankan mesin evaluasi tanggal akad.';
+
+    console.error(
+      'calculate-akad-date-v2 DETAIL:',
+      detail
+    );
+
+    throw new Error(String(detail));
+  }
+
+  if (!data) {
+    throw new Error(
+      'Server tidak mengembalikan hasil evaluasi tanggal akad.'
+    );
   }
 
   return {
-    inputs: { wetonPria, wetonWanita, abjadPria, abjadWanita, abjadIbuPria, abjadIbuWanita },
-    no22: { r: row.no22_r, label: row.no22_label, makna: row.no22_makna },
-    no23: { r: row.no23_r, label: row.no23_label, status: row.no23_status },
-    jodoh: { r: row.jodoh_r, makna: row.jodoh_makna, baik: jodohBaik },
-    burujPria: { r: row.buruj_pria_r, nama: row.buruj_pria, hariBaik: row.buruj_pria_hari || [] },
-    burujWanita: { r: row.buruj_wanita_r, nama: row.buruj_wanita, hariBaik: row.buruj_wanita_hari || [] },
-    hariBaikBersama: row.hari_baik_bersama || [],
-    status,
+    ...data,
+
+    plannedDate: data.planned_date || null,
+
+    recommendations: Array.isArray(data.recommendations)
+      ? data.recommendations.map((candidate) => ({
+          ...candidate,
+          reasons: normalizeReasons(candidate.reasons),
+        }))
+      : [],
+
+    metadata: data.metadata || {},
+
+    inputs: {
+      namaPria,
+      namaAyahPria,
+      namaIbuPria,
+      tglPria: toISODate(tglPria),
+
+      namaWanita,
+      namaAyahWanita,
+      namaIbuWanita,
+      tglWanita: toISODate(tglWanita),
+
+      plannedAkadDate: plannedISO,
+      plannedAkadTime,
+      tanggalMulai: startISO,
+      tanggalSelesai: endISO,
+      timezone,
+      locationText,
+    },
   };
+}
+
+// Alias baru untuk pemanggil lama.
+// Tidak lagi menjalankan mesin kecocokan pasangan.
+export async function engineAkadNikah(params) {
+  return evaluateAkadDate(params);
 }
